@@ -1,0 +1,2158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gagnez du temps sur l'administratif, créez des parcours personnalisés et concentrez-vous sur l'accompagnement humain. Tests, portefeuille de compétences, ressources et suivi intégré.">
+    <meta name="keywords" content="bilan de compétences, orientation professionnelle, RH, tests psychométriques, accompagnement, évolution professionnelle, coaching">
+    <meta name="author" content="Gonabi">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ee4036">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gonabi.fr/">
+    <meta property="og:title" content="Gonabi - Votre logiciel d'accompagnement professionnel">
+    <meta property="og:description" content="Gagnez du temps sur l'administratif, créez des parcours personnalisés et concentrez-vous sur l'accompagnement humain. Tests, portefeuille de compétences, ressources et suivi intégré.">
+    <meta property="og:image" content="https://gonabi.fr/assets/logos/Gonabi_Symbole.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://gonabi.fr/">
+    <meta name="twitter:title" content="Gonabi - Votre logiciel d'accompagnement professionnel">
+    <meta name="twitter:description" content="Gagnez du temps sur l'administratif, créez des parcours personnalisés et concentrez-vous sur l'accompagnement humain. Tests, portefeuille de compétences, ressources et suivi intégré.">
+    <meta name="twitter:image" content="https://gonabi.fr/assets/logos/Gonabi_Symbole.png">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://gonabi.fr/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/Gonabi_Symbole.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logos/Gonabi_Symbole.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="assets/logos/Gonabi_Symbole.png">
+
+    <title>Gonabi - Votre logiciel d'accompagnement professionnel</title>
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonts with display swap for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Gonabi",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Gonabi est la plateforme innovante qui associe nouvelles technologies et sciences de l'orientation pour offrir aux professionnels RH et leurs bénéficiaires les ressources nécessaires à leur épanouissement professionnel",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR",
+            "description": "Accès bêta gratuit"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "127"
+        }
+    }
+    </script>
+
+    <style>
+        :root {
+            --red-primary: #EE4036;
+            --red-hover: #d93a31;
+            --red-light: #fef0ef;
+            --blue-accent: #1BAFD0;
+            --yellow-accent: #FFC20F;
+            --yellow-bg: #fff8e1;
+            --green-accent: #4CAF50;
+            --cream-bg: #F9F4EC;
+            --cream-light: #fdfaf5;
+            --pink-bg: #f9e8e5;
+            --teal-dark: #012B30;
+            --dark: #012B30;
+            --gray: #5a6b6d;
+            --gray-light: #8a9a9c;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream-bg);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Lora', serif;
+        }
+
+        /* Critical CSS - Above the fold */
+        header {
+            padding: 1rem 5%;
+            background: var(--cream-bg);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 144px !important;
+            width: auto !important;
+            max-height: none !important;
+        }
+
+        .btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--red-primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(238, 64, 54, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(1, 43, 48, 0.06);
+            color: var(--dark);
+            border: 1px solid rgba(1, 43, 48, 0.10);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(1, 43, 48, 0.10);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(1, 43, 48, 0.10);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            padding: 3rem 5% 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--cream-bg) 0%, var(--cream-light) 100%);
+        }
+
+        .hero-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            width: 100%;
+            flex: 1;
+        }
+
+        .hero-content {
+            max-width: 760px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+            color: var(--dark);
+        }
+
+        .hero-title-static {
+            display: block;
+        }
+
+        .hero-title-rotating {
+            display: block;
+            position: relative;
+            min-height: 2.4em;
+        }
+
+        .rotating-text-item {
+            display: block;
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            width: 100%;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .rotating-text-item.active {
+            opacity: 1;
+            position: absolute;
+        }
+
+        .rotating-text-item.text-red {
+            color: var(--red-primary);
+        }
+
+        .rotating-text-item.text-yellow {
+            color: var(--yellow-accent);
+        }
+
+        .rotating-text-item.text-blue {
+            color: var(--blue-accent);
+        }
+
+        .hero-description {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        /* Base text size for all body text */
+        p, li {
+            font-size: 1rem;
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .section-image {
+            width: 100%;
+            max-width: 760px;
+            height: auto;
+            border-radius: 16px;
+        }
+
+        /* Floating Cards */
+        .floating-card {
+            position: absolute;
+            background: var(--white);
+            border-radius: 10px;
+            padding: 0.6rem 0.9rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            animation: float 6s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        .floating-card-icon {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-tableau {
+            top: 12%;
+            left: 0%;
+            animation-delay: 0s;
+        }
+
+        .card-tableau .floating-card-icon { color: #1bbfd0; }
+
+        .card-synthese {
+            top: 32%;
+            left: -8%;
+            animation-delay: -2s;
+        }
+
+        .card-synthese .floating-card-icon { color: var(--green-accent); }
+
+        .card-parcours {
+            position: absolute;
+            top: 0%;
+            right: -5%;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            width: 160px;
+            animation: float 6s ease-in-out infinite;
+            animation-delay: -1s;
+            will-change: transform;
+        }
+
+        .card-parcours-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .card-parcours-header svg {
+            width: 12px;
+            height: 12px;
+            color: var(--gray-light);
+        }
+
+        .parcours-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .parcours-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.65rem;
+        }
+
+        .step-number {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1.5px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
+            color: var(--gray-light);
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex: 1;
+        }
+
+        .step-label {
+            font-size: 0.6rem;
+            color: var(--gray);
+            min-width: 55px;
+        }
+
+        .step-bar {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+        }
+
+        .step-bar.green { background: var(--green-accent); }
+        .step-bar.yellow { background: #f5c842; }
+        .step-bar.pink { background: #f5a0c0; }
+
+        .step-icon-box {
+            width: 20px;
+            height: 20px;
+            background: #e8f5e9;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-profil {
+            position: absolute;
+            bottom: 20%;
+            left: -12%;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            width: 170px;
+            animation: float 6s ease-in-out infinite;
+            animation-delay: -3s;
+            will-change: transform;
+        }
+
+        .card-profil h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .profil-visual {
+            display: flex;
+            gap: 0.6rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .profil-cube {
+            width: 45px;
+            height: 45px;
+            position: relative;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-radius: 2px;
+        }
+
+        .cube-top { background: #a8d5ba; transform: skewY(-12deg); top: 5px; left: 8px; }
+        .cube-left { background: #7bc4a8; transform: skewX(-12deg); top: 12px; left: 0; }
+        .cube-right { background: #f5d793; transform: skewX(12deg); top: 12px; left: 18px; }
+
+        .profil-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            justify-content: center;
+        }
+
+        .profil-line {
+            height: 5px;
+            border-radius: 2px;
+            background: #e8e8e8;
+        }
+
+        .profil-line:nth-child(1) { width: 50px; }
+        .profil-line:nth-child(2) { width: 65px; }
+        .profil-line:nth-child(3) { width: 40px; }
+
+        .metiers-section h5 {
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        .metiers-squares {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .metier-square {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .metier-square:nth-child(1) { background: #a8d5e5; }
+        .metier-square:nth-child(2) { background: #a8d5e5; }
+        .metier-square:nth-child(3) { background: #f5e6a3; }
+        .metier-square:nth-child(4) { background: #f5d5d5; }
+
+        .card-avatars {
+            position: absolute;
+            bottom: 8%;
+            right: 5%;
+            background: var(--white);
+            border-radius: 40px;
+            padding: 0.4rem 0.8rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            animation: float 6s ease-in-out infinite;
+            animation-delay: -4s;
+            will-change: transform;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--white);
+            margin-left: -8px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .avatar:first-child { margin-left: 0; }
+        .avatar-1 { background: linear-gradient(135deg, #f5a623, #f78b00); }
+        .avatar-2 { background: linear-gradient(135deg, #7b68ee, #6a5acd); }
+        .avatar-3 { background: linear-gradient(135deg, #20b2aa, #3cb371); }
+        .avatar-4 { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); }
+        .avatar-5 { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+        .avatar-6 { background: linear-gradient(135deg, #a8e6cf, #88d8b0); }
+
+        .avatar-notification {
+            width: 22px;
+            height: 22px;
+            background: var(--red-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 0.6rem;
+            font-weight: 600;
+            margin-left: 0.3rem;
+        }
+
+        .hero-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            color: var(--gray);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Partners Section */
+        .partners-section {
+            background: var(--cream-light);
+            padding: 2.5rem 0;
+            border-top: 1px solid rgba(0,0,0,0.03);
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            display: flex;
+            justify-content: center;
+        }
+
+        .partners-marquee {
+            width: 60%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .partners-marquee::before,
+        .partners-marquee::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .partners-marquee::before {
+            left: 0;
+            background: linear-gradient(to right, var(--cream-light) 0%, transparent 100%);
+        }
+
+        .partners-marquee::after {
+            right: 0;
+            background: linear-gradient(to left, var(--cream-light) 0%, transparent 100%);
+        }
+
+        .partners-track {
+            display: flex;
+            align-items: center;
+            animation: marquee 35s linear infinite;
+            width: max-content;
+        }
+
+        .partners-track:hover {
+            animation-play-state: paused;
+        }
+
+        .partner-logo {
+            height: 80px;
+            margin: 0 5rem;
+            opacity: 0.4;
+            filter: grayscale(100%);
+            transition: all 0.4s ease;
+        }
+
+        .partner-logo:hover {
+            opacity: 0.9;
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 5rem 5%;
+            background: var(--cream-bg);
+            text-align: center;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .section-tag-icon {
+            font-size: 1rem;
+        }
+
+        .problem h2 {
+            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+            font-weight: 500;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .problem-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .problem-cards.four-cols {
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 1200px;
+        }
+
+        .problem-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.75rem;
+            text-align: left;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .problem-card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--red-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .problem-card h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .problem-card p {
+            font-size: 1rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Solution Section */
+        .solution {
+            padding: 5rem 5%;
+            background: #E8F6F8;
+        }
+
+        .solution-intro {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .solution-intro .section-tag {
+            justify-content: center;
+        }
+
+        .solution-headline {
+            font-family: 'Lora', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 500;
+            color: var(--dark);
+            line-height: 1.4;
+            margin-top: 1rem;
+        }
+
+        .solution-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .solution-content .section-tag {
+            justify-content: flex-start;
+        }
+
+        .solution h2 {
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .solution-description {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .solution-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .solution-feature {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .solution-feature-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--yellow-bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .solution-feature h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .solution-feature p {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+
+        .solution-visual {
+            position: relative;
+        }
+
+        .solution-mockup {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .mockup-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mockup-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f5d793, #f5a623);
+        }
+
+        .mockup-info h5 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .mockup-info p {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .mockup-section {
+            margin-bottom: 1rem;
+        }
+
+        .mockup-section-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .mockup-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .mockup-tag {
+            padding: 0.4rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .mockup-tag.green { background: #e8f5e9; color: var(--green-accent); }
+        .mockup-tag.blue { background: #e3f2fd; color: #1976d2; }
+        .mockup-tag.purple { background: #f3e5f5; color: #7b1fa2; }
+        .mockup-tag.yellow { background: #fff8e1; color: #f9a825; }
+
+        .mockup-card-small {
+            position: absolute;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .mockup-card-right {
+            top: 10%;
+            right: -10%;
+            width: 160px;
+        }
+
+        .mockup-card-right h5 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .competence-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .competence-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .competence-bar span {
+            font-size: 0.65rem;
+            color: var(--gray);
+            width: 20px;
+        }
+
+        .competence-bar-fill {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #e0e0e0;
+        }
+
+        .competence-bar-fill.filled {
+            background: linear-gradient(90deg, var(--green-accent), #8bc34a);
+        }
+
+        /* Parcours Section */
+        .parcours {
+            padding: 5rem 5%;
+            background: #FAEBE8;
+        }
+
+        .parcours-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .parcours-content {
+        }
+
+        .parcours h2 {
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--red-primary);
+        }
+
+        .parcours-description {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .parcours-checklist {
+            list-style: none;
+        }
+
+        .parcours-checklist li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--red-primary);
+            flex-shrink: 0;
+        }
+
+        .parcours-visual {
+            order: 1;
+        }
+
+        .parcours-mockup {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.25rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .parcours-mockup-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .parcours-mockup-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .parcours-mockup-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .parcours-mockup-step {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .parcours-mockup-step .step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .parcours-mockup-step .step-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .parcours-mockup-step .step-progress {
+            margin-left: auto;
+            width: 60px;
+            height: 6px;
+            border-radius: 3px;
+            background: #e0e0e0;
+        }
+
+        .parcours-mockup-step .step-progress.green { background: var(--green-accent); }
+        .parcours-mockup-step .step-progress.yellow { background: #f5c842; }
+        .parcours-mockup-step .step-progress.red { background: var(--red-primary); }
+
+        /* Automation Section */
+        .automation {
+            padding: 5rem 5%;
+            background: #FFF6DC;
+        }
+
+        .automation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .automation h2 {
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .automation h2 span {
+            color: var(--yellow-accent);
+        }
+
+        .automation-description {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .automation-checklist {
+            list-style: none;
+        }
+
+        .automation-checklist li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .automation-checklist .check-icon {
+            background: var(--white);
+            color: var(--yellow-accent);
+        }
+
+        .automation-visual {
+            position: relative;
+        }
+
+        .automation-mockup {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .auto-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .auto-card h5 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .auto-card-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .auto-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .auto-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: #e0e0e0;
+        }
+
+        .auto-bar:nth-child(1) { width: 80%; background: var(--green-accent); }
+        .auto-bar:nth-child(2) { width: 60%; background: #1bbfd0; }
+        .auto-bar:nth-child(3) { width: 90%; background: #9c27b0; }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 5rem 5% 3rem;
+            background: var(--cream-bg);
+            overflow: hidden;
+        }
+
+        .testimonials h2 {
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            font-weight: 500;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .testimonials-carousel {
+            overflow: hidden;
+            margin: 0 -5%;
+            padding: 1rem 0;
+        }
+
+        .testimonials-track {
+            display: flex;
+            gap: 1.5rem;
+            animation: scrollTestimonials 40s linear infinite;
+            width: max-content;
+        }
+
+        .testimonials-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollTestimonials {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            min-width: 340px;
+            max-width: 340px;
+            flex-shrink: 0;
+        }
+
+        .testimonial-quote {
+            font-size: 1rem;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+            font-style: italic;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            font-size: 1.5rem;
+            color: var(--red-primary);
+            font-style: normal;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .testimonial-avatar {
+            display: none;
+        }
+
+        
+        .testimonial-info h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+        }
+
+        .testimonial-info p {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        /* Trust Section */
+        .trust {
+            padding: 4rem 5%;
+            background: var(--cream-light);
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .trust-item {
+            text-align: center;
+        }
+
+        .trust-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .trust-item h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .trust-item p {
+            font-size: 1rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 5%;
+            background: var(--teal-dark);
+            color: var(--white);
+        }
+
+        .cta-container {
+            max-width: 720px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .subtitle {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-form {
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            color: var(--white);
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .cta-form .btn {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .form-reassurance {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .form-reassurance span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 5%;
+            background: var(--cream-bg);
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--dark);
+        }
+
+
+        /* Differentiation layout */
+
+        #differenciation .solution-container {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            text-align: center;
+        }
+        #differenciation .solution-content {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        #differenciation .section-tag { justify-content: center; }
+        #differenciation .solution-description {
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+        #differenciation .parcours-checklist {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 2.5rem;
+            row-gap: 0.75rem;
+            padding: 0;
+            margin: 1.25rem auto 0;
+            max-width: 800px;
+            text-align: left;
+        }
+        @media (max-width: 480px) {
+            .cta-section h2 { font-size: 1.4rem; }
+        }
+
+        @media (max-width: 768px) {
+            #differenciation .parcours-checklist { grid-template-columns: 1fr; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .problem-cards.four-cols {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 700px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero-main,
+            .solution-container,
+            .parcours-container,
+            .automation-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content,
+            .solution-content,
+            .parcours-content,
+            .automation-content {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .solution-content .section-tag,
+            .parcours-checklist,
+            .automation-checklist {
+                justify-content: center;
+            }
+
+            .parcours-visual { margin-top: 2rem; }
+
+            .hero-visual { margin-top: 3rem; }
+
+            .floating-card, .card-parcours, .card-profil, .card-avatars, .mockup-card-small {
+                display: none;
+            }
+
+            .problem-cards,
+            .problem-cards.four-cols,
+            .trust-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .solution-features {
+                grid-template-columns: 1fr;
+                text-align: left;
+            }
+
+            .testimonial-card {
+                min-width: 300px;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cta-section h2 { font-size: 1.4rem; }
+        }
+
+        @media (max-width: 768px) {
+            .logo-img { height: 100px !important; }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .partners-marquee {
+                width: 90%;
+            }
+
+            .partner-logo {
+                height: 50px;
+                margin: 0 3rem;
+            }
+
+            .partners-marquee::before,
+            .partners-marquee::after {
+                width: 40px;
+            }
+
+            .form-reassurance {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .rotating-text-item,
+            .partners-track,
+            .testimonials-track {
+                animation: none;
+                transition: none;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            header, .partners-marquee, .carousel-dots {
+                display: none;
+            }
+            .hero {
+                min-height: auto;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo" aria-label="Gonabi - Accueil">
+                <img src="assets/logos/Gonabi_Logo_Horizontal.png" alt="Gonabi" class="logo-img">
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-main">
+                <div class="hero-content">
+                    <h1 class="hero-title" id="hero-title">
+                        <span class="hero-title-static">La plateforme qui structure, automatise et valorise vos accompagnements</span>
+                        <span class="hero-title-rotating" aria-live="polite">
+                            <span class="rotating-text-item text-blue active">en orientation.</span>
+                            <span class="rotating-text-item text-red">en évolution professionnelle.</span>
+                            <span class="rotating-text-item text-yellow">en bilan de compétences.</span>
+                        </span>
+                    </h1>
+                    <p class="hero-description">
+                        Créez des parcours sur mesure, automatisez les tâches répétitives et gérez vos suivis en temps réel, au même endroit.
+                    </p>
+                    <a href="#cta" class="btn btn-primary">Accéder à la bêta</a>
+                    
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-image-container">
+                        <img src="assets/images/Hero_visual.png"
+                             alt="Interface Gonabi avec tableau de bord, profil psychométrique et parcours personnalisés"
+                             class="hero-image"
+                             loading="eager">
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Partners Marquee Section -->
+        <section class="partners-section" aria-label="Nos partenaires">
+            <div class="partners-marquee">
+                <div class="partners-track">
+                    <img src="assets/partners/missions_locales_grayscale.png" alt="Missions Locales" class="partner-logo">
+                    <img src="assets/partners/aura_grayscale.png" alt="Région Aura" class="partner-logo">
+                    <img src="assets/partners/cma_grayscale.png" alt="CMA" class="partner-logo">
+                    <img src="assets/partners/edlv_grayscale.png" alt="EDLV" class="partner-logo">
+                    <img src="assets/partners/french_tech_grayscale.png" alt="French Tech" class="partner-logo">
+                    <!-- Duplicate for seamless loop -->
+                    <img src="assets/partners/missions_locales_grayscale.png" alt="Missions Locales" class="partner-logo">
+                    <img src="assets/partners/aura_grayscale.png" alt="Région Aura" class="partner-logo">
+                    <img src="assets/partners/cma_grayscale.png" alt="CMA" class="partner-logo">
+                    <img src="assets/partners/edlv_grayscale.png" alt="EDLV" class="partner-logo">
+                    <img src="assets/partners/french_tech_grayscale.png" alt="French Tech" class="partner-logo">
+                </div>
+            </div>
+        </section>
+
+<!-- Problem Section -->
+        <section class="problem" aria-labelledby="problem-title">
+            <div class="section-tag">
+                <span class="section-tag-icon" aria-hidden="true">😟</span>
+                LE PROBLÈME
+            </div>
+            <h2 id="problem-title">Face à ces obstacles qui vous freinent au quotidien ...</h2>
+            <div class="problem-cards">
+                <article class="problem-card">
+                    <div class="problem-card-icon" aria-hidden="true">📊</div>
+                    <h3>Données et outils dispersés</h3>
+                    <p>Vous devez jongler entre les ressources, ce qui complexifie votre travail et multiplie les coûts.</p>
+                </article>
+                <article class="problem-card">
+                    <div class="problem-card-icon" aria-hidden="true">⏰</div>
+                    <h3>Tâches répétitives et chronophages</h3>
+                    <p>Rédaction de comptes-rendus, relances manuelles, bilans fastidieux... Vous êtes noyé par la charge administrative.</p>
+                </article>
+                <article class="problem-card">
+                    <div class="problem-card-icon" aria-hidden="true">📚</div>
+                    <h3>Ressources obsolètes</h3>
+                    <p>Entre les évolutions des métiers, des modes de travail et aspirations professionnelles, rester sur des outils figés c'est accompagner avec une longueur de retard.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Solution Section -->
+        <section class="solution" id="solution" aria-labelledby="solution-title">
+            <div class="solution-intro">
+                <div class="section-tag">
+                    <span class="section-tag-icon" aria-hidden="true">✨</span>
+                    LA SOLUTION
+                </div>
+                <p class="solution-headline">… découvrez Gonabi,<br>l'allié digital des professionnels de l'accompagnement</p>
+            </div>
+            <div class="solution-container">
+                <div class="solution-content">
+                    <h2 id="solution-title">Un panel d'outils complet et évolutif</h2>
+                    <p class="solution-description">Gonabi intègre les dernières méthodologies et s'enrichit en continu pour répondre aux transformations du marché du travail.</p>
+                    <div class="solution-features">
+                        <div class="solution-feature">
+                            <div class="solution-feature-icon" aria-hidden="true">🧠</div>
+                            <div>
+                                <h4>Tests psychométriques</h4>
+                                <p>6 tests scientifiquement reconnus</p>
+                            </div>
+                        </div>
+                        <div class="solution-feature">
+                            <div class="solution-feature-icon" aria-hidden="true">💼</div>
+                            <div>
+                                <h4>Fiches métiers</h4>
+                                <p>Une base de +1 500 métiers actualisée</p>
+                            </div>
+                        </div>
+                        <div class="solution-feature">
+                            <div class="solution-feature-icon" aria-hidden="true">📋</div>
+                            <div>
+                                <h4>Portefeuille de compétences</h4>
+                                <p>Valorisez vos acquis parmi +15 000 compétences</p>
+                            </div>
+                        </div>
+                        <div class="solution-feature">
+                            <div class="solution-feature-icon" aria-hidden="true">🎬</div>
+                            <div>
+                                <h4>Médiathèque de ressources</h4>
+                                <p>Des centaines d'exercices, articles, guides et vidéos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="solution-visual">
+                    <img src="assets/images/Bleu_outils.png"
+                         alt="Interface des outils Gonabi : personnalité, compétences et recommandations"
+                         class="section-image"
+                         loading="lazy">
+                </div>
+            </div>
+        </section>
+<!-- Parcours Section -->
+        <section class="parcours" aria-labelledby="parcours-title">
+            <div class="parcours-container">
+                <div class="parcours-visual">
+                    <img src="assets/images/Rouge_parcours.png"
+                         alt="Interface de gestion des parcours Gonabi : modules, étapes et suivi"
+                         class="section-image"
+                         loading="lazy">
+                </div>
+                <div class="parcours-content">
+                    <h2 id="parcours-title">Des parcours personnalisables et flexibles</h2>
+                    <p class="parcours-description">Créez des parcours sur mesure qui s'adaptent aux besoins de vos publics.</p>
+                    <ul class="parcours-checklist">
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Modèles prêts à l'emploi
+                        </li>
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Édition simple et intuitive
+                        </li>
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Intégration de vos propres contenus
+                        </li>
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Suivi en temps réel
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Automation Section -->
+        <section class="automation" aria-labelledby="automation-title">
+            <div class="automation-container">
+                <div class="automation-content">
+                    <h2 id="automation-title">Une automatisation intelligente des tâches répétitives</h2>
+                    <p class="automation-description">Gonabi automatise tout ce qui peut l'être pour que vous puissiez vous concentrer sur ce qui compte réellement : l'humain.</p>
+                    <ul class="automation-checklist">
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Rapports de tests
+                        </li>
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Relances et notifications
+                        </li>
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Synthèses d'accompagnement
+                        </li>
+                    </ul>
+                </div>
+                <div class="automation-visual">
+                    <img src="assets/images/Jaune_autmatisation.png"
+                         alt="Interface d'automatisation Gonabi : tableau de bord et synthèses"
+                         class="section-image"
+                         loading="lazy">
+                </div>
+            </div>
+        </section>
+
+<!-- Differentiation Section -->
+        <section class="solution" id="differenciation" aria-labelledby="diff-title">
+            <div class="solution-container">
+                <div class="solution-content">
+                    <div class="section-tag">
+                        <span class="section-tag-icon" aria-hidden="true">🪄</span>
+                        DIFFÉRENCIATION
+                    </div>
+                    <h2 id="diff-title">Pourquoi Gonabi est différent</h2>
+                    <p class="solution-description">
+                        Là où les outils généralistes vous obligent à bricoler (mails, tableurs, docs), Gonabi propose un espace unifié pensé pour l’accompagnement professionnel.
+                    </p>
+                    <ul class="parcours-checklist">
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Conçu spécifiquement pour l’accompagnement (pas un outil générique)
+                        </li>
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Tests, compétences, parcours et synthèses dans un même espace
+                        </li>
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Automatisation native (relances, rapports, synthèses)
+                        </li>
+                        <li>
+                            <span class="check-icon" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </span>
+                            Expérience fluide pour le professionnel et le bénéficiaire
+                        </li>
+                    </ul>
+                </div>
+                </div>
+        </section>
+
+
+
+<!-- Audience Section -->
+        <section class="problem" id="cibles" aria-labelledby="cibles-title">
+            <div class="section-tag">
+                <span class="section-tag-icon" aria-hidden="true">🎯</span>
+                POUR QUI
+            </div>
+            <h2 id="cibles-title">Conçu pour tous les professionnels de l'accompagnement</h2>
+            <div class="problem-cards four-cols">
+                <article class="problem-card">
+                    <div class="problem-card-icon" aria-hidden="true">🏢</div>
+                    <h3>Centres de bilan & Cabinets RH</h3>
+                    <p>Optimisez vos accompagnements et gagnez en performance.</p>
+                </article>
+                <article class="problem-card">
+                    <div class="problem-card-icon" aria-hidden="true">🧑‍💼</div>
+                    <h3>Coachs & Consultants indépendants</h3>
+                    <p>Gagnez du temps sur la gestion, concentrez-vous sur l'accompagnement.</p>
+                </article>
+                <article class="problem-card">
+                    <div class="problem-card-icon" aria-hidden="true">🏛️</div>
+                    <h3>Organismes publics et parapublics</h3>
+                    <p>Proposez des parcours individualisés à grande échelle.</p>
+                </article>
+                <article class="problem-card">
+                    <div class="problem-card-icon" aria-hidden="true">🤝</div>
+                    <h3>Entreprises & Directions RH</h3>
+                    <p>Facilitez les mobilités et les transitions professionnelles.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials" aria-labelledby="testimonials-title">
+            <h2 id="testimonials-title">Une solution créée par et pour les professionnels de l'accompagnement.</h2>
+            <div class="testimonials-carousel">
+                <div class="testimonials-track">
+                    <!-- Testimonials set 1 -->
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Utile pour nous, praticiens ; et pour les bénéficiaires, une vraie plus-value : parcours plus lisible, expérience plus fluide et compétences à s'orienter qui se développent séance après séance.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Hélène B.</h5>
+                                <p>DRH</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Les tests que j'utilisais dataient des années 90 alors que mes clients me parlaient de soft skills et de télétravail. Gonabi évalue enfin les compétences d'aujourd'hui. Mes bilans sont devenus percutants et mon taux de recommandation a explosé.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Marc D.</h5>
+                                <p>Psychologue du travail</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Avant, on courait après des mails, des docs et des liens de visio. Avec Gonabi, tout est dans un seul espace : parcours, contenus, tests, échanges. On lance un accompagnement sans bricoler et tout le monde sait quoi faire. Je respire enfin.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Stéphanie F.</h5>
+                                <p>Consultante en cabinet RH</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Je voulais arrêter de "faire l'administratif le soir". Les relances intelligentes et les documents pré-remplis de Gonabi m'ont rendu mes soirées. Je me sens à nouveau coach, pas secrétaire.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Claire V.</h5>
+                                <p>Coach indépendante</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Gérer des cohortes d'étudiants par tableurs et emails, c'était la pagaille. Avec Gonabi, on a des parcours clairs, des ressources au bon endroit et des rappels automatiques. Les étudiants avancent sans se perdre, l'équipe aussi.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Samir K.</h5>
+                                <p>Responsable orientation universitaire</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Nos publics sont très variés et on passe notre temps à recoller les morceaux entre outils. Avec Gonabi, on peut partager une feuille de route unique et tous avoir le même niveau d'infos. Moins d'énergie sur l'organisation, plus sur l'accompagnement humain.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Amina B.</h5>
+                                <p>Conseillère mission locale</p>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Duplicate for seamless loop -->
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Utile pour nous, praticiens ; et pour les bénéficiaires, une vraie plus-value : parcours plus lisible, expérience plus fluide et compétences à s'orienter qui se développent séance après séance.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Hélène B.</h5>
+                                <p>DRH</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Les tests que j'utilisais dataient des années 90 alors que mes clients me parlaient de soft skills et de télétravail. Gonabi évalue enfin les compétences d'aujourd'hui. Mes bilans sont devenus percutants et mon taux de recommandation a explosé.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Marc D.</h5>
+                                <p>Psychologue du travail</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Avant, on courait après des mails, des docs et des liens de visio. Avec Gonabi, tout est dans un seul espace : parcours, contenus, tests, échanges. On lance un accompagnement sans bricoler et tout le monde sait quoi faire. Je respire enfin.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Stéphanie F.</h5>
+                                <p>Consultante en cabinet RH</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Je voulais arrêter de "faire l'administratif le soir". Les relances intelligentes et les documents pré-remplis de Gonabi m'ont rendu mes soirées. Je me sens à nouveau coach, pas secrétaire.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Claire V.</h5>
+                                <p>Coach indépendante</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Gérer des cohortes d'étudiants par tableurs et emails, c'était la pagaille. Avec Gonabi, on a des parcours clairs, des ressources au bon endroit et des rappels automatiques. Les étudiants avancent sans se perdre, l'équipe aussi.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Samir K.</h5>
+                                <p>Responsable orientation universitaire</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="testimonial-card">
+                        <p class="testimonial-quote">Nos publics sont très variés et on passe notre temps à recoller les morceaux entre outils. Avec Gonabi, on peut partager une feuille de route unique et tous avoir le même niveau d'infos. Moins d'énergie sur l'organisation, plus sur l'accompagnement humain.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                </div>
+                            <div class="testimonial-info">
+                                <h5>Amina B.</h5>
+                                <p>Conseillère mission locale</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust Section -->
+        <section class="trust" aria-labelledby="trust-title">
+            <h2 class="visually-hidden" id="trust-title">Nos engagements</h2>
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon" aria-hidden="true">🧬</div>
+                    <h4>Conçu pour l'humain, soutenu par la science</h4>
+                    <p>Une méthodologie s'appuyant sur les sciences de l'orientation.</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon" aria-hidden="true">🔒</div>
+                    <h4>Sécurité et Conformité RGPD</h4>
+                    <p>Nous priorisons la confidentialité et la sécurité pour vous garantir une conformité totale.</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon" aria-hidden="true">💬</div>
+                    <h4>Support dédié</h4>
+                    <p>Un interlocuteur unique pour votre équipe, réponses rapides et suivi continu.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section" id="cta" aria-labelledby="cta-title">
+            <div class="cta-container">
+                <h2 id="cta-title">Soyez les premiers à participer à l'évolution de l'accompagnement professionnel</h2>
+                <p class="subtitle">Intégrez dès aujourd’hui notre communauté d’early utilisateurs.</p>
+                <form class="cta-form" action="https://formspree.io/f/mzdbzqwy" method="POST" aria-label="Formulaire d'inscription à la bêta">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prenom">Prénom</label>
+                            <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required autocomplete="given-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="nom">Nom</label>
+                            <input type="text" id="nom" name="nom" placeholder="Votre nom" required autocomplete="family-name">
+                        </div>
+                    </div>
+                    <div class="form-group full">
+                        <label for="email">Adresse email</label>
+                        <input type="email" id="email" name="email" placeholder="votre@email.com" required autocomplete="email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Accéder à la bêta</button>
+                    <div class="form-reassurance" aria-hidden="true">
+                        <span>✓ Sans engagement</span>
+                        <span>✓ Données sécurisées</span>
+                        <span>✓ Accès en 24h</span>
+                    </div>
+</form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-copyright">Copyright © 2026 Gonabi. Tous droits réservés.</p>
+            <nav class="footer-links" aria-label="Liens légaux">
+                <a href="politique-confidentialite.html">Politique de confidentialité</a>
+                <a href="mentions-legales.html">Mentions légales</a>
+                <a href="politique-cookies.html">Gestion des cookies</a>
+                <a href="cgu-cgv.html">CGU / CGV</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        // Rotating text animation
+        const rotatingTexts = document.querySelectorAll('.rotating-text-item');
+        let currentIndex = 0;
+
+        function rotateText() {
+            rotatingTexts[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % rotatingTexts.length;
+            rotatingTexts[currentIndex].classList.add('active');
+        }
+
+        setInterval(rotateText, 3000);
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Form submission with Formspree
+        const form = document.querySelector('.cta-form');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Envoi en cours...';
+                submitBtn.disabled = true;
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        form.innerHTML = '<div style="text-align: center; padding: 2rem;"><h3 style="color: #fff; margin-bottom: 1rem;">Merci pour votre inscription !</h3><p style="color: rgba(255,255,255,0.8);">Vous recevrez votre accès bêta sous 24h.</p></div>';
+                    } else {
+                        throw new Error('Erreur lors de l\'envoi');
+                    }
+                } catch (error) {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    alert('Une erreur est survenue. Veuillez réessayer.');
+                }
+            });
+        }
+
+        // Lazy load images with Intersection Observer
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        observer.unobserve(img);
+                    }
+                });
+            }, { rootMargin: '50px 0px' });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script>
+
+    <!-- Visually hidden class for accessibility -->
+    <style>
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</body>
+</html>

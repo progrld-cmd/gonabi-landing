@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mentions légales de Gonabi">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Mentions légales - Gonabi</title>
+    <link rel="icon" type="image/png" href="assets/logos/Gonabi_Symbole.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red-primary: #EE4036;
+            --blue-accent: #1BAFD0;
+            --cream-bg: #F9F4EC;
+            --cream-light: #fdfaf5;
+            --teal-dark: #012B30;
+            --dark: #012B30;
+            --gray: #5a6b6d;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream-bg);
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Lora', serif;
+        }
+
+        header {
+            background: var(--cream-bg);
+            padding: 1rem 5%;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 80px;
+            width: auto;
+        }
+
+        .back-link {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--red-primary);
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 5% 5rem;
+        }
+
+        .legal-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .legal-header h1 {
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-date {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        .legal-content h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--red-primary);
+            display: inline-block;
+        }
+
+        .legal-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .legal-content p {
+            font-size: 0.95rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .legal-content strong {
+            color: var(--dark);
+        }
+
+        .legal-content a {
+            color: var(--blue-accent);
+            text-decoration: none;
+        }
+
+        .legal-content a:hover {
+            text-decoration: underline;
+        }
+
+        .info-box {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-left: 4px solid var(--red-primary);
+        }
+
+        .info-box p {
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 0.5rem 1rem;
+            font-size: 0.95rem;
+        }
+
+        .info-grid dt {
+            color: var(--gray);
+        }
+
+        .info-grid dd {
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        footer {
+            padding: 2rem 5%;
+            background: var(--cream-bg);
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--dark);
+        }
+
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 60px;
+            }
+
+            main {
+                padding: 2rem 5% 3rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid dt {
+                margin-top: 0.5rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <img src="assets/logos/Gonabi_Logo_Horizontal.png" alt="Gonabi" class="logo-img">
+            </a>
+            <a href="index.html" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Retour au site
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="legal-header">
+            <h1>Mentions légales</h1>
+            <p class="legal-date">Dernière mise à jour : 27 août 2025</p>
+        </div>
+
+        <div class="legal-content">
+            <h2>1) Éditeur du site</h2>
+            <div class="info-box">
+                <dl class="info-grid">
+                    <dt>Raison sociale</dt>
+                    <dd>GONABI — SASU</dd>
+                    <dt>Capital social</dt>
+                    <dd>1 000 €</dd>
+                    <dt>Siège social</dt>
+                    <dd>47 rue Paul Bert, 69003 Lyon, France</dd>
+                    <dt>SIREN</dt>
+                    <dd>991 019 001</dd>
+                    <dt>RCS</dt>
+                    <dd>Lyon</dd>
+                    <dt>TVA intracom.</dt>
+                    <dd>FR 36 991019001</dd>
+                    <dt>E-mail</dt>
+                    <dd>gerald@gonabi.fr</dd>
+                </dl>
+            </div>
+
+            <h2>2) Directeur de la publication</h2>
+            <p><strong>Gérald Porro</strong>, Président de GONABI.</p>
+
+            <h2>3) Hébergement</h2>
+            <p>Le Site est hébergé sur une infrastructure serveur située au sein de l'Union européenne ou bénéficiant de garanties appropriées au sens du RGPD.</p>
+
+            <h2>4) Propriété intellectuelle</h2>
+            <p>L'ensemble des éléments accessibles sur le Site (textes, images, graphismes, logos, marques, architecture, éléments logiciels, bases de données) est protégé par les dispositions du Code de la propriété intellectuelle et demeure la propriété exclusive de <strong>GONABI</strong>, sauf mention contraire.</p>
+            <p>Toute reproduction, représentation, adaptation ou exploitation, totale ou partielle, sans autorisation écrite préalable, est strictement interdite.</p>
+
+            <h2>5) Responsabilité</h2>
+            <p>GONABI s'efforce de fournir des informations exactes et à jour. Toutefois, elle ne saurait être tenue responsable des erreurs, omissions ou d'une indisponibilité temporaire du Site.</p>
+
+            <h2>6) Contact</h2>
+            <p>Pour toute question relative au Site : <strong>gerald@gonabi.fr</strong></p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-copyright">Copyright © 2026 Gonabi. Tous droits réservés.</p>
+            <nav class="footer-links">
+                <a href="politique-confidentialite.html">Politique de confidentialité</a>
+                <a href="mentions-legales.html">Mentions légales</a>
+                <a href="politique-cookies.html">Gestion des cookies</a>
+                <a href="cgu-cgv.html">CGU / CGV</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>
