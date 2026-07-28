@@ -11,7 +11,7 @@ const produit = mainNav.find((group) => group.label === 'Produit');
   description="[À FOURNIR] Meta description — vue d'ensemble des fonctionnalités de Gonabi, 150 à 160 caractères."
   heading="Tout l'accompagnement, dans un seul outil"
   eyebrow="Produit"
-  lead="[À FOURNIR] Chapô : ce que couvre la plateforme, du premier rendez-vous à la synthèse finale."
+  lead="Du premier entretien à la synthèse finale, chaque brique alimente la suivante : les tests nourrissent l'exploration métiers, le parcours produit ses preuves, et la synthèse se rédige à partir de tout ce qui précède."
 >
   <section class="gnb-section gnb-section--cream-light">
     <div class="gnb-container">
@@ -21,9 +21,7 @@ const produit = mainNav.find((group) => group.label === 'Produit');
           produit?.children?.map((page) => (
             <a href={page.href} class="gnb-card hub-card">
               <h3>{page.label}</h3>
-              <p>
-                <span class="gnb-todo">[À FOURNIR]</span> Description en une à deux phrases.
-              </p>
+              <p>{page.description}</p>
               <span class="hub-card__more" aria-hidden="true">En savoir plus →</span>
             </a>
           ))
@@ -36,8 +34,11 @@ const produit = mainNav.find((group) => group.label === 'Produit');
     <div class="gnb-container">
       <h2>Comment ça s'articule</h2>
       <p class="gnb-lead">
-        <span class="gnb-todo">[À FOURNIR]</span> Décrire le déroulé type d'un accompagnement, étape par
-        étape, en s'appuyant sur les briques ci-dessus.
+        Vous partez d'une trame de parcours adaptée à la prestation. Le bénéficiaire passe ses
+        tests depuis son espace, explore des métiers à partir de son profil, consulte les
+        ressources que vous lui assignez étape par étape. Chacune de ces actions laisse une trace
+        horodatée exploitable en audit. À la fin, la synthèse est pré-rédigée à partir de tout ce
+        qui s'est réellement passé — vous la relisez et vous la publiez.
       </p>
     </div>
   </section>

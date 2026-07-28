@@ -29,37 +29,37 @@ export const mainNav: NavGroup[] = [
       {
         label: 'Tests psychométriques',
         href: '/produit/tests-psychometriques',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Une batterie de tests passée en autonomie, exploitable en séance.',
       },
       {
         label: 'Parcours personnalisés',
         href: '/produit/parcours-personnalises',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Des trames réutilisables, adaptées à chaque bénéficiaire.',
       },
       {
         label: 'Synthèses IA',
         href: '/produit/syntheses-ia',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'La synthèse pré-rédigée à partir du parcours. Sans compteur.',
       },
       {
         label: 'Portefeuille de compétences',
         href: '/produit/portefeuille-competences',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Les compétences identifiées, structurées et transférables.',
       },
       {
         label: 'Explorateur de métiers',
         href: '/produit/explorateur-metiers',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Les fiches métiers France Travail, croisées avec le profil.',
       },
       {
         label: 'Bibliothèque de ressources',
         href: '/produit/bibliotheque-ressources',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Vos supports et les nôtres, assignables au bon moment.',
       },
       {
         label: 'Conformité Qualiopi',
         href: '/produit/conformite-qualiopi',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Chaque séance produit ses preuves, sans saisie en plus.',
       },
     ],
   },
@@ -70,22 +70,22 @@ export const mainNav: NavGroup[] = [
       {
         label: 'Cabinets RH',
         href: '/solutions/cabinets-rh',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Plusieurs consultants, une vue commune sur les accompagnements.',
       },
       {
         label: 'Organismes de formation',
         href: '/solutions/organismes-de-formation',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Accompagner et rester auditable, dans le même outil.',
       },
       {
         label: 'Coachs indépendants',
         href: '/solutions/coachs-independants',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'La structure d’un cabinet, sans l’équipe qui va avec.',
       },
       {
         label: 'Insertion professionnelle',
         href: '/solutions/insertion-professionnelle',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Missions locales, PLIE : suivre des volumes et en rendre compte.',
       },
     ],
   },
@@ -100,7 +100,7 @@ export const mainNav: NavGroup[] = [
       {
         label: 'Blog',
         href: '/ressources/blog',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Articles de fond sur l’accompagnement et l’orientation.',
       },
       {
         label: 'Nouveautés',
@@ -110,12 +110,12 @@ export const mainNav: NavGroup[] = [
       {
         label: 'Témoignages',
         href: '/temoignages',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Ce que disent les structures qui utilisent Gonabi.',
       },
       {
         label: 'Migrer vers Gonabi',
         href: '/migrer-vers-gonabi',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Changer d’outil sans perdre votre historique.',
       },
     ],
   },
@@ -126,12 +126,12 @@ export const mainNav: NavGroup[] = [
       {
         label: "L'équipe",
         href: '/a-propos/equipe',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Les personnes derrière la plateforme.',
       },
       {
         label: 'Sécurité & RGPD',
         href: '/a-propos/securite-rgpd',
-        description: '[À FOURNIR] Accroche courte.',
+        description: 'Où vivent les données, qui y accède, combien de temps.',
       },
       {
         label: 'Contact',

@@ -1,35 +1,171 @@
 ---
 import PageLayout from '../../../layouts/PageLayout.astro';
-import PlaceholderSection from '../../../components/PlaceholderSection.astro';
 import CtaBand from '../../../components/CtaBand.astro';
+
+// Trames issues de la bibliothèque de parcours documentée dans Notion
+// (Produit & Fonctionnalités — Templates de parcours).
+const trames = [
+  { nom: 'Bilan de compétences', seances: '12 séances' },
+  { nom: 'Conseil en évolution professionnelle', seances: '3 séances' },
+  { nom: 'Reconversion — public jeune', seances: '6 séances' },
+  { nom: 'Reconversion — public senior', seances: '15 séances' },
+  { nom: 'Outplacement', seances: '10 séances' },
+  { nom: 'Orientation post-bac', seances: '4 séances' },
+];
 ---
 
 <PageLayout
   title="Parcours personnalisés"
-  description="[À FOURNIR] Meta description — création de parcours d'accompagnement sur mesure, 150 à 160 caractères."
-  heading="Parcours personnalisés"
+  description="Construisez un parcours d'accompagnement à partir de trames réutilisables : étapes, tests, ressources et rendez-vous, adaptés à chaque bénéficiaire."
+  heading="Un parcours par bénéficiaire, sans repartir de zéro"
   eyebrow="Produit"
-  lead="[À FOURNIR] Chapô : construire un parcours adapté à chaque bénéficiaire sans repartir de zéro."
+  lead="Vous partez d'une trame qui correspond à la prestation, vous l'ajustez au bénéficiaire, et vous suivez son avancement sans avoir à le relancer pour savoir où il en est."
   breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Parcours personnalisés' }]}
 >
-  <PlaceholderSection
-    title="Construire un parcours"
-    brief="Décrire l'éditeur de parcours : étapes, modules, durées, assignation."
-    items={['Étapes', 'Modules', 'Assignation']}
-    tone="cream-light"
-  />
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Des trames prêtes à l'emploi</h2>
+      <p class="gnb-lead">
+        Les prestations les plus courantes sont déjà découpées en étapes. Vous les appliquez telles
+        quelles, vous les modifiez, ou vous créez vos propres trames à partir de vos pratiques.
+      </p>
+      <ul class="trames">
+        {
+          trames.map((trame) => (
+            <li class="trames__item">
+              <span class="trames__nom">{trame.nom}</span>
+              <span class="trames__seances">{trame.seances}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="parcours-note">
+        Les durées indiquées sont celles des trames fournies par défaut. Elles s'ajustent
+        bénéficiaire par bénéficiaire.
+      </p>
+    </div>
+  </section>
 
-  <PlaceholderSection
-    title="Modèles réutilisables"
-    brief="Expliquer la logique de trames dupliquables d'un bénéficiaire à l'autre."
-    tone="cream"
-  />
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Ce qu'on met dans une étape</h2>
+      <div class="gnb-grid gnb-grid--3">
+        <article class="gnb-card">
+          <h3>Des tests à passer</h3>
+          <p>
+            Vous décidez quel test est accessible, et à quel moment du parcours il s'ouvre.
+            <a href="/produit/tests-psychometriques">Voir les tests</a>
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Des ressources à consulter</h3>
+          <p>
+            Un support de votre bibliothèque, assigné à l'étape où il a du sens plutôt qu'envoyé
+            par mail en vrac.
+            <a href="/produit/bibliotheque-ressources">Voir la bibliothèque</a>
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Des rendez-vous</h3>
+          <p>
+            Les séances jalonnent le parcours. Chacune produit son compte rendu et sa feuille
+            d'émargement.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <PlaceholderSection
-    title="Suivi de l'avancement"
-    brief="Décrire la vision temps réel côté consultant et côté bénéficiaire."
-    tone="white"
-  />
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Suivre l'avancement sans relancer</h2>
+      <p class="gnb-lead">
+        Côté bénéficiaire, le parcours s'affiche sous forme de progression : ce qui est fait, ce
+        qui vient ensuite, ce qui est en attente. Il sait quoi faire sans vous écrire pour le
+        demander.
+      </p>
+      <p class="gnb-lead">
+        Côté consultant, vous voyez où en est chaque personne que vous suivez. Quand un
+        bénéficiaire décroche, une alerte remonte plutôt que de découvrir le retard à la séance
+        suivante.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>À lire ensuite</h2>
+      <div class="gnb-grid gnb-grid--2">
+        <a href="/produit/syntheses-ia" class="gnb-card parcours-link">
+          <h3>Synthèses IA</h3>
+          <p>Ce que le parcours produit une fois terminé.</p>
+        </a>
+        <a href="/produit/conformite-qualiopi" class="gnb-card parcours-link">
+          <h3>Conformité Qualiopi</h3>
+          <p>Les traces que chaque étape laisse au passage.</p>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <CtaBand />
 </PageLayout>
+
+<style>
+  .trames {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gnb-space-3);
+    margin-top: var(--gnb-space-8);
+  }
+
+  .trames__item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gnb-space-4);
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-sm);
+    padding: var(--gnb-space-4) var(--gnb-space-6);
+  }
+
+  .trames__nom {
+    font-weight: 600;
+  }
+
+  .trames__seances {
+    font-size: var(--gnb-text-sm);
+    color: var(--gnb-text-muted);
+    white-space: nowrap;
+  }
+
+  .parcours-note {
+    margin-top: var(--gnb-space-4);
+    font-size: var(--gnb-text-sm);
+    color: var(--gnb-text-subtle);
+  }
+
+  .gnb-card a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  .parcours-link {
+    text-decoration: none;
+    transition: var(--gnb-transition);
+  }
+
+  .parcours-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+
+  @media (max-width: 768px) {
+    .trames {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,41 +1,154 @@
 ---
 import PageLayout from '../../../layouts/PageLayout.astro';
-import PlaceholderSection from '../../../components/PlaceholderSection.astro';
 import CtaBand from '../../../components/CtaBand.astro';
 ---
 
 <PageLayout
   title="Tests psychométriques"
-  description="[À FOURNIR] Meta description — tests psychométriques Gonabi, 150 à 160 caractères."
-  heading="Tests psychométriques"
+  description="Une batterie de tests passée en autonomie par le bénéficiaire, dont les résultats alimentent directement l'exploration métiers et la synthèse finale."
+  heading="Des tests que le bénéficiaire passe seul, que vous exploitez en séance"
   eyebrow="Produit"
-  lead="[À FOURNIR] Chapô : ce que les tests apportent au consultant et au bénéficiaire."
+  lead="Le bénéficiaire passe les tests depuis son espace, à son rythme. Vous récupérez des résultats structurés, prêts à être travaillés en entretien — pas un PDF de plus à décrypter."
   breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Tests psychométriques' }]}
 >
-  <PlaceholderSection
-    title="Ce que couvrent les tests"
-    brief="Lister les dimensions évaluées. Ne mentionner que les tests réellement disponibles."
-    items={['Dimension 1', 'Dimension 2', 'Dimension 3']}
-    tone="cream-light"
-  />
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Ce qui est évalué</h2>
+      <p class="gnb-lead">
+        La batterie couvre les dimensions habituellement mobilisées en bilan de compétences :
+        intérêts professionnels, motivations, traits de personnalité, valeurs au travail et zones
+        d'efficacité. Les restitutions s'appuient sur des cadres de référence établis, notamment
+        <strong>RIASEC</strong> pour les intérêts professionnels et le modèle
+        <strong>Big Five</strong> pour la personnalité.
+      </p>
+      <p class="gnb-lead">
+        <span class="gnb-todo">[À FOURNIR]</span> Le catalogue exact des tests disponibles et leurs
+        sources scientifiques restent à valider avant publication : les documents internes n'en
+        donnent pas une liste unique et cohérente.
+      </p>
+    </div>
+  </section>
 
-  <PlaceholderSection
-    title="Comment ça se passe pour le bénéficiaire"
-    brief="Décrire le parcours de passation, de l'invitation à la restitution."
-    tone="cream"
-  />
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Comment ça se passe pour le bénéficiaire</h2>
+      <ol class="tests-steps">
+        <li>
+          <h3>Le test s'ouvre au bon moment</h3>
+          <p>
+            Vous rattachez le test à une étape du parcours. Le bénéficiaire y accède quand cette
+            étape arrive, pas avant.
+          </p>
+        </li>
+        <li>
+          <h3>Il passe le test à son rythme</h3>
+          <p>
+            La passation se fait depuis son espace, sur le support de son choix. Les réponses sont
+            enregistrées au fur et à mesure : il peut s'interrompre et reprendre.
+          </p>
+        </li>
+        <li>
+          <h3>Vous décidez de la restitution</h3>
+          <p>
+            Les résultats ne s'affichent côté bénéficiaire que si vous l'autorisez. Un profil
+            psychométrique livré sans accompagnement ne vaut rien — c'est vous qui choisissez le
+            moment.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
 
-  <PlaceholderSection
-    title="Ce que le consultant récupère"
-    brief="Décrire les livrables : profil, restitution, intégration à la synthèse."
-    tone="white"
-  />
-
-  <PlaceholderSection
-    title="Fondements scientifiques"
-    brief="Sources et référentiels utilisés. Ne rien affirmer qui ne soit documenté."
-    tone="cream"
-  />
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Ce que les résultats alimentent</h2>
+      <div class="gnb-grid gnb-grid--2">
+        <a href="/produit/explorateur-metiers" class="gnb-card tests-link">
+          <h3>L'exploration métiers</h3>
+          <p>
+            Le profil sert de point d'entrée dans les fiches métiers : les suggestions se croisent
+            avec les intérêts et les valeurs identifiés.
+          </p>
+        </a>
+        <a href="/produit/syntheses-ia" class="gnb-card tests-link">
+          <h3>La synthèse finale</h3>
+          <p>
+            Les résultats nourrissent la section « Profil et ressources » de la synthèse, sans
+            ressaisie de votre part.
+          </p>
+        </a>
+      </div>
+      <p class="tests-note">
+        Les résultats constituent aussi la preuve de positionnement à l'entrée attendue par le
+        référentiel qualité. <a href="/produit/conformite-qualiopi">Voir la conformité Qualiopi</a>
+      </p>
+    </div>
+  </section>
 
   <CtaBand />
 </PageLayout>
+
+<style>
+  .tests-steps {
+    counter-reset: step;
+    list-style: none;
+    display: grid;
+    gap: var(--gnb-space-6);
+    margin-top: var(--gnb-space-8);
+    max-width: 70ch;
+  }
+
+  .tests-steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  .tests-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gnb-red-light);
+    color: var(--gnb-red);
+    font-weight: 700;
+    font-size: var(--gnb-text-sm);
+    display: grid;
+    place-items: center;
+  }
+
+  .tests-steps h3 {
+    font-family: var(--gnb-font-body);
+    font-size: var(--gnb-text-base);
+    font-weight: 600;
+    margin-bottom: var(--gnb-space-2);
+  }
+
+  .tests-steps p {
+    color: var(--gnb-text-muted);
+    line-height: var(--gnb-leading-relaxed);
+  }
+
+  .tests-link {
+    text-decoration: none;
+    transition: var(--gnb-transition);
+  }
+
+  .tests-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+
+  .tests-note {
+    margin-top: var(--gnb-space-8);
+    color: var(--gnb-text-muted);
+  }
+
+  .tests-note a {
+    color: var(--gnb-red);
+    font-weight: 600;
+  }
+</style>

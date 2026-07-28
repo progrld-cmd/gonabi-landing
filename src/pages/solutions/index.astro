@@ -11,7 +11,7 @@ const solutions = mainNav.find((group) => group.label === 'Solutions');
   description="[À FOURNIR] Meta description — Gonabi selon votre type de structure, 150 à 160 caractères."
   heading="Gonabi selon votre structure"
   eyebrow="Solutions"
-  lead="[À FOURNIR] Chapô : les enjeux ne sont pas les mêmes selon la taille et le métier de la structure."
+  lead="Un consultant seul cherche à gagner du temps. Un cabinet cherche un cadre commun. Un organisme de formation cherche à rester auditable. Une mission locale cherche à rendre compte. Le produit est le même, les enjeux ne le sont pas."
 >
   <section class="gnb-section gnb-section--cream-light">
     <div class="gnb-container">
@@ -21,10 +21,7 @@ const solutions = mainNav.find((group) => group.label === 'Solutions');
           solutions?.children?.map((page) => (
             <a href={page.href} class="gnb-card hub-card">
               <h3>{page.label}</h3>
-              <p>
-                <span class="gnb-todo">[À FOURNIR]</span> Enjeu principal de cette cible, en une à deux
-                phrases.
-              </p>
+              <p>{page.description}</p>
               <span class="hub-card__more" aria-hidden="true">En savoir plus →</span>
             </a>
           ))
@@ -37,7 +34,9 @@ const solutions = mainNav.find((group) => group.label === 'Solutions');
     <div class="gnb-container">
       <h2>Vous venez d'un autre outil ?</h2>
       <p class="gnb-lead">
-        <span class="gnb-todo">[À FOURNIR]</span> Résumer l'accompagnement à la reprise de l'existant.
+        La crainte de perdre son historique et de faire réapprendre son équipe passe avant le prix
+        dans les échanges que nous avons. C'est l'objection la plus fréquente, et elle a sa propre
+        page.
       </p>
       <p class="hub-more"><a href="/migrer-vers-gonabi">Migrer vers Gonabi</a></p>
     </div>

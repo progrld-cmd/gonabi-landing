@@ -1,66 +1,377 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
-import PlaceholderSection from '../../components/PlaceholderSection.astro';
 import CtaBand from '../../components/CtaBand.astro';
+
+/**
+ * ⚠️ AUCUN MONTANT SUR CETTE PAGE.
+ *
+ * Deux grilles se contredisent dans les documents internes (grille V5 d'avril
+ * 2026 en abonnement mensuel, et brief de refonte de juillet 2026 en licences
+ * annuelles), et la décision d'afficher les tarifs publiquement n'est pas
+ * tranchée. Les prix ne s'ajoutent ici qu'après arbitrage explicite — voir la
+ * règle « pricing affiché publiquement » dans CLAUDE.md.
+ *
+ * Les noms d'offres proviennent de la grille V5 et sont eux aussi à confirmer.
+ */
+const offres = [
+  {
+    nom: 'Découverte',
+    pour: 'Tester l’outil sur de vrais dossiers avant de s’engager.',
+    points: ['Nombre de bénéficiaires limité', 'Parcours, tests, explorateur, bibliothèque'],
+  },
+  {
+    nom: 'Solo',
+    pour: 'Un consultant indépendant qui accompagne régulièrement.',
+    points: ['Un utilisateur', 'Bénéficiaires illimités', 'IA illimitée'],
+  },
+  {
+    nom: 'Cabinet',
+    pour: 'Une petite équipe de consultants avec une vue commune.',
+    points: ['Plusieurs utilisateurs', 'Bénéficiaires illimités', 'Tableau de bord multi-consultants'],
+  },
+  {
+    nom: 'Structure',
+    pour: 'Réseaux, établissements, structures publiques.',
+    points: ['Sur devis', 'Onboarding dédié', 'Support prioritaire'],
+  },
+];
+
+const familles = [
+  {
+    titre: 'Capacité',
+    criteres: ['Nombre d’utilisateurs', 'Nombre de bénéficiaires', 'Durée d’accès aux dossiers'],
+  },
+  {
+    titre: 'Outils & méthode',
+    criteres: [
+      'Tests psychométriques',
+      'Trames de parcours',
+      'Explorateur de métiers',
+      'Bibliothèque de ressources',
+    ],
+  },
+  {
+    titre: 'IA',
+    criteres: ['Génération de synthèses', 'Nombre de générations', 'Reprise section par section'],
+  },
+  {
+    titre: 'Travail en équipe',
+    criteres: ['Tableau de bord multi-consultants', 'Réaffectation de bénéficiaires', 'Personnalisation'],
+  },
+  {
+    titre: 'Conformité & support',
+    criteres: ['Traces Qualiopi', 'Export de dossier d’audit', 'Canal et délai de support'],
+  },
+];
+
+const faq = [
+  'Puis-je essayer avant de payer ?',
+  'Que se passe-t-il si je dépasse le nombre de bénéficiaires prévu ?',
+  'Puis-je changer d’offre en cours d’année ?',
+  'Y a-t-il un engagement de durée ?',
+  'Comment se passe la facturation pour une structure publique ?',
+  'Que deviennent mes données si j’arrête ?',
+];
 ---
 
 <PageLayout
   title="Tarifs"
-  description="[À FOURNIR] Meta description — offres et tarifs Gonabi, 150 à 160 caractères."
-  heading="Tarifs"
+  description="Les offres Gonabi selon votre volume d'accompagnements et la taille de votre structure. L'IA est incluse sans limite dans toutes les offres."
+  heading="Un prix qui ne dépend pas du nombre de synthèses"
   eyebrow="Tarifs"
-  lead="[À FOURNIR] Chapô : logique de tarification, sans chiffre tant qu'il n'est pas validé."
+  lead="La plupart des outils du marché facturent l'IA au crédit. Chez nous, la génération de synthèses est illimitée dans toutes les offres : ce que vous payez dépend de la taille de votre structure, pas de votre usage."
 >
   <section class="gnb-section gnb-section--cream-light">
     <div class="gnb-container">
+      <h2>Quelle offre pour vous ?</h2>
+      <p class="gnb-lead">Deux questions suffisent à s'orienter.</p>
+
+      <form class="quiz" id="quiz-tarifs">
+        <fieldset class="quiz__step">
+          <legend>1. Combien de personnes accompagnent dans votre structure ?</legend>
+          <div class="quiz__options">
+            <label><input type="radio" name="taille" value="solo" /> Je suis seul</label>
+            <label><input type="radio" name="taille" value="cabinet" /> De 2 à 10 consultants</label>
+            <label><input type="radio" name="taille" value="structure" /> Plus de 10 consultants</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="quiz__step">
+          <legend>2. Combien d'accompagnements menez-vous par an ?</legend>
+          <div class="quiz__options">
+            <label><input type="radio" name="volume" value="faible" /> Moins de 15</label>
+            <label><input type="radio" name="volume" value="regulier" /> De 15 à 50</label>
+            <label><input type="radio" name="volume" value="eleve" /> Plus de 50</label>
+          </div>
+        </fieldset>
+
+        <p class="quiz__result" id="quiz-resultat" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
       <h2>Les offres</h2>
       <p class="gnb-lead pricing-warning">
-        <span class="gnb-todo">[À FOURNIR]</span> Aucun montant n'est affiché ici tant que la grille
-        tarifaire n'a pas été validée explicitement. Noms d'offres, paliers et prix sont à renseigner
-        avant mise en ligne.
+        <span class="gnb-todo">[À FOURNIR]</span> Aucun montant n'est affiché tant que la grille
+        tarifaire publique n'a pas été arbitrée. Les noms d'offres ci-dessous sont eux aussi à
+        confirmer.
       </p>
-
-      <div class="gnb-grid gnb-grid--3 pricing-grid">
-        <article class="gnb-card">
-          <h3>Offre 1</h3>
-          <p><span class="gnb-todo">[À FOURNIR]</span> Positionnement, prix, inclusions.</p>
-        </article>
-        <article class="gnb-card">
-          <h3>Offre 2</h3>
-          <p><span class="gnb-todo">[À FOURNIR]</span> Positionnement, prix, inclusions.</p>
-        </article>
-        <article class="gnb-card">
-          <h3>Offre 3</h3>
-          <p><span class="gnb-todo">[À FOURNIR]</span> Positionnement, prix, inclusions.</p>
-        </article>
+      <div class="gnb-grid gnb-grid--4 offres">
+        {
+          offres.map((offre) => (
+            <article class="gnb-card offre">
+              <h3>{offre.nom}</h3>
+              <p class="offre__prix"><span class="gnb-todo">[À FOURNIR]</span></p>
+              <p class="offre__pour">{offre.pour}</p>
+              <ul>
+                {offre.points.map((point) => <li>{point}</li>)}
+              </ul>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
 
-  <PlaceholderSection
-    title="Ce qui est inclus dans toutes les offres"
-    brief="Lister le socle commun. Ne rien promettre qui ne soit effectivement livré."
-    tone="cream"
-  />
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Comparatif détaillé</h2>
+      <p class="gnb-lead">
+        Le comparatif est organisé par familles de critères plutôt qu'en liste : c'est ce qui
+        permet de comparer ce qui est comparable.
+      </p>
+      <div class="familles">
+        {
+          familles.map((famille) => (
+            <div class="famille">
+              <h3>{famille.titre}</h3>
+              <ul>
+                {famille.criteres.map((critere) => (
+                  <li>
+                    {critere} — <span class="gnb-todo">[À FOURNIR]</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
-  <PlaceholderSection
-    title="Questions fréquentes sur les tarifs"
-    brief="Engagement, résiliation, facturation, évolution du nombre d'utilisateurs."
-    tone="white"
-  />
+  <section class="gnb-section gnb-section--blue">
+    <div class="gnb-container">
+      <h2>Pourquoi l'IA est illimitée</h2>
+      <p class="gnb-lead">
+        Facturer chaque génération de synthèse revient à faire hésiter le consultant au moment
+        précis où l'outil devrait lui faire gagner du temps. Nous avons choisi l'inverse : l'IA est
+        incluse sans compteur, et le prix suit la taille de la structure.
+      </p>
+      <p class="tarifs-more"><a href="/produit/syntheses-ia">Voir comment fonctionnent les synthèses</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Questions fréquentes</h2>
+      <div class="faq">
+        {
+          faq.map((question) => (
+            <details class="faq__item">
+              <summary>{question}</summary>
+              <p>
+                <span class="gnb-todo">[À FOURNIR]</span> Réponse à rédiger. Ne pas s'engager sur
+                un délai de support ou une condition commerciale non validée.
+              </p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
   <CtaBand
     title="Un devis adapté à votre structure"
-    text="Nous cadrons ensemble le périmètre et le nombre d'accompagnements avant de vous proposer un tarif."
+    text="Nous cadrons ensemble le périmètre et le volume d'accompagnements avant de vous proposer un tarif."
   />
 </PageLayout>
 
+<script>
+  // Quiz d'orientation — vanilla, sans dépendance.
+  const form = document.querySelector<HTMLFormElement>('#quiz-tarifs');
+  const sortie = document.querySelector<HTMLParagraphElement>('#quiz-resultat');
+
+  if (form && sortie) {
+    const recommander = (taille: string, volume: string) => {
+      if (taille === 'structure') return 'Structure';
+      if (taille === 'cabinet') return 'Cabinet';
+      // Un indépendant à faible volume n'a pas besoin d'un abonnement à l'année.
+      if (volume === 'faible') return 'Découverte';
+      return 'Solo';
+    };
+
+    form.addEventListener('change', () => {
+      const data = new FormData(form);
+      const taille = String(data.get('taille') ?? '');
+      const volume = String(data.get('volume') ?? '');
+      if (!taille || !volume) return;
+
+      sortie.textContent = `L'offre ${recommander(taille, volume)} correspond a priori à votre situation. Une démonstration permet de le confirmer.`;
+      sortie.classList.add('is-visible');
+    });
+  }
+</script>
+
 <style>
+  .quiz {
+    margin-top: var(--gnb-space-8);
+    display: grid;
+    gap: var(--gnb-space-8);
+    max-width: 720px;
+  }
+
+  .quiz__step {
+    border: none;
+  }
+
+  .quiz__step legend {
+    font-weight: 600;
+    margin-bottom: var(--gnb-space-4);
+  }
+
+  .quiz__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gnb-space-3);
+  }
+
+  .quiz__options label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gnb-space-2);
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-pill);
+    padding: 0.5rem 1rem;
+    font-size: 0.925rem;
+    cursor: pointer;
+  }
+
+  .quiz__options label:hover {
+    border-color: var(--gnb-red);
+  }
+
+  .quiz__result {
+    display: none;
+    background: var(--gnb-white);
+    border-left: 4px solid var(--gnb-red);
+    border-radius: var(--gnb-radius-sm);
+    padding: var(--gnb-space-4) var(--gnb-space-6);
+    font-weight: 500;
+  }
+
+  .quiz__result.is-visible {
+    display: block;
+  }
+
   .pricing-warning {
     margin-bottom: var(--gnb-space-8);
   }
 
-  .pricing-grid {
+  .offres {
     margin-top: var(--gnb-space-8);
+  }
+
+  .offre__prix {
+    margin: var(--gnb-space-2) 0 var(--gnb-space-4);
+  }
+
+  .offre__pour {
+    margin-bottom: var(--gnb-space-4);
+  }
+
+  .offre ul {
+    padding-left: 1.1rem;
+    display: grid;
+    gap: var(--gnb-space-1);
+  }
+
+  .offre li {
+    font-size: 0.925rem;
+    color: var(--gnb-text-muted);
+  }
+
+  .familles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gnb-space-8);
+    margin-top: var(--gnb-space-8);
+  }
+
+  .famille h3 {
+    font-family: var(--gnb-font-body);
+    font-size: var(--gnb-text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gnb-text);
+    padding-bottom: var(--gnb-space-2);
+    border-bottom: 2px solid var(--gnb-red);
+    display: inline-block;
+    margin-bottom: var(--gnb-space-4);
+  }
+
+  .famille ul {
+    padding-left: 1.1rem;
+    display: grid;
+    gap: var(--gnb-space-2);
+  }
+
+  .famille li {
+    font-size: 0.925rem;
+    color: var(--gnb-text-muted);
+  }
+
+  .faq {
+    margin-top: var(--gnb-space-8);
+    display: grid;
+    gap: var(--gnb-space-2);
+    max-width: 75ch;
+  }
+
+  .faq__item {
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-sm);
+    padding: var(--gnb-space-4) var(--gnb-space-6);
+  }
+
+  .faq__item summary {
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .faq__item p {
+    margin-top: var(--gnb-space-3);
+    color: var(--gnb-text-muted);
+    line-height: var(--gnb-leading-relaxed);
+  }
+
+  .tarifs-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .tarifs-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 768px) {
+    .familles {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

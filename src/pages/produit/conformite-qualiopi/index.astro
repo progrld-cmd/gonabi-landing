@@ -1,41 +1,299 @@
 ---
 import PageLayout from '../../../layouts/PageLayout.astro';
-import PlaceholderSection from '../../../components/PlaceholderSection.astro';
 import CtaBand from '../../../components/CtaBand.astro';
+
+/**
+ * Contenu issu du PRD « Module Conformité Qualiopi v1.1 » (juin 2026).
+ * Seules les fonctions du sprint 1 (P0) sont décrites : ne pas ajouter ici de
+ * fonction P1/P2 (multi-intervenants, sous-traitance, journal de veille, module
+ * PSH, réclamations) tant qu'elle n'est pas livrée.
+ */
+const traces = [
+  {
+    action: 'Vous publiez votre fiche-offre',
+    preuve: 'Export horodaté et score de complétude sur les 10 items obligatoires',
+    indicateur: 'Indicateur 1',
+  },
+  {
+    action: 'Les parcours avancent',
+    preuve: 'Taux de satisfaction, de complétion et d’abandon calculés automatiquement',
+    indicateur: 'Indicateur 2',
+  },
+  {
+    action: 'Vous menez l’analyse du besoin',
+    preuve: 'Compte rendu d’entretien préalable horodaté et co-signé',
+    indicateur: 'Indicateur 4',
+  },
+  {
+    action: 'Vous co-construisez les objectifs',
+    preuve: 'Fiche objectifs rattachée aux étapes du parcours',
+    indicateur: 'Indicateur 5',
+  },
+  {
+    action: 'Vous attribuez un parcours',
+    preuve: 'Programme exportable, contenus et modalités documentés',
+    indicateur: 'Indicateur 6',
+  },
+  {
+    action: 'Le bénéficiaire passe les tests',
+    preuve: 'Résultats de positionnement horodatés',
+    indicateur: 'Indicateur 8',
+  },
+  {
+    action: 'Vous tenez une séance',
+    preuve: 'Feuille d’émargement double signature, et log de connexion si la séance est à distance',
+    indicateur: 'Indicateurs 9 et 10',
+  },
+  {
+    action: 'Vous partagez une ressource',
+    preuve: 'Journal d’accès par bénéficiaire',
+    indicateur: 'Indicateur 19',
+  },
+  {
+    action: 'L’accompagnement se termine',
+    preuve: 'Enquête à chaud, puis relance automatique à 6 mois',
+    indicateur: 'Indicateurs 11 et 30',
+  },
+  {
+    action: 'Un bénéficiaire décroche',
+    preuve: 'Journal des alertes et des relances envoyées',
+    indicateur: 'Indicateur 12',
+  },
+];
 ---
 
 <PageLayout
   title="Conformité Qualiopi"
-  description="[À FOURNIR] Meta description — ce que Gonabi apporte pour la conformité Qualiopi, 150 à 160 caractères."
-  heading="Conformité Qualiopi"
+  description="Chaque séance menée dans Gonabi produit automatiquement ses preuves Qualiopi : émargement double signature, logs de connexion, enquêtes de satisfaction, export d'audit."
+  heading="Vos preuves Qualiopi se constituent pendant l'accompagnement"
   eyebrow="Produit"
-  lead="[À FOURNIR] Chapô : traçabilité et preuves d'accompagnement, sans travail administratif supplémentaire."
+  lead="La plupart des consultants reconstituent leur dossier après coup, à partir de tableurs et de dossiers éparpillés. Dans Gonabi, chaque action que vous faites déjà laisse une trace horodatée exploitable en audit. Vous ne saisissez rien de plus."
   breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Conformité Qualiopi' }]}
 >
-  <PlaceholderSection
-    title="Les indicateurs concernés"
-    brief="Lister uniquement les indicateurs du référentiel national qualité sur lesquels l'outil produit réellement des éléments. Ne pas laisser entendre que l'outil certifie."
-    tone="cream-light"
-  />
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Ce que produit chaque action</h2>
+      <p class="gnb-lead">
+        Le tableau ci-dessous se lit dans un sens inhabituel : à gauche ce que vous faites déjà, à
+        droite la preuve que Gonabi en tire, sans action supplémentaire de votre part.
+      </p>
+      <div class="table-scroll">
+        <table class="traces-table">
+          <thead>
+            <tr>
+              <th scope="col">Ce que vous faites</th>
+              <th scope="col">La trace générée</th>
+              <th scope="col">Référentiel</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              traces.map((trace) => (
+                <tr>
+                  <td>{trace.action}</td>
+                  <td>{trace.preuve}</td>
+                  <td class="traces-table__ind">{trace.indicateur}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="qualiopi-note">
+        Numérotation du référentiel national qualité dans sa version V9, issue de l'arrêté du
+        31 décembre 2023.
+      </p>
+    </div>
+  </section>
 
-  <PlaceholderSection
-    title="Les preuves générées automatiquement"
-    brief="Décrire les traces produites au fil du parcours et leur export."
-    items={['Trace 1', 'Trace 2', 'Trace 3']}
-    tone="cream"
-  />
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>L'émargement, sans outil supplémentaire</h2>
+      <p class="gnb-lead">
+        Aucun texte n'impose d'outil d'émargement dédié. Ce qui est exigé, c'est une signature
+        nominative <strong>par session</strong> — pas par journée —, signée des deux côtés avec la
+        mention « certifié exact », et horodatée.
+      </p>
+      <div class="gnb-grid gnb-grid--3">
+        <article class="gnb-card">
+          <h3>Double signature</h3>
+          <p>
+            Le bénéficiaire signe depuis son espace, vous signez de votre côté avec la mention
+            « certifié exact ». Horodatage serveur des deux signatures.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Relance automatique</h3>
+          <p>
+            Si le bénéficiaire n'a pas signé sous 48 heures, il est relancé. Au-delà de 7 jours,
+            l'alerte remonte sur votre tableau de bord.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Séances à distance</h3>
+          <p>
+            Le log de connexion à la plateforme — heure de début, de fin, durée — est attaché
+            automatiquement à la feuille d'émargement.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <PlaceholderSection
-    title="Préparer un audit"
-    brief="Décrire le rassemblement des pièces au moment de l'audit."
-    tone="white"
-  />
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Le distanciel, sans enregistrer les séances</h2>
+      <p class="gnb-lead">
+        Pour le distanciel, ce qui est demandé, c'est de justifier des connexions du bénéficiaire.
+        L'enregistrement vidéo n'est pas requis — et il est contre-indiqué en bilan de compétences,
+        où la confidentialité des échanges est protégée par l'article L6313-4 du Code du travail.
+      </p>
+      <p class="gnb-lead">
+        Gonabi n'enregistre ni l'audio ni la vidéo de vos séances. Le bénéficiaire se connecte déjà
+        à la plateforme : c'est cette connexion qui fait preuve, associée au compte rendu de séance.
+      </p>
+    </div>
+  </section>
 
-  <PlaceholderSection
-    title="Ce que Gonabi ne fait pas"
-    brief="Clarifier honnêtement la limite : l'outil ne délivre pas la certification. Section à conserver."
-    tone="cream"
-  />
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Préparer un audit</h2>
+      <p class="gnb-lead">
+        Un tableau de bord affiche votre couverture par critère et la liste des actions qui
+        manquent encore. L'export rassemble les pièces sur la période de votre choix, en PDF,
+        avec une option d'anonymisation pour respecter la confidentialité des bilans.
+      </p>
+      <p class="gnb-lead">
+        Les preuves de réalisation — traces, émargements, logs de connexion — sont conservées
+        <strong>5 ans</strong>, la durée pendant laquelle la Caisse des Dépôts peut demander les
+        pièces d'un dossier.
+      </p>
+    </div>
+  </section>
 
-  <CtaBand />
+  <section class="gnb-section gnb-section--blue">
+    <div class="gnb-container">
+      <h2>Ce que Gonabi ne fait pas</h2>
+      <p class="gnb-lead">
+        Une page de conformité qui exagère se paie en audit. Voici les limites, dites franchement.
+      </p>
+      <ul class="qualiopi-limits">
+        <li>
+          <strong>Gonabi ne délivre pas la certification Qualiopi</strong> et n'est pas organisme
+          certificateur. L'outil produit des preuves ; l'audit reste réalisé par votre certificateur.
+        </li>
+        <li>
+          <strong>Gonabi n'accompagne pas une primo-certification.</strong> Le module est conçu
+          pour maintenir la conformité d'une structure déjà certifiée, pas pour rédiger votre
+          politique qualité de départ.
+        </li>
+        <li>
+          <strong>Certains indicateurs sortent du périmètre de l'outil</strong> — notamment ceux
+          qui concernent les formations certifiantes et l'alternance. Ils sont signalés comme non
+          applicables plutôt que masqués.
+        </li>
+        <li>
+          <strong>Les preuves reprises rétroactivement sont marquées comme telles.</strong> Si vous
+          arrivez avec un historique, il est intégré en tant que trace reconstituée. Rien n'est
+          antidaté.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>À lire ensuite</h2>
+      <div class="gnb-grid gnb-grid--2">
+        <a href="/solutions/organismes-de-formation" class="gnb-card qualiopi-link">
+          <h3>Gonabi pour les organismes de formation</h3>
+          <p>Le contexte dans lequel ce module a été conçu.</p>
+        </a>
+        <a href="/a-propos/securite-rgpd" class="gnb-card qualiopi-link">
+          <h3>Sécurité &amp; RGPD</h3>
+          <p>Ce que deviennent les données conservées 5 ans.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Voir votre dossier d'audit se constituer"
+    text="En démonstration, nous déroulons un accompagnement complet et nous exportons le dossier qui en sort."
+  />
 </PageLayout>
+
+<style>
+  .table-scroll {
+    overflow-x: auto;
+    margin-top: var(--gnb-space-8);
+  }
+
+  .traces-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.925rem;
+    min-width: 640px;
+  }
+
+  .traces-table th {
+    background: var(--gnb-teal);
+    color: var(--gnb-white);
+    font-family: var(--gnb-font-body);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.65rem 0.9rem;
+    font-size: var(--gnb-text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .traces-table td {
+    padding: 0.75rem 0.9rem;
+    border-bottom: 1px solid var(--gnb-border-soft);
+    color: var(--gnb-text-muted);
+    vertical-align: top;
+  }
+
+  .traces-table tr:nth-child(even) td {
+    background: rgba(249, 244, 236, 0.6);
+  }
+
+  .traces-table__ind {
+    white-space: nowrap;
+    font-size: var(--gnb-text-sm);
+  }
+
+  .qualiopi-note {
+    margin-top: var(--gnb-space-4);
+    font-size: var(--gnb-text-sm);
+    color: var(--gnb-text-subtle);
+  }
+
+  .qualiopi-limits {
+    margin-top: var(--gnb-space-8);
+    display: grid;
+    gap: var(--gnb-space-4);
+    padding-left: 1.25rem;
+    max-width: 75ch;
+  }
+
+  .qualiopi-limits li {
+    color: var(--gnb-text-muted);
+    line-height: var(--gnb-leading-relaxed);
+  }
+
+  .qualiopi-limits strong {
+    color: var(--gnb-text);
+  }
+
+  .qualiopi-link {
+    text-decoration: none;
+    transition: var(--gnb-transition);
+  }
+
+  .qualiopi-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+</style>

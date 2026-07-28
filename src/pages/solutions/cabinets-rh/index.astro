@@ -6,30 +6,78 @@ import CtaBand from '../../../components/CtaBand.astro';
 
 <PageLayout
   title="Gonabi pour les cabinets RH"
-  description="[À FOURNIR] Meta description — Gonabi pour les cabinets RH, 150 à 160 caractères."
-  heading="Gonabi pour les cabinets RH"
+  description="Plusieurs consultants, des méthodes qui divergent, une direction qui n'a pas de vue d'ensemble : Gonabi donne un cadre commun sans uniformiser les pratiques."
+  heading="Un cadre commun, sans uniformiser vos consultants"
   eyebrow="Solutions"
-  lead="[À FOURNIR] Chapô : l'enjeu principal des cabinets RH, formulé avec leurs mots."
+  lead="Passé quelques consultants, chacun développe ses propres trames, ses propres supports et sa propre façon de rendre compte. Le cabinet perd la vue d'ensemble, et la qualité devient dépendante de la personne."
   breadcrumbs={[{ label: 'Solutions', href: '/solutions' }, { label: 'Cabinets RH' }]}
 >
-  <PlaceholderSection
-    title="Vos enjeux"
-    brief="Trois freins spécifiques à cette cible, issus d'entretiens clients réels."
-    items={['Enjeu 1', 'Enjeu 2', 'Enjeu 3']}
-    tone="cream-light"
-  />
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Ce que ça change dans un cabinet</h2>
+      <div class="gnb-grid gnb-grid--3">
+        <article class="gnb-card">
+          <h3>Des trames partagées</h3>
+          <p>
+            Les parcours types sont définis une fois pour le cabinet. Chaque consultant les adapte
+            à son bénéficiaire sans repartir d'une page blanche.
+            <a href="/produit/parcours-personnalises">Voir les parcours</a>
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Une vue direction</h3>
+          <p>
+            Qui suit qui, où en est chaque accompagnement, quels dossiers décrochent. La
+            réaffectation d'un bénéficiaire à un autre consultant se fait sans reconstituer le
+            dossier.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Des preuves homogènes</h3>
+          <p>
+            Le jour de l'audit, le dossier tiré au sort ne dépend plus de la rigueur individuelle
+            du consultant qui l'a suivi.
+            <a href="/produit/conformite-qualiopi">Voir la conformité</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>L'objection que vous allez nous poser</h2>
+      <p class="gnb-lead">
+        « Mes consultants ont leurs habitudes, je ne vais pas leur imposer un outil de plus. »
+        C'est l'objection la plus fréquente, et elle est légitime. Nous lui avons consacré une page
+        entière plutôt qu'une réponse commerciale.
+      </p>
+      <p class="solution-more"><a href="/migrer-vers-gonabi">Migrer vers Gonabi</a></p>
+    </div>
+  </section>
 
   <PlaceholderSection
-    title="Ce que Gonabi change"
-    brief="Relier chaque enjeu à une brique produit, avec un lien vers la page correspondante."
-    tone="cream"
-  />
-
-  <PlaceholderSection
-    title="Mise en route"
-    brief="Décrire le déploiement type pour cette cible : durée, accompagnement, reprise des données."
+    title="Mise en route dans un cabinet"
+    brief="Décrire le déploiement type : durée, qui paramètre quoi, formation des consultants, reprise de l'existant. Ne pas annoncer de délai non tenu."
     tone="white"
   />
 
   <CtaBand />
 </PageLayout>
+
+<style>
+  .gnb-card a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  .solution-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .solution-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+  }
+</style>
