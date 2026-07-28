@@ -54,18 +54,25 @@ function isActive(href?: string) {
               <div class="site-nav__dropdown">
                 <ul class="site-nav__dropdown-list">
                   {group.children.map((child) => (
-                    <li>
-                      <a
-                        href={child.href}
-                        class="site-nav__dropdown-link"
-                        aria-current={isActive(child.href) ? 'page' : undefined}
-                      >
-                        <span class="site-nav__dropdown-label">{child.label}</span>
-                        {child.description && (
-                          <span class="site-nav__dropdown-desc">{child.description}</span>
-                        )}
-                      </a>
-                    </li>
+                    <>
+                      {child.group && (
+                        <li class="site-nav__dropdown-heading" role="presentation">
+                          {child.group}
+                        </li>
+                      )}
+                      <li>
+                        <a
+                          href={child.href}
+                          class="site-nav__dropdown-link"
+                          aria-current={isActive(child.href) ? 'page' : undefined}
+                        >
+                          <span class="site-nav__dropdown-label">{child.label}</span>
+                          {child.description && (
+                            <span class="site-nav__dropdown-desc">{child.description}</span>
+                          )}
+                        </a>
+                      </li>
+                    </>
                   ))}
                 </ul>
               </div>
@@ -121,15 +128,22 @@ function isActive(href?: string) {
                     </li>
                   )}
                   {group.children.map((child) => (
-                    <li>
-                      <a
-                        href={child.href}
-                        class="mobile-menu__sublink"
-                        aria-current={isActive(child.href) ? 'page' : undefined}
-                      >
-                        {child.label}
-                      </a>
-                    </li>
+                    <>
+                      {child.group && (
+                        <li class="mobile-menu__subheading" role="presentation">
+                          {child.group}
+                        </li>
+                      )}
+                      <li>
+                        <a
+                          href={child.href}
+                          class="mobile-menu__sublink"
+                          aria-current={isActive(child.href) ? 'page' : undefined}
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    </>
                   ))}
                 </ul>
               </details>
@@ -274,6 +288,21 @@ function isActive(href?: string) {
     gap: 2px;
   }
 
+  .site-nav__dropdown-heading {
+    font-size: var(--gnb-text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gnb-text-subtle);
+    padding: var(--gnb-space-4) 0.75rem var(--gnb-space-2);
+  }
+
+  /* Pas de trait au-dessus du tout premier bloc */
+  .site-nav__dropdown-list > .site-nav__dropdown-heading:not(:first-child) {
+    border-top: 1px solid var(--gnb-border-soft);
+    margin-top: var(--gnb-space-2);
+  }
+
   .site-nav__dropdown-link {
     display: block;
     padding: 0.6rem 0.75rem;
@@ -394,6 +423,15 @@ function isActive(href?: string) {
     display: grid;
     gap: 2px;
     padding: var(--gnb-space-2) 0 var(--gnb-space-4) var(--gnb-space-4);
+  }
+
+  .mobile-menu__subheading {
+    font-size: var(--gnb-text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gnb-text-subtle);
+    padding: var(--gnb-space-4) 0.5rem var(--gnb-space-1);
   }
 
   .mobile-menu__sublink {

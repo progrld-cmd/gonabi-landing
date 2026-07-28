@@ -1,0 +1,83 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Gonabi pour le coaching professionnel"
+  description="Le coaching n'a pas de cadre réglementaire imposé : tout le cadre est à poser soi-même. Gonabi fournit la structure sans imposer la méthode."
+  heading="Poser un cadre quand la loi n'en impose aucun"
+  eyebrow="Cas d'usage"
+  lead="Le bilan de compétences a ses trois phases, son document de synthèse, son suivi obligatoire. Le coaching n'a rien de tout cela — ce qui est une liberté, et un problème : c'est à vous de rendre l'accompagnement lisible pour votre client."
+  breadcrumbs={[{ label: "Cas d'usage", href: '/cas-usage' }, { label: 'Coaching' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Ce que la structure apporte à une pratique libre</h2>
+      <div class="gnb-grid gnb-grid--3">
+        <article class="gnb-card">
+          <h3>Un parcours visible</h3>
+          <p>
+            Le coaché voit où il en est, ce qui a été fait, ce qui vient. Un accompagnement lisible
+            se justifie mieux — et se renouvelle plus facilement.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Du travail entre les séances</h3>
+          <p>
+            Ressources assignées, tests à passer, notes à prendre : le temps entre deux rendez-vous
+            cesse d'être un temps mort.
+            <a href="/produit/bibliotheque-ressources">Voir la bibliothèque</a>
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Une trace de ce qui a été fait</h3>
+          <p>
+            Comptes rendus et progression constituent la matière d'un bilan de fin de mission, sans
+            que vous ayez à le reconstituer de mémoire.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Vous restez maître de la méthode</h2>
+      <p class="gnb-lead">
+        Gonabi ne vous impose pas de protocole de coaching. Les trames fournies sont un point de
+        départ que vous remplacez par les vôtres, et les tests psychométriques s'activent ou non
+        selon votre approche.
+      </p>
+      <p class="coaching-more"><a href="/produit/parcours-personnalises">Construire ses propres trames</a></p>
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Coaching individuel et coaching en entreprise"
+    brief="Distinguer les deux situations : client particulier qui paie pour lui-même, et mission financée par une entreprise pour un de ses salariés. Le second cas rejoint les enjeux de l'outplacement."
+    tone="white"
+  />
+
+  <PlaceholderSection
+    title="Déontologie et supervision"
+    brief="Sujet important pour cette cible, souvent certifiée par une fédération. Ne rien affirmer sur la compatibilité avec un référentiel déontologique sans l'avoir vérifié."
+    tone="cream"
+  />
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .gnb-card a,
+  .coaching-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  .coaching-more {
+    margin-top: var(--gnb-space-6);
+  }
+</style>

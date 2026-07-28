@@ -9,6 +9,11 @@ export interface NavLink {
   href: string;
   /** Courte accroche affichée dans le méga-menu et les pages d'index. */
   description?: string;
+  /**
+   * Intertitre affiché au-dessus de cette entrée dans le sous-menu. À poser sur
+   * la première entrée d'un bloc uniquement — les suivantes l'omettent.
+   */
+  group?: string;
 }
 
 export interface NavGroup {
@@ -71,6 +76,7 @@ export const mainNav: NavGroup[] = [
         label: 'Cabinets RH',
         href: '/solutions/cabinets-rh',
         description: 'Plusieurs consultants, une vue commune sur les accompagnements.',
+        group: 'Par type de structure',
       },
       {
         label: 'Organismes de formation',
@@ -86,6 +92,27 @@ export const mainNav: NavGroup[] = [
         label: 'Insertion professionnelle',
         href: '/solutions/insertion-professionnelle',
         description: 'Missions locales, PLIE : suivre des volumes et en rendre compte.',
+      },
+      {
+        label: 'Bilan de compétences',
+        href: '/cas-usage/bilan-de-competences',
+        description: 'Les trois phases, la synthèse et le suivi à six mois.',
+        group: 'Par prestation',
+      },
+      {
+        label: 'Outplacement',
+        href: '/cas-usage/outplacement',
+        description: 'Accompagner un départ, et en rendre compte à l’employeur.',
+      },
+      {
+        label: 'Coaching',
+        href: '/cas-usage/coaching',
+        description: 'Structurer un accompagnement qui n’a pas de cadre réglementaire.',
+      },
+      {
+        label: 'Orientation des jeunes',
+        href: '/cas-usage/orientation-jeunes',
+        description: 'Post-bac et premiers choix, avec des publics peu autonomes.',
       },
     ],
   },
@@ -142,6 +169,38 @@ export const mainNav: NavGroup[] = [
   },
 ];
 
+/**
+ * Pages « par prestation ». Elles vivent dans le sous-menu Solutions, sous
+ * l'intertitre « Par prestation » : Solutions segmente par type de structure,
+ * Cas d'usage segmente par prestation vendue.
+ */
+export const casUsageNav: NavLink[] = [
+  {
+    label: 'Bilan de compétences',
+    href: '/cas-usage/bilan-de-competences',
+    description:
+      'La prestation la plus encadrée : trois phases, document de synthèse et suivi à six mois.',
+  },
+  {
+    label: 'Outplacement',
+    href: '/cas-usage/outplacement',
+    description:
+      'Un accompagnement financé par l’employeur, à qui il faut rendre compte sans trahir la confidentialité.',
+  },
+  {
+    label: 'Coaching',
+    href: '/cas-usage/coaching',
+    description:
+      'Pas de cadre réglementaire imposé, donc tout le cadre à poser soi-même.',
+  },
+  {
+    label: 'Orientation des jeunes',
+    href: '/cas-usage/orientation-jeunes',
+    description:
+      'Des publics jeunes, souvent peu autonomes, et des prescripteurs à qui rendre des comptes.',
+  },
+];
+
 /** Colonnes du footer. */
 export const footerNav: NavGroup[] = [
   {
@@ -165,6 +224,11 @@ export const footerNav: NavGroup[] = [
       { label: 'Coachs indépendants', href: '/solutions/coachs-independants' },
       { label: 'Insertion professionnelle', href: '/solutions/insertion-professionnelle' },
       { label: 'Migrer vers Gonabi', href: '/migrer-vers-gonabi' },
+      { label: 'Cas d’usage', href: '/cas-usage' },
+      { label: 'Bilan de compétences', href: '/cas-usage/bilan-de-competences' },
+      { label: 'Outplacement', href: '/cas-usage/outplacement' },
+      { label: 'Coaching', href: '/cas-usage/coaching' },
+      { label: 'Orientation des jeunes', href: '/cas-usage/orientation-jeunes' },
     ],
   },
   {
