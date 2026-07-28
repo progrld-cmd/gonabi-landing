@@ -1,0 +1,69 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import PageLayout from '../../../layouts/PageLayout.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const entrees = await getCollection('nouveautes', ({ data }) => !data.draft);
+  return entrees.map((entree) => ({
+    params: { slug: entree.id },
+    props: { entree },
+  }));
+};
+
+interface Props {
+  entree: CollectionEntry<'nouveautes'>;
+}
+
+const { entree } = Astro.props;
+const { Content } = await render(entree);
+
+const dateFormat = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<PageLayout
+  title={entree.data.title}
+  description={entree.data.description}
+  eyebrow={entree.data.categorie}
+  breadcrumbs={[{ label: 'Nouveautés', href: '/nouveautes' }, { label: entree.data.title }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container gnb-container--narrow">
+      <p class="entry-meta">
+        <time datetime={entree.data.date.toISOString()}>{dateFormat.format(entree.data.date)}</time>
+        {entree.data.version && <span> · version {entree.data.version}</span>}
+      </p>
+
+      <div class="gnb-prose">
+        <Content />
+      </div>
+
+      <p class="entry-back"><a href="/nouveautes">← Toutes les nouveautés</a></p>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .entry-meta {
+    font-size: var(--gnb-text-sm);
+    color: var(--gnb-text-muted);
+    margin-bottom: var(--gnb-space-8);
+  }
+
+  .entry-back {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .entry-back a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Gonabi pour l'insertion professionnelle"
+  description="Missions locales, PLIE et structures d'insertion : accompagner des volumes importants et rendre compte à des financeurs, dans un outil qui trace ce qui s'est passé."
+  heading="Accompagner en volume, et pouvoir en rendre compte"
+  eyebrow="Solutions"
+  lead="Les missions locales, les PLIE et les structures d'insertion accompagnent beaucoup de personnes avec des équipes contraintes, et doivent justifier leur action auprès de financeurs publics. Ce sont deux exigences qui tirent dans des directions opposées."
+  breadcrumbs={[
+    { label: 'Solutions', href: '/solutions' },
+    { label: 'Insertion professionnelle' },
+  ]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Ce que l'outil apporte sur ce terrain</h2>
+      <div class="gnb-grid gnb-grid--3">
+        <article class="gnb-card">
+          <h3>Le bénéficiaire travaille en autonomie</h3>
+          <p>
+            Tests et exploration métiers se font depuis son espace. Le temps de conseiller se
+            concentre sur ce qui demande un accompagnement humain.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Des métiers nommés officiellement</h3>
+          <p>
+            Les pistes s'appuient sur le référentiel ROME de France Travail — le même langage que
+            celui des prescripteurs et des financeurs.
+            <a href="/produit/explorateur-metiers">Voir l'explorateur</a>
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Les décrochages se voient</h3>
+          <p>
+            Les alertes d'inactivité et les relances sont journalisées : vous ne découvrez pas
+            l'abandon au moment du bilan.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Suivi de cohortes et reporting financeur"
+    brief="Décrire précisément les capacités de pilotage et d'export réellement disponibles pour un volume de plusieurs centaines de bénéficiaires. Aucun chiffre de volumétrie ni de performance ne doit être affirmé sans mesure."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Marchés publics et modalités d'achat"
+    brief="Préciser ce qui est possible côté procédure : devis, marché, facturation sur bon de commande, virement. À aligner avec les conditions commerciales validées."
+    tone="white"
+  />
+
+  <CtaBand
+    title="Parlons de votre volume et de vos obligations de reporting"
+    text="Le cadrage porte d'abord sur ce que vous devez justifier, et à qui."
+  />
+</PageLayout>
+
+<style>
+  .gnb-card a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+</style>

@@ -1,0 +1,77 @@
+/**
+ * Design tokens Gonabi — source unique de vérité pour la charte graphique.
+ * Reprend à l'identique les valeurs de l'ancien index.html afin que la refonte
+ * reste visuellement cohérente avec l'identité en ligne.
+ */
+
+:root {
+  /* ---------- Couleurs de marque ---------- */
+  --gnb-red: #ee4036;
+  --gnb-red-hover: #d93a31;
+  --gnb-red-light: #fef0ef;
+  --gnb-blue: #1bafd0;
+  --gnb-blue-light: #e8f6f8;
+  --gnb-yellow: #ffc20f;
+  --gnb-yellow-light: #fff8e1;
+  --gnb-green: #4caf50;
+
+  /* ---------- Fonds ---------- */
+  --gnb-cream: #f9f4ec;
+  --gnb-cream-light: #fdfaf5;
+  --gnb-pink: #f9e8e5;
+  --gnb-white: #ffffff;
+
+  /* ---------- Texte ---------- */
+  --gnb-teal: #012b30;
+  --gnb-text: #012b30;
+  --gnb-text-muted: #5a6b6d;
+  --gnb-text-subtle: #8a9a9c;
+
+  /* ---------- Bordures & ombres ---------- */
+  --gnb-border: rgba(1, 43, 48, 0.1);
+  --gnb-border-soft: rgba(0, 0, 0, 0.05);
+  --gnb-shadow-sm: 0 2px 8px rgba(1, 43, 48, 0.06);
+  --gnb-shadow-md: 0 8px 25px rgba(1, 43, 48, 0.1);
+  --gnb-shadow-red: 0 8px 25px rgba(238, 64, 54, 0.3);
+
+  /* ---------- Typographie ---------- */
+  --gnb-font-heading: 'Lora', Georgia, 'Times New Roman', serif;
+  --gnb-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --gnb-text-xs: 0.75rem;
+  --gnb-text-sm: 0.85rem;
+  --gnb-text-base: 1rem;
+  --gnb-text-lg: 1.125rem;
+  /* Titres fluides — mêmes clamp() que l'ancienne landing */
+  --gnb-text-h1: clamp(2.2rem, 4vw, 3rem);
+  --gnb-text-h2: clamp(1.75rem, 3.5vw, 2.5rem);
+  --gnb-text-h3: clamp(1.25rem, 2vw, 1.5rem);
+
+  --gnb-leading-tight: 1.2;
+  --gnb-leading-normal: 1.6;
+  --gnb-leading-relaxed: 1.7;
+
+  /* ---------- Espacements ---------- */
+  --gnb-space-1: 0.25rem;
+  --gnb-space-2: 0.5rem;
+  --gnb-space-3: 0.75rem;
+  --gnb-space-4: 1rem;
+  --gnb-space-6: 1.5rem;
+  --gnb-space-8: 2rem;
+  --gnb-space-12: 3rem;
+  --gnb-space-20: 5rem;
+
+  --gnb-section-padding: 5rem 5%;
+  --gnb-container: 1200px;
+  --gnb-container-narrow: 800px;
+
+  /* ---------- Rayons ---------- */
+  --gnb-radius-sm: 10px;
+  --gnb-radius-md: 16px;
+  --gnb-radius-lg: 24px;
+  --gnb-radius-pill: 50px;
+
+  /* ---------- Divers ---------- */
+  --gnb-transition: all 0.3s ease;
+  --gnb-header-height: 88px;
+}

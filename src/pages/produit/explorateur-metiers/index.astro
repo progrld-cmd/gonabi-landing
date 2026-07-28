@@ -1,0 +1,110 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+
+const filtres = [
+  'Intérêts professionnels (RIASEC)',
+  'Valeurs au travail',
+  'Niveau de formation',
+  'Secteur d’activité',
+  'Fourchette de salaire',
+  'Zone géographique',
+];
+---
+
+<PageLayout
+  title="Explorateur de métiers"
+  description="Explorez les fiches métiers du référentiel ROME de France Travail à partir du profil du bénéficiaire, et transformez une piste en étape de parcours."
+  heading="Du profil aux pistes de métiers concrètes"
+  eyebrow="Produit"
+  lead="Un profil psychométrique ne vaut que par ce qu'on en fait. L'explorateur relie les résultats du bénéficiaire aux fiches métiers officielles, pour passer de « voilà qui vous êtes » à « voilà ce que ça peut donner »."
+  breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Explorateur de métiers' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Une base métiers officielle</h2>
+      <p class="gnb-lead">
+        Les fiches proviennent du <strong>référentiel ROME de France Travail</strong>, la
+        nomenclature publique des métiers et des compétences. Vous ne travaillez pas sur une base
+        maison invérifiable : les intitulés, les compétences attendues et les passerelles sont ceux
+        que vos financeurs et vos bénéficiaires retrouveront ailleurs.
+      </p>
+      <p class="gnb-lead">
+        Le référentiel évolue régulièrement ; les mises à jour sont répercutées dans Gonabi.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Chercher autrement qu'avec un moteur de recherche</h2>
+      <p class="gnb-lead">
+        Le bénéficiaire qui tape un mot-clé trouve ce qu'il connaît déjà. L'intérêt de l'outil est
+        de faire remonter ce à quoi il n'aurait pas pensé, à partir de son profil.
+      </p>
+      <ul class="filtres">
+        {filtres.map((filtre) => <li>{filtre}</li>)}
+      </ul>
+      <p class="metiers-note">
+        Chaque métier suggéré est accompagné d'une explication du rapprochement : le bénéficiaire
+        comprend pourquoi il lui est proposé, ce qui rend la discussion possible en séance.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>D'une piste à un plan d'action</h2>
+      <p class="gnb-lead">
+        Un métier exploré n'est pas un signet perdu dans un navigateur. Le bénéficiaire le classe :
+        à explorer, en cours, écarté, retenu — avec ses notes. Ce tri devient la matière de la
+        section « Projets explorés » de la synthèse.
+      </p>
+      <p class="gnb-lead">
+        Une fois le projet retenu, les compétences attendues par la fiche métier se confrontent à
+        celles déjà identifiées : l'écart devient le plan d'action.
+      </p>
+      <p class="metiers-more">
+        <a href="/produit/portefeuille-competences">Voir le portefeuille de compétences</a>
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .filtres {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gnb-space-3);
+    margin-top: var(--gnb-space-8);
+  }
+
+  .filtres li {
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-pill);
+    padding: 0.45rem 1rem;
+    font-size: 0.925rem;
+    color: var(--gnb-text-muted);
+  }
+
+  .metiers-note {
+    margin-top: var(--gnb-space-6);
+    color: var(--gnb-text-muted);
+    max-width: 70ch;
+    line-height: var(--gnb-leading-relaxed);
+  }
+
+  .metiers-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .metiers-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+</style>

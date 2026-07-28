@@ -1,0 +1,72 @@
+---
+export interface Crumb {
+  label: string;
+  href?: string;
+}
+
+export interface Props {
+  items: Crumb[];
+}
+
+const { items } = Astro.props;
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+
+// Fil d'Ariane balisé : renforce le maillage interne des silos thématiques.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [{ label: 'Accueil', href: '/' }, ...items].map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: `${site}${item.href}` } : {}),
+  })),
+};
+---
+
+<nav class="breadcrumbs" aria-label="Fil d'Ariane">
+  <ol>
+    <li><a href="/">Accueil</a></li>
+    {
+      items.map((item) => (
+        <li>
+          {item.href ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+<style>
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gnb-space-2);
+    list-style: none;
+    font-size: var(--gnb-text-sm);
+    color: var(--gnb-text-muted);
+  }
+
+  .breadcrumbs li + li::before {
+    content: '/';
+    margin-right: var(--gnb-space-2);
+    color: var(--gnb-text-subtle);
+  }
+
+  .breadcrumbs a {
+    color: var(--gnb-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--gnb-red);
+  }
+
+  .breadcrumbs [aria-current='page'] {
+    color: var(--gnb-text);
+    font-weight: 600;
+  }
+</style>

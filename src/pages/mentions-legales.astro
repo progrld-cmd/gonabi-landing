@@ -1,0 +1,15 @@
+---
+// Avec `build.format: 'preserve'`, ce fichier produit /mentions-legales.html.
+// URL déjà indexée : ne pas renommer ce fichier et ne pas le déplacer dans un
+// sous-dossier — cela produirait /mentions-legales/index.html.
+import LegalLayout from '../layouts/LegalLayout.astro';
+import html from '../legal/mentions-legales.html?raw';
+---
+
+<LegalLayout
+  title="Mentions légales"
+  description="Mentions légales de Gonabi"
+  canonical="/mentions-legales.html"
+  crumb="Mentions légales"
+  html={html}
+/>

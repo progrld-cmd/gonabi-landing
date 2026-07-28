@@ -1,0 +1,21 @@
+{
+  "name": "gonabi-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Site gonabi.fr — Astro, sortie 100% statique (déploiement Hostinger).",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.1.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
+  }
+}

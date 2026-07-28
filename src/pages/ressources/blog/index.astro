@@ -1,0 +1,133 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { getCollection } from 'astro:content';
+
+const articles = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const categories = [...new Set(articles.map((article) => article.data.categorie))].sort();
+
+const dateFormat = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<PageLayout
+  title="Blog"
+  description="[À FOURNIR] Meta description — le blog Gonabi, 150 à 160 caractères."
+  heading="Le blog"
+  eyebrow="Ressources"
+  lead="[À FOURNIR] Chapô : ligne éditoriale du blog et à qui il s'adresse."
+  breadcrumbs={[{ label: 'Ressources', href: '/ressources' }, { label: 'Blog' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2 class="gnb-visually-hidden">Tous les articles</h2>
+
+      {
+        categories.length > 0 && (
+          <ul class="blog-cats" aria-label="Catégories présentes">
+            {categories.map((categorie) => (
+              <li>{categorie}</li>
+            ))}
+          </ul>
+        )
+      }
+
+      {
+        articles.length > 0 ? (
+          <ul class="blog-list">
+            {articles.map((article) => (
+              <li>
+                <article>
+                  <a href={`/ressources/blog/${article.id}`}>
+                    <span class="blog-list__meta">
+                      {article.data.categorie} ·{' '}
+                      <time datetime={article.data.date.toISOString()}>
+                        {dateFormat.format(article.data.date)}
+                      </time>
+                    </span>
+                    <h3>{article.data.title}</h3>
+                    <p>{article.data.description}</p>
+                  </a>
+                </article>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="gnb-lead">
+            Aucun article publié pour le moment. Déposer un fichier Markdown dans
+            <code>src/data/blog/</code> pour en créer un.
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .blog-cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gnb-space-2);
+    list-style: none;
+    margin-bottom: var(--gnb-space-8);
+  }
+
+  .blog-cats li {
+    font-size: var(--gnb-text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gnb-text-muted);
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-pill);
+    padding: 0.35rem 0.85rem;
+  }
+
+  .blog-list {
+    list-style: none;
+    display: grid;
+    gap: var(--gnb-space-4);
+  }
+
+  .blog-list a {
+    display: block;
+    padding: var(--gnb-space-6);
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-md);
+    text-decoration: none;
+    transition: var(--gnb-transition);
+  }
+
+  .blog-list a:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+
+  .blog-list__meta {
+    display: block;
+    font-size: var(--gnb-text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gnb-text-muted);
+    margin-bottom: var(--gnb-space-2);
+  }
+
+  .blog-list h3 {
+    font-size: var(--gnb-text-lg);
+    margin-bottom: var(--gnb-space-2);
+  }
+
+  .blog-list p {
+    color: var(--gnb-text-muted);
+  }
+</style>

@@ -1,0 +1,508 @@
+---
+import { mainNav, DEMO_HREF } from '../data/navigation';
+
+const { pathname } = Astro.url;
+
+/** Une entrée est active si on est sur sa page ou sur une de ses sous-pages. */
+function isActive(href?: string) {
+  if (!href || href.startsWith('#')) return false;
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+---
+
+<header class="site-header">
+  <nav class="site-nav" aria-label="Navigation principale">
+    <a href="/" class="site-nav__logo" aria-label="Gonabi — Accueil">
+      <img
+        src="/assets/logos/Gonabi_Logo_Horizontal.png"
+        alt="Gonabi"
+        width="180"
+        height="48"
+      />
+    </a>
+
+    <!-- Navigation desktop -->
+    <ul class="site-nav__list">
+      {
+        mainNav.map((group) => (
+          <li class:list={['site-nav__item', { 'has-menu': !!group.children }]}>
+            <a
+              href={group.href}
+              class="site-nav__link"
+              aria-current={isActive(group.href) ? 'page' : undefined}
+              aria-haspopup={group.children ? 'true' : undefined}
+            >
+              {group.label}
+              {group.children && (
+                <svg
+                  class="site-nav__chevron"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              )}
+            </a>
+
+            {group.children && (
+              <div class="site-nav__dropdown">
+                <ul class="site-nav__dropdown-list">
+                  {group.children.map((child) => (
+                    <>
+                      {child.group && (
+                        <li class="site-nav__dropdown-heading" role="presentation">
+                          {child.group}
+                        </li>
+                      )}
+                      <li>
+                        <a
+                          href={child.href}
+                          class="site-nav__dropdown-link"
+                          aria-current={isActive(child.href) ? 'page' : undefined}
+                        >
+                          <span class="site-nav__dropdown-label">{child.label}</span>
+                          {child.description && (
+                            <span class="site-nav__dropdown-desc">{child.description}</span>
+                          )}
+                        </a>
+                      </li>
+                    </>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+
+    <a href={DEMO_HREF} class="gnb-btn gnb-btn--primary site-nav__cta">Réserver une démo</a>
+
+    <button
+      type="button"
+      class="site-nav__burger"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+  </nav>
+
+  <!-- Navigation mobile : accordéons natifs, fonctionne même sans JS une fois ouverte -->
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <ul class="mobile-menu__list">
+      {
+        mainNav.map((group) =>
+          group.children ? (
+            <li>
+              <details class="mobile-menu__group" open={isActive(group.href)}>
+                <summary class="mobile-menu__summary">
+                  {group.label}
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    aria-hidden="true"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </summary>
+                <ul class="mobile-menu__sublist">
+                  {group.href && (
+                    <li>
+                      <a href={group.href} class="mobile-menu__sublink">
+                        Vue d’ensemble
+                      </a>
+                    </li>
+                  )}
+                  {group.children.map((child) => (
+                    <>
+                      {child.group && (
+                        <li class="mobile-menu__subheading" role="presentation">
+                          {child.group}
+                        </li>
+                      )}
+                      <li>
+                        <a
+                          href={child.href}
+                          class="mobile-menu__sublink"
+                          aria-current={isActive(child.href) ? 'page' : undefined}
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    </>
+                  ))}
+                </ul>
+              </details>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={group.href}
+                class="mobile-menu__link"
+                aria-current={isActive(group.href) ? 'page' : undefined}
+              >
+                {group.label}
+              </a>
+            </li>
+          )
+        )
+      }
+    </ul>
+
+    <a href={DEMO_HREF} class="gnb-btn gnb-btn--primary mobile-menu__cta">Réserver une démo</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--gnb-cream);
+    border-bottom: 1px solid var(--gnb-border-soft);
+  }
+
+  .site-nav {
+    max-width: var(--gnb-container);
+    margin-inline: auto;
+    padding: var(--gnb-space-4) 5%;
+    display: flex;
+    align-items: center;
+    gap: var(--gnb-space-6);
+  }
+
+  .site-nav__logo {
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .site-nav__logo img {
+    height: 48px;
+    width: auto;
+  }
+
+  .site-nav__list {
+    display: flex;
+    align-items: center;
+    gap: var(--gnb-space-2);
+    list-style: none;
+    margin-left: auto;
+  }
+
+  .site-nav__item {
+    position: relative;
+  }
+
+  .site-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--gnb-radius-pill);
+    font-size: 0.925rem;
+    font-weight: 500;
+    color: var(--gnb-text);
+    text-decoration: none;
+    transition: var(--gnb-transition);
+    white-space: nowrap;
+  }
+
+  .site-nav__link:hover,
+  .site-nav__item:focus-within > .site-nav__link {
+    background: rgba(1, 43, 48, 0.06);
+  }
+
+  .site-nav__link[aria-current='page'] {
+    color: var(--gnb-red);
+  }
+
+  .site-nav__chevron {
+    transition: transform 0.2s ease;
+  }
+
+  .site-nav__item:hover .site-nav__chevron,
+  .site-nav__item:focus-within .site-nav__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ---------- Sous-menus desktop ---------- */
+
+  .site-nav__dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 320px;
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-md);
+    box-shadow: var(--gnb-shadow-md);
+    padding: var(--gnb-space-2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    /* `visibility` bascule après le fondu à la fermeture, mais immédiatement à
+       l'ouverture (voir la règle ci-dessous) : sinon un Tab rapide traverserait
+       le sous-menu avant qu'il ne devienne focusable. */
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0s linear 0.2s;
+  }
+
+  /* Pont invisible pour que le survol ne se coupe pas entre lien et menu */
+  .site-nav__dropdown::before {
+    content: '';
+    position: absolute;
+    inset: -0.5rem 0 100% 0;
+  }
+
+  .site-nav__item:hover .site-nav__dropdown,
+  .site-nav__item:focus-within .site-nav__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0s;
+  }
+
+  .site-nav__dropdown-list {
+    list-style: none;
+    display: grid;
+    gap: 2px;
+  }
+
+  .site-nav__dropdown-heading {
+    font-size: var(--gnb-text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gnb-text-subtle);
+    padding: var(--gnb-space-4) 0.75rem var(--gnb-space-2);
+  }
+
+  /* Pas de trait au-dessus du tout premier bloc */
+  .site-nav__dropdown-list > .site-nav__dropdown-heading:not(:first-child) {
+    border-top: 1px solid var(--gnb-border-soft);
+    margin-top: var(--gnb-space-2);
+  }
+
+  .site-nav__dropdown-link {
+    display: block;
+    padding: 0.6rem 0.75rem;
+    border-radius: var(--gnb-radius-sm);
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .site-nav__dropdown-link:hover {
+    background: var(--gnb-cream);
+  }
+
+  .site-nav__dropdown-link[aria-current='page'] .site-nav__dropdown-label {
+    color: var(--gnb-red);
+  }
+
+  .site-nav__dropdown-label {
+    display: block;
+    font-size: 0.925rem;
+    font-weight: 600;
+    color: var(--gnb-text);
+  }
+
+  .site-nav__dropdown-desc {
+    display: block;
+    font-size: var(--gnb-text-xs);
+    color: var(--gnb-text-muted);
+    margin-top: 0.15rem;
+  }
+
+  .site-nav__cta {
+    flex-shrink: 0;
+  }
+
+  /* ---------- Burger ---------- */
+
+  .site-nav__burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--gnb-border);
+    border-radius: var(--gnb-radius-sm);
+    cursor: pointer;
+  }
+
+  .site-nav__burger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--gnb-text);
+    border-radius: 2px;
+    transition: var(--gnb-transition);
+  }
+
+  .site-nav__burger[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .site-nav__burger[aria-expanded='true'] span:nth-child(2) {
+    opacity: 0;
+  }
+  .site-nav__burger[aria-expanded='true'] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ---------- Menu mobile ---------- */
+
+  .mobile-menu {
+    display: none;
+    padding: var(--gnb-space-4) 5% var(--gnb-space-8);
+    background: var(--gnb-cream);
+    border-top: 1px solid var(--gnb-border-soft);
+    max-height: calc(100vh - var(--gnb-header-height));
+    overflow-y: auto;
+  }
+
+  .mobile-menu__list {
+    list-style: none;
+    display: grid;
+    gap: 2px;
+  }
+
+  .mobile-menu__link,
+  .mobile-menu__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 0.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--gnb-text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gnb-border-soft);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .mobile-menu__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-menu__group[open] .mobile-menu__summary svg {
+    transform: rotate(180deg);
+  }
+
+  .mobile-menu__summary svg {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .mobile-menu__sublist {
+    list-style: none;
+    display: grid;
+    gap: 2px;
+    padding: var(--gnb-space-2) 0 var(--gnb-space-4) var(--gnb-space-4);
+  }
+
+  .mobile-menu__subheading {
+    font-size: var(--gnb-text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gnb-text-subtle);
+    padding: var(--gnb-space-4) 0.5rem var(--gnb-space-1);
+  }
+
+  .mobile-menu__sublink {
+    display: block;
+    padding: 0.55rem 0.5rem;
+    font-size: 0.95rem;
+    color: var(--gnb-text-muted);
+    text-decoration: none;
+  }
+
+  .mobile-menu__sublink[aria-current='page'] {
+    color: var(--gnb-red);
+    font-weight: 600;
+  }
+
+  .mobile-menu__cta {
+    width: 100%;
+    margin-top: var(--gnb-space-6);
+  }
+
+  /* ---------- Bascule desktop / mobile ---------- */
+
+  @media (max-width: 1100px) {
+    .site-nav__list,
+    .site-nav__cta {
+      display: none;
+    }
+
+    .site-nav__burger {
+      display: flex;
+    }
+
+    /* `:not([hidden])` est nécessaire : une règle de classe l'emporterait sur
+       le `display: none` que le navigateur applique à l'attribut `hidden`. */
+    .mobile-menu:not([hidden]) {
+      display: block;
+    }
+
+    .site-nav__logo img {
+      height: 40px;
+    }
+  }
+</style>
+
+<script>
+  const burger = document.querySelector<HTMLButtonElement>('.site-nav__burger');
+  const menu = document.querySelector<HTMLElement>('#mobile-menu');
+
+  if (burger && menu) {
+    const setOpen = (open: boolean) => {
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+      menu.hidden = !open;
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+
+    burger.addEventListener('click', () => {
+      setOpen(burger.getAttribute('aria-expanded') !== 'true');
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        burger.focus();
+      }
+    });
+
+    // Repasser en état fermé si l'écran redevient large, sinon le body reste bloqué.
+    const wide = window.matchMedia('(min-width: 1101px)');
+    wide.addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+  }
+</script>

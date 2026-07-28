@@ -1,0 +1,196 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+
+// Les trois phases sont celles définies par le Code du travail (art. R6313-4).
+const phases = [
+  {
+    nom: 'Phase préliminaire',
+    role: 'Analyser la demande, vérifier l’engagement du bénéficiaire, définir le format.',
+    outil:
+      'Formulaire d’analyse du besoin co-signé, convention générée avec la durée, le coût et le planning.',
+  },
+  {
+    nom: 'Phase d’investigation',
+    role: 'Construire ou confirmer le projet, explorer les pistes, évaluer leur faisabilité.',
+    outil:
+      'Tests psychométriques, exploration des fiches métiers, ressources assignées étape par étape.',
+  },
+  {
+    nom: 'Phase de conclusions',
+    role: 'Restituer les résultats, arrêter le projet et son plan d’action.',
+    outil: 'Document de synthèse pré-rédigé à partir du parcours, que vous relisez avant remise.',
+  },
+];
+---
+
+<PageLayout
+  title="Gonabi pour le bilan de compétences"
+  description="Les trois phases réglementaires du bilan de compétences, le document de synthèse et le suivi à six mois, dans un outil qui produit au passage vos preuves d'audit."
+  heading="Le bilan de compétences, de la convention au suivi à six mois"
+  eyebrow="Cas d'usage"
+  lead="C'est la prestation la plus encadrée du secteur : trois phases imposées, un document de synthèse qui appartient au bénéficiaire, une confidentialité protégée par la loi et un suivi obligatoire six mois après. Gonabi suit ce cadre plutôt que de vous demander de l'adapter."
+  breadcrumbs={[{ label: "Cas d'usage", href: '/cas-usage' }, { label: 'Bilan de compétences' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Les trois phases, et ce que l'outil fait à chacune</h2>
+      <div class="phases">
+        {
+          phases.map((phase, index) => (
+            <article class="phase">
+              <p class="phase__num" aria-hidden="true">{index + 1}</p>
+              <div>
+                <h3>{phase.nom}</h3>
+                <p class="phase__role">{phase.role}</p>
+                <p class="phase__outil">{phase.outil}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+      <p class="bilan-note">
+        La trame de bilan fournie par défaut est découpée en 12 séances. Elle s'ajuste
+        bénéficiaire par bénéficiaire.
+        <a href="/produit/parcours-personnalises">Voir les parcours</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Le document de synthèse</h2>
+      <p class="gnb-lead">
+        Il est le livrable de la prestation, et il appartient au bénéficiaire. Gonabi le pré-rédige
+        à partir de ce qui s'est réellement passé pendant le parcours — résultats de tests, métiers
+        explorés et écartés, projet retenu — en six sections. Vous relisez, vous corrigez, vous
+        publiez.
+      </p>
+      <p class="bilan-more"><a href="/produit/syntheses-ia">Voir comment se génère une synthèse</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Confidentialité : ce que la loi impose</h2>
+      <p class="gnb-lead">
+        L'article L6313-4 du Code du travail protège les résultats d'un bilan : ils ne peuvent être
+        communiqués à un tiers, employeur compris, sans l'accord du bénéficiaire.
+      </p>
+      <p class="gnb-lead">
+        C'est pour cette raison que l'export d'un dossier d'audit propose une option
+        d'anonymisation, et que Gonabi n'enregistre pas vos séances — même à distance, où seule la
+        connexion à la plateforme est journalisée.
+      </p>
+      <p class="bilan-more"><a href="/a-propos/securite-rgpd">Sécurité &amp; RGPD</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--blue">
+    <div class="gnb-container">
+      <h2>Le suivi à six mois n'est pas optionnel</h2>
+      <p class="gnb-lead">
+        Le référentiel qualité attend un entretien de suivi six mois après la fin du bilan. C'est
+        aussi le moment où il est le plus facile de l'oublier : le dossier est clos, le bénéficiaire
+        est parti.
+      </p>
+      <p class="gnb-lead">
+        Gonabi déclenche l'enquête à froid automatiquement, avec ses relances, et rattache la
+        réponse au dossier. Les résultats alimentent les indicateurs de résultats que vous devrez
+        publier.
+      </p>
+      <p class="bilan-more"><a href="/produit/conformite-qualiopi">Voir la conformité Qualiopi</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Financement</h2>
+      <p class="gnb-lead">
+        Le plafond de prise en charge par le compte personnel de formation est fixé à
+        <strong>1 600 €</strong> depuis le 26 février 2026. Au-delà, le reste à charge doit
+        apparaître clairement sur votre offre — c'est un point que les contrôles regardent.
+      </p>
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Questions fréquentes sur le bilan"
+    brief="Traiter les objections propres à cette prestation : validité des tests, acceptation par les financeurs, adaptation aux publics en situation de handicap. Ne rien affirmer sans source."
+    tone="cream-light"
+  />
+
+  <CtaBand
+    title="Dérouler un bilan complet en démonstration"
+    text="De la convention au document de synthèse, sur un cas fictif, pour juger du rendu réel."
+  />
+</PageLayout>
+
+<style>
+  .phases {
+    display: grid;
+    gap: var(--gnb-space-6);
+    margin-top: var(--gnb-space-8);
+  }
+
+  .phase {
+    display: flex;
+    gap: var(--gnb-space-6);
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-md);
+    padding: var(--gnb-space-6);
+  }
+
+  .phase__num {
+    font-family: var(--gnb-font-heading);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--gnb-red);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .phase h3 {
+    font-family: var(--gnb-font-heading);
+    font-size: var(--gnb-text-lg);
+    margin-bottom: var(--gnb-space-2);
+  }
+
+  .phase__role {
+    color: var(--gnb-text);
+    margin-bottom: var(--gnb-space-3);
+  }
+
+  .phase__outil {
+    color: var(--gnb-text-muted);
+    font-size: 0.925rem;
+    line-height: var(--gnb-leading-relaxed);
+    padding-top: var(--gnb-space-3);
+    border-top: 1px solid var(--gnb-border-soft);
+  }
+
+  .bilan-note {
+    margin-top: var(--gnb-space-6);
+    color: var(--gnb-text-muted);
+  }
+
+  .bilan-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .bilan-note a,
+  .bilan-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .phase {
+      flex-direction: column;
+      gap: var(--gnb-space-3);
+    }
+  }
+</style>

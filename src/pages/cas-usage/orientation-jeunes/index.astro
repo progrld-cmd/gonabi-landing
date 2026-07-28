@@ -1,0 +1,97 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Gonabi pour l'orientation des jeunes"
+  description="Post-bac, réorientation, premiers choix : accompagner des publics jeunes avec des outils qu'ils utilisent vraiment, et rendre compte aux prescripteurs."
+  heading="Des jeunes qui explorent vraiment, des prescripteurs qui voient l'action"
+  eyebrow="Cas d'usage"
+  lead="Un jeune de 18 ans ne remplit pas un questionnaire papier et ne lit pas un rapport de douze pages. Mais il explore volontiers un outil depuis son téléphone — à condition qu'on lui montre pourquoi les métiers proposés le concernent."
+  breadcrumbs={[{ label: "Cas d'usage", href: '/cas-usage' }, { label: 'Orientation des jeunes' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Ce qui marche avec ce public</h2>
+      <div class="gnb-grid gnb-grid--3">
+        <article class="gnb-card">
+          <h3>Explorer plutôt que lire</h3>
+          <p>
+            Les fiches métiers du référentiel ROME sont parcourues à partir du profil, avec
+            l'explication du rapprochement. Le jeune comprend pourquoi un métier lui est proposé.
+            <a href="/produit/explorateur-metiers">Voir l'explorateur</a>
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Avancer entre deux rendez-vous</h3>
+          <p>
+            Les tests se passent depuis son espace, à son rythme. Le temps de conseiller se
+            concentre sur ce qui demande un échange.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Repérer ceux qui décrochent</h3>
+          <p>
+            Les alertes d'inactivité remontent avant le rendez-vous manqué. Sur ce public, c'est
+            souvent ce qui fait la différence.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Des parcours plus courts</h2>
+      <p class="gnb-lead">
+        Les trames fournies par défaut prévoient 4 séances pour une orientation post-bac et
+        6 séances pour une reconversion de public jeune. Elles s'ajustent à votre cadre
+        d'intervention et au temps dont vous disposez.
+      </p>
+      <p class="jeunes-more"><a href="/produit/parcours-personnalises">Voir les parcours</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Rendre compte au prescripteur</h2>
+      <p class="gnb-lead">
+        Missions locales, PLIE, établissements scolaires : l'action doit se justifier auprès de
+        celui qui la finance. Les traces de parcours documentent ce qui a été fait, sans exposer le
+        contenu des entretiens.
+      </p>
+      <p class="jeunes-more">
+        <a href="/solutions/insertion-professionnelle">Voir la page insertion professionnelle</a>
+      </p>
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Accompagner un public mineur"
+    brief="Point à traiter sérieusement : recueil du consentement, information des représentants légaux, traitement des données de mineurs. À valider avec les mentions de la politique de confidentialité avant publication."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Validité des tests sur un public jeune"
+    brief="Préciser à partir de quel âge les tests sont pertinents et sur quelles sources cette borne s'appuie. Ne rien affirmer sans référence."
+    tone="cream-light"
+  />
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .gnb-card a,
+  .jeunes-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  .jeunes-more {
+    margin-top: var(--gnb-space-6);
+  }
+</style>

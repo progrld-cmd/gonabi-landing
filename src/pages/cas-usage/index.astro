@@ -1,0 +1,81 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { casUsageNav } from '../../data/navigation';
+---
+
+<PageLayout
+  title="Cas d'usage"
+  description="Gonabi selon la prestation que vous vendez : bilan de compétences, outplacement, coaching, orientation des jeunes. Le cadre change, l'outil s'adapte."
+  heading="Gonabi selon la prestation que vous vendez"
+  eyebrow="Cas d'usage"
+  lead="Un bilan de compétences est encadré par la loi, un coaching ne l'est pas, un outplacement doit rendre compte à un tiers payeur. Ce ne sont pas les mêmes contraintes — ce ne sont donc pas les mêmes parcours."
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Choisissez votre prestation</h2>
+      <div class="gnb-grid gnb-grid--2 cas-grid">
+        {
+          casUsageNav.map((page) => (
+            <a href={page.href} class="gnb-card cas-card">
+              <h3>{page.label}</h3>
+              <p>{page.description}</p>
+              <span class="cas-card__more" aria-hidden="true">En savoir plus →</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Deux façons de lire le site</h2>
+      <p class="gnb-lead">
+        Ces pages parlent de <strong>ce que vous vendez</strong>. Si vous cherchez plutôt ce que
+        Gonabi change selon <strong>le type de structure</strong> — cabinet, organisme de
+        formation, indépendant, insertion — c'est la rubrique Solutions.
+      </p>
+      <p class="cas-more"><a href="/solutions">Voir par type de structure</a></p>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .cas-grid {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .cas-card {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gnb-space-2);
+    transition: var(--gnb-transition);
+  }
+
+  .cas-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+
+  .cas-card__more {
+    margin-top: auto;
+    padding-top: var(--gnb-space-4);
+    font-size: var(--gnb-text-sm);
+    font-weight: 600;
+    color: var(--gnb-red);
+  }
+
+  .cas-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .cas-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+</style>

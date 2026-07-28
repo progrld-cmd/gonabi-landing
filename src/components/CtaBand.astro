@@ -1,0 +1,54 @@
+---
+import { DEMO_HREF } from '../data/navigation';
+
+export interface Props {
+  title?: string;
+  text?: string;
+}
+
+const {
+  title = 'Voir Gonabi sur vos propres cas',
+  text = 'Une démonstration guidée, adaptée à votre structure et à vos accompagnements.',
+} = Astro.props;
+---
+
+<section class="cta-band">
+  <div class="gnb-container cta-band__inner">
+    <div>
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+    <a href={DEMO_HREF} class="gnb-btn gnb-btn--primary">Réserver une démo</a>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    padding: var(--gnb-section-padding);
+    background: var(--gnb-blue-light);
+  }
+
+  .cta-band__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gnb-space-8);
+  }
+
+  .cta-band h2 {
+    margin-bottom: var(--gnb-space-2);
+  }
+
+  .cta-band p {
+    color: var(--gnb-text-muted);
+    max-width: 55ch;
+  }
+
+  @media (max-width: 768px) {
+    .cta-band__inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

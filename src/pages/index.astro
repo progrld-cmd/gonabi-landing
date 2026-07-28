@@ -1,0 +1,322 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { DEMO_HREF, mainNav } from '../data/navigation';
+
+const produit = mainNav.find((group) => group.label === 'Produit');
+const solutions = mainNav.find((group) => group.label === 'Solutions');
+
+const partenaires = [
+  { src: '/assets/partners/missions_locales_grayscale.png', alt: 'Missions Locales' },
+  { src: '/assets/partners/aura_grayscale.png', alt: 'Région Auvergne-Rhône-Alpes' },
+  { src: '/assets/partners/cma_grayscale.png', alt: 'Chambre de Métiers et de l’Artisanat' },
+  { src: '/assets/partners/edlv_grayscale.png', alt: 'EDLV' },
+  { src: '/assets/partners/french_tech_grayscale.png', alt: 'French Tech' },
+];
+
+const badges = [
+  'IA illimitée, sans compteur',
+  'Preuves Qualiopi automatiques',
+  'Aucun enregistrement de vos séances',
+];
+
+const problemes = [
+  {
+    titre: 'Vos outils ne se parlent pas',
+    texte:
+      'Un outil pour les tests, un tableur pour le suivi, une boîte mail pour les documents, un traitement de texte pour les synthèses. Chaque passage de l’un à l’autre se paie en ressaisie.',
+  },
+  {
+    titre: 'L’administratif mange le temps d’accompagnement',
+    texte:
+      'Le temps passé à remettre en forme, retrouver, recopier est du temps qui ne va ni au bénéficiaire ni à de nouveaux dossiers.',
+  },
+  {
+    titre: 'Les preuves se reconstituent après coup',
+    texte:
+      'À l’approche de l’audit, il faut retrouver qui a signé quoi, quand, et sur quelle séance. Nos bêta-testeurs estimaient y passer 2 à 4 heures par audit — un travail refait à chaque cycle.',
+  },
+];
+---
+
+<BaseLayout
+  title="Gonabi"
+  description="Gonabi réunit tests psychométriques, parcours, exploration métiers et synthèses IA dans un seul outil pour les cabinets RH et organismes de formation. L'IA est illimitée."
+  canonical="/"
+>
+  <section class="home-hero">
+    <div class="gnb-container home-hero__grid">
+      <div>
+        <h1>La plateforme qui structure, automatise et valorise vos accompagnements</h1>
+        <p class="gnb-lead">
+          Tests, parcours, exploration métiers, synthèses et preuves de conformité au même endroit.
+          Vous passez moins de temps à administrer, plus de temps à accompagner.
+        </p>
+        <div class="home-hero__actions">
+          <a href={DEMO_HREF} class="gnb-btn gnb-btn--primary">Réserver une démo</a>
+          <a href="/produit" class="gnb-btn gnb-btn--secondary">Découvrir le produit</a>
+        </div>
+        <ul class="home-hero__badges">
+          {badges.map((badge) => <li>{badge}</li>)}
+        </ul>
+      </div>
+
+      <div class="home-hero__visual">
+        <img
+          src="/assets/images/Hero_visual.png"
+          alt="Interface Gonabi : tableau de bord, profil psychométrique et parcours personnalisés"
+          width="640"
+          height="480"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="partners" aria-label="Ils nous font confiance">
+    <div class="gnb-container partners__row">
+      {
+        partenaires.map((partenaire) => (
+          <img src={partenaire.src} alt={partenaire.alt} loading="lazy" class="partners__logo" />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Ce qui vous freine aujourd'hui</h2>
+      <div class="gnb-grid gnb-grid--3 home-grid">
+        {
+          problemes.map((probleme) => (
+            <article class="gnb-card">
+              <h3>{probleme.titre}</h3>
+              <p>{probleme.texte}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--blue">
+    <div class="gnb-container">
+      <h2>Tout l'accompagnement dans un seul outil</h2>
+      <p class="gnb-lead">
+        Chaque brique alimente la suivante : les tests nourrissent l'exploration métiers, le
+        parcours produit ses preuves, et la synthèse se rédige à partir de tout ce qui précède.
+      </p>
+      <div class="gnb-grid gnb-grid--3 home-grid">
+        {
+          produit?.children?.map((page) => (
+            <a href={page.href} class="gnb-card home-link-card">
+              <h3>{page.label}</h3>
+              <p>{page.description}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Pour qui</h2>
+      <p class="gnb-lead">
+        Gonabi est conçu d'abord pour les cabinets RH et les organismes de formation qui comptent
+        de quelques consultants à une trentaine, et qui accompagnent en bilan de compétences,
+        évolution professionnelle ou orientation.
+      </p>
+      <div class="gnb-grid gnb-grid--4 home-grid">
+        {
+          solutions?.children?.map((page) => (
+            <a href={page.href} class="gnb-card home-link-card">
+              <h3>{page.label}</h3>
+              <p>{page.description}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Ce qui nous différencie</h2>
+      <div class="gnb-grid gnb-grid--3 home-grid">
+        <article class="gnb-card">
+          <h3>L'IA n'est pas rationnée</h3>
+          <p>
+            Générer une synthèse ne consomme aucun crédit. Notre prix ne dépend pas du nombre de
+            synthèses que vous produisez — c'est un choix de modèle économique.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>La conformité naît de l'accompagnement</h3>
+          <p>
+            Les preuves Qualiopi ne se saisissent pas dans un module à part : elles sont produites
+            par les séances que vous menez déjà.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Le bénéficiaire est dans la boucle</h3>
+          <p>
+            Il passe ses tests, suit son parcours et explore ses pistes depuis son propre espace.
+            Vous décidez de ce qu'il voit et quand.
+          </p>
+        </article>
+      </div>
+      <p class="home-more"><a href="/produit/syntheses-ia">Comprendre l'IA illimitée</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Ils utilisent Gonabi</h2>
+      <p class="gnb-lead">
+        <span class="gnb-todo">[À FOURNIR]</span> Aucun témoignage n'est affiché tant que les
+        verbatims n'ont pas été recueillis et autorisés par écrit par les clients concernés.
+      </p>
+      <p class="home-more"><a href="/temoignages">Voir la page témoignages</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Vous changez d'outil ? C'est l'objection qu'on entend le plus</h2>
+      <p class="gnb-lead">
+        Perdre son historique, faire réapprendre ses consultants, s'arrêter pendant la bascule :
+        ces craintes passent avant le prix dans les échanges que nous avons. Nous leur avons
+        consacré une page entière plutôt qu'un paragraphe rassurant.
+      </p>
+      <p class="home-more"><a href="/migrer-vers-gonabi">Migrer vers Gonabi</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Sécurité et confiance</h2>
+      <p class="gnb-lead">
+        Vous manipulez des données sensibles, couvertes par la confidentialité du bilan de
+        compétences. Nous n'enregistrons pas vos séances, et nous documentons publiquement ce que
+        deviennent les données que vous nous confiez.
+      </p>
+      <p class="home-more">
+        <a href="/a-propos/securite-rgpd">Sécurité &amp; RGPD</a> ·
+        <a href="/produit/conformite-qualiopi">Conformité Qualiopi</a>
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .home-hero {
+    padding: var(--gnb-space-12) 5%;
+    background: linear-gradient(180deg, var(--gnb-cream) 0%, var(--gnb-cream-light) 100%);
+  }
+
+  .home-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gnb-space-12);
+    align-items: center;
+  }
+
+  .home-hero h1 {
+    margin-bottom: var(--gnb-space-6);
+  }
+
+  .home-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gnb-space-4);
+    margin-top: var(--gnb-space-8);
+  }
+
+  .home-hero__badges {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gnb-space-4);
+    margin-top: var(--gnb-space-8);
+  }
+
+  .home-hero__badges li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--gnb-text-sm);
+    color: var(--gnb-text-muted);
+  }
+
+  .home-hero__badges li::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gnb-blue);
+    flex-shrink: 0;
+  }
+
+  .home-hero__visual img {
+    width: 100%;
+    height: auto;
+  }
+
+  .partners {
+    padding: var(--gnb-space-8) 5%;
+    background: var(--gnb-cream-light);
+    border-block: 1px solid var(--gnb-border-soft);
+  }
+
+  .partners__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: var(--gnb-space-8);
+  }
+
+  .partners__logo {
+    height: 40px;
+    width: auto;
+    opacity: 0.65;
+    transition: opacity 0.3s ease;
+  }
+
+  .partners__logo:hover {
+    opacity: 1;
+  }
+
+  .home-grid {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .home-link-card {
+    text-decoration: none;
+    transition: var(--gnb-transition);
+  }
+
+  .home-link-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+
+  .home-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .home-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .home-hero__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

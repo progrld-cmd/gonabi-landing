@@ -1,0 +1,130 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import PageLayout from '../../../../layouts/PageLayout.astro';
+import CtaBand from '../../../../components/CtaBand.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const articles = await getCollection('blog', ({ data }) => !data.draft);
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+};
+
+interface Props {
+  article: CollectionEntry<'blog'>;
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+const dateFormat = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<PageLayout
+  title={article.data.title}
+  description={article.data.description}
+  eyebrow={article.data.categorie}
+  lead={article.data.description}
+  breadcrumbs={[
+    { label: 'Ressources', href: '/ressources' },
+    { label: 'Blog', href: '/ressources/blog' },
+    { label: article.data.title },
+  ]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container gnb-container--narrow">
+      <p class="article-meta">
+        <time datetime={article.data.date.toISOString()}>
+          Publié le {dateFormat.format(article.data.date)}
+        </time>
+        {article.data.auteur && <span> · {article.data.auteur}</span>}
+        {
+          article.data.updatedDate && (
+            <span>
+              {' '}· Mis à jour le{' '}
+              <time datetime={article.data.updatedDate.toISOString()}>
+                {dateFormat.format(article.data.updatedDate)}
+              </time>
+            </span>
+          )
+        }
+      </p>
+
+      <div class="gnb-prose article-body">
+        <Content />
+      </div>
+
+      {
+        article.data.tags.length > 0 && (
+          <ul class="article-tags" aria-label="Mots-clés">
+            {article.data.tags.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+        )
+      }
+
+      <p class="article-back"><a href="/ressources/blog">← Tous les articles</a></p>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .article-meta {
+    font-size: var(--gnb-text-sm);
+    color: var(--gnb-text-muted);
+    margin-bottom: var(--gnb-space-8);
+  }
+
+  .article-body {
+    max-width: none;
+  }
+
+  .article-body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.925rem;
+  }
+
+  .article-body :global(th),
+  .article-body :global(td) {
+    border: 1px solid var(--gnb-border-soft);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
+
+  .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gnb-space-2);
+    list-style: none;
+    margin-top: var(--gnb-space-8);
+  }
+
+  .article-tags li {
+    font-size: var(--gnb-text-xs);
+    color: var(--gnb-text-muted);
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-pill);
+    padding: 0.25rem 0.75rem;
+  }
+
+  .article-back {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .article-back a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

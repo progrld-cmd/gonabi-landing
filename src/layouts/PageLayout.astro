@@ -1,0 +1,57 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import type { Crumb } from '../components/Breadcrumbs.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  /** H1 de la page. À défaut, on reprend `title`. */
+  heading?: string;
+  /** Surtitre court au-dessus du H1. */
+  eyebrow?: string;
+  /** Chapô sous le H1. */
+  lead?: string;
+  /** Fil d'Ariane. Omis sur les pages de premier niveau. */
+  breadcrumbs?: Crumb[];
+  canonical?: string;
+  noindex?: boolean;
+}
+
+const { title, description, heading, eyebrow, lead, breadcrumbs, canonical, noindex } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} noindex={noindex}>
+  <section class="page-hero">
+    <div class="gnb-container">
+      {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+      {eyebrow && <p class="gnb-eyebrow">{eyebrow}</p>}
+      <h1>{heading ?? title}</h1>
+      {lead && <p class="gnb-lead">{lead}</p>}
+      <slot name="hero-actions" />
+    </div>
+  </section>
+
+  <slot />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: var(--gnb-space-12) 5% var(--gnb-space-8);
+    background: linear-gradient(180deg, var(--gnb-cream) 0%, var(--gnb-cream-light) 100%);
+  }
+
+  .page-hero .gnb-eyebrow {
+    margin-top: var(--gnb-space-6);
+    margin-bottom: var(--gnb-space-2);
+  }
+
+  .page-hero h1 {
+    max-width: 22ch;
+    margin-bottom: var(--gnb-space-4);
+  }
+
+  .page-hero :global(.gnb-lead) {
+    margin-bottom: var(--gnb-space-6);
+  }
+</style>

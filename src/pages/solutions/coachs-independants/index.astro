@@ -1,0 +1,73 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Gonabi pour les coachs indépendants"
+  description="La structure d'un cabinet sans l'équipe qui va avec : trames de parcours, tests, exploration métiers et synthèses, dans un outil unique tenu par une seule personne."
+  heading="La structure d'un cabinet, sans l'équipe qui va avec"
+  eyebrow="Solutions"
+  lead="Seul, vous faites tout : l'accompagnement, l'administratif, la prospection. Chaque heure passée à remettre en forme une synthèse est une heure qui ne va ni à vos bénéficiaires ni à votre activité."
+  breadcrumbs={[{ label: 'Solutions', href: '/solutions' }, { label: 'Coachs indépendants' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Ce que ça change quand on travaille seul</h2>
+      <div class="gnb-grid gnb-grid--3">
+        <article class="gnb-card">
+          <h3>Pas de paramétrage à faire</h3>
+          <p>
+            Les trames de parcours et la bibliothèque de ressources sont fournies. Vous démarrez
+            avec un cadre, vous l'adaptez ensuite à vos pratiques.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Le bénéficiaire avance sans vous</h3>
+          <p>
+            Il passe ses tests et explore ses pistes depuis son espace, entre deux séances. Vous
+            arrivez en entretien avec de la matière, pas avec une page blanche.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>La synthèse ne se facture pas à l'unité</h3>
+          <p>
+            L'IA est illimitée. Quand on a peu de dossiers, un outil qui compte les générations est
+            un outil qu'on n'ose pas utiliser.
+            <a href="/produit/syntheses-ia">Comprendre</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Une précision utile</h2>
+      <p class="gnb-lead">
+        Cette page s'adresse aux indépendants qui choisissent et financent leur propre outil. Si
+        vous intervenez en sous-traitance pour un cabinet qui impose sa plateforme, c'est à lui que
+        la question se pose — et c'est la page
+        <a href="/solutions/cabinets-rh">cabinets RH</a> qui le concerne.
+      </p>
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Démarrer seul"
+    brief="Décrire concrètement la prise en main sans équipe technique : ce qu'il faut faire le premier jour, le temps réel avant le premier bénéficiaire. Ne pas annoncer de durée non mesurée."
+    tone="white"
+  />
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .gnb-card a,
+  .gnb-lead a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+</style>

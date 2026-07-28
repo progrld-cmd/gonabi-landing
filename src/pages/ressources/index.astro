@@ -1,0 +1,156 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getCollection } from 'astro:content';
+
+const articles = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const rubriques = [
+  {
+    label: 'Blog',
+    href: '/ressources/blog',
+    texte: 'Articles de fond sur l’orientation, le bilan de compétences et le métier du conseil.',
+  },
+  {
+    label: 'Nouveautés',
+    href: '/nouveautes',
+    texte: 'Le journal des évolutions de la plateforme.',
+  },
+  {
+    label: 'Témoignages',
+    href: '/temoignages',
+    texte: 'Ce que disent les structures qui utilisent Gonabi.',
+  },
+  {
+    label: 'Bibliothèque de ressources',
+    href: '/produit/bibliotheque-ressources',
+    texte: 'Les supports intégrés à la plateforme, assignables aux bénéficiaires.',
+  },
+];
+
+const dateFormat = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<PageLayout
+  title="Ressources"
+  description="[À FOURNIR] Meta description — ressources Gonabi pour les professionnels de l'accompagnement, 150 à 160 caractères."
+  heading="Ressources"
+  eyebrow="Ressources"
+  lead="[À FOURNIR] Chapô : à qui s'adressent ces contenus et ce qu'on y trouve."
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Par type de contenu</h2>
+      <div class="gnb-grid gnb-grid--2 res-grid">
+        {
+          rubriques.map((rubrique) => (
+            <a href={rubrique.href} class="gnb-card res-card">
+              <h3>{rubrique.label}</h3>
+              <p>{rubrique.texte}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Derniers articles</h2>
+      {
+        articles.length > 0 ? (
+          <ul class="res-list">
+            {articles.map((article) => (
+              <li>
+                <a href={`/ressources/blog/${article.id}`}>
+                  <span class="res-list__meta">
+                    {article.data.categorie} · <time datetime={article.data.date.toISOString()}>
+                      {dateFormat.format(article.data.date)}
+                    </time>
+                  </span>
+                  <h3>{article.data.title}</h3>
+                  <p>{article.data.description}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="gnb-lead">Aucun article publié pour le moment.</p>
+        )
+      }
+      <p class="res-more"><a href="/ressources/blog">Tous les articles</a></p>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .res-grid {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .res-card {
+    text-decoration: none;
+    transition: var(--gnb-transition);
+  }
+
+  .res-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+
+  .res-list {
+    list-style: none;
+    display: grid;
+    gap: var(--gnb-space-4);
+    margin-top: var(--gnb-space-8);
+  }
+
+  .res-list a {
+    display: block;
+    padding: var(--gnb-space-6);
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-md);
+    text-decoration: none;
+    transition: var(--gnb-transition);
+  }
+
+  .res-list a:hover {
+    box-shadow: var(--gnb-shadow-md);
+  }
+
+  .res-list__meta {
+    display: block;
+    font-size: var(--gnb-text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gnb-text-muted);
+    margin-bottom: var(--gnb-space-2);
+  }
+
+  .res-list h3 {
+    font-size: var(--gnb-text-lg);
+    margin-bottom: var(--gnb-space-2);
+  }
+
+  .res-list p {
+    color: var(--gnb-text-muted);
+  }
+
+  .res-more {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .res-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+  }
+</style>

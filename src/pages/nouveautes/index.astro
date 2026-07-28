@@ -1,0 +1,160 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getCollection } from 'astro:content';
+
+const entrees = (await getCollection('nouveautes', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const dateFormat = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+
+/** Regroupement par mois pour donner un rythme de lecture au changelog. */
+const monthFormat = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' });
+const parMois = entrees.reduce<Map<string, typeof entrees>>((acc, entree) => {
+  const cle = monthFormat.format(entree.data.date);
+  acc.set(cle, [...(acc.get(cle) ?? []), entree]);
+  return acc;
+}, new Map());
+---
+
+<PageLayout
+  title="Nouveautés"
+  description="[À FOURNIR] Meta description — journal des évolutions de la plateforme Gonabi, 150 à 160 caractères."
+  heading="Nouveautés"
+  eyebrow="Changelog"
+  lead="Les évolutions de la plateforme, de la plus récente à la plus ancienne."
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container gnb-container--narrow">
+      {
+        entrees.length > 0 ? (
+          [...parMois.entries()].map(([mois, items]) => (
+            <div class="changelog-month">
+              <h2 class="changelog-month__title">{mois}</h2>
+              <ul class="changelog-list">
+                {items.map((entree) => (
+                  <li>
+                    <article class="changelog-entry">
+                      <p class="changelog-entry__meta">
+                        <span class:list={['changelog-badge', `is-${entree.data.categorie.toLowerCase()}`]}>
+                          {entree.data.categorie}
+                        </span>
+                        <time datetime={entree.data.date.toISOString()}>
+                          {dateFormat.format(entree.data.date)}
+                        </time>
+                        {entree.data.version && <span class="changelog-version">{entree.data.version}</span>}
+                      </p>
+                      <h3>
+                        <a href={`/nouveautes/${entree.id}`}>{entree.data.title}</a>
+                      </h3>
+                      <p class="changelog-entry__desc">{entree.data.description}</p>
+                    </article>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        ) : (
+          <p class="gnb-lead">
+            Aucune nouveauté publiée pour le moment. Déposer un fichier Markdown dans
+            <code>src/data/nouveautes/</code> pour en créer une.
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .changelog-month + .changelog-month {
+    margin-top: var(--gnb-space-12);
+  }
+
+  .changelog-month__title {
+    font-size: var(--gnb-text-h3);
+    text-transform: capitalize;
+    padding-bottom: var(--gnb-space-3);
+    border-bottom: 1px solid var(--gnb-border-soft);
+    margin-bottom: var(--gnb-space-6);
+  }
+
+  .changelog-list {
+    list-style: none;
+    display: grid;
+    gap: var(--gnb-space-6);
+  }
+
+  .changelog-entry {
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-md);
+    padding: var(--gnb-space-6);
+  }
+
+  .changelog-entry__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gnb-space-3);
+    font-size: var(--gnb-text-sm);
+    color: var(--gnb-text-muted);
+    margin-bottom: var(--gnb-space-3);
+  }
+
+  .changelog-badge {
+    font-size: var(--gnb-text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--gnb-radius-pill);
+    padding: 0.2rem 0.7rem;
+    background: var(--gnb-cream);
+    color: var(--gnb-text);
+  }
+
+  .changelog-badge.is-nouveauté {
+    background: var(--gnb-red-light);
+    color: var(--gnb-red);
+  }
+  .changelog-badge.is-amélioration {
+    background: var(--gnb-blue-light);
+    color: #0d7c94;
+  }
+  .changelog-badge.is-correction {
+    background: var(--gnb-yellow-light);
+    color: #8a6400;
+  }
+  .changelog-badge.is-sécurité {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  .changelog-version {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: var(--gnb-text-xs);
+  }
+
+  .changelog-entry h3 {
+    font-size: var(--gnb-text-lg);
+    margin-bottom: var(--gnb-space-2);
+  }
+
+  .changelog-entry h3 a {
+    text-decoration: none;
+  }
+
+  .changelog-entry h3 a:hover {
+    color: var(--gnb-red);
+  }
+
+  .changelog-entry__desc {
+    color: var(--gnb-text-muted);
+  }
+</style>

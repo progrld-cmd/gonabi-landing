@@ -1,0 +1,15 @@
+---
+// Avec `build.format: 'preserve'`, ce fichier produit /politique-confidentialite.html.
+// URL déjà indexée : ne pas renommer ce fichier et ne pas le déplacer dans un
+// sous-dossier — cela produirait /politique-confidentialite/index.html.
+import LegalLayout from '../layouts/LegalLayout.astro';
+import html from '../legal/politique-confidentialite.html?raw';
+---
+
+<LegalLayout
+  title="Politique de confidentialité"
+  description="Politique de confidentialité de Gonabi - Protection de vos données personnelles"
+  canonical="/politique-confidentialite.html"
+  crumb="Politique de confidentialité"
+  html={html}
+/>
