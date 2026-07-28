@@ -1,0 +1,15 @@
+---
+// Avec `build.format: 'preserve'`, ce fichier produit /politique-cookies.html.
+// URL déjà indexée : ne pas renommer ce fichier et ne pas le déplacer dans un
+// sous-dossier — cela produirait /politique-cookies/index.html.
+import LegalLayout from '../layouts/LegalLayout.astro';
+import html from '../legal/politique-cookies.html?raw';
+---
+
+<LegalLayout
+  title="Politique cookies"
+  description="Politique relative aux cookies de Gonabi - Landing page & Plateforme"
+  canonical="/politique-cookies.html"
+  crumb="Politique relative aux cookies"
+  html={html}
+/>

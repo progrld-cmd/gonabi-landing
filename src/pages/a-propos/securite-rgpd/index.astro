@@ -1,0 +1,77 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { legalNav } from '../../../data/navigation';
+---
+
+<PageLayout
+  title="Sécurité & RGPD"
+  description="[À FOURNIR] Meta description — sécurité des données et conformité RGPD chez Gonabi, 150 à 160 caractères."
+  heading="Sécurité &amp; RGPD"
+  eyebrow="À propos"
+  lead="[À FOURNIR] Chapô : engagement sur la protection des données des bénéficiaires."
+  breadcrumbs={[{ label: 'À propos', href: '/a-propos' }, { label: 'Sécurité & RGPD' }]}
+>
+  <PlaceholderSection
+    title="Hébergement et localisation des données"
+    brief="Hébergeur, région, sous-traitants. Uniquement des informations vérifiables."
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Mesures de sécurité"
+    brief="Chiffrement, contrôle d'accès, sauvegardes, journalisation. Ne rien affirmer qui ne soit en place."
+    items={['Chiffrement', 'Contrôle d’accès', 'Sauvegardes']}
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Rôles RGPD"
+    brief="Qui est responsable de traitement, qui est sous-traitant, et sur quels traitements."
+    tone="white"
+  />
+
+  <PlaceholderSection
+    title="Droits des personnes"
+    brief="Exercice des droits d'accès, rectification, effacement, portabilité, et point de contact."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Certifications et audits"
+    brief="Ne lister que des certifications réellement obtenues. Sinon, laisser la section vide."
+    tone="cream-light"
+  />
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Documents de référence</h2>
+      <ul class="security-links">
+        {
+          legalNav.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .security-links {
+    list-style: none;
+    display: grid;
+    gap: var(--gnb-space-3);
+    margin-top: var(--gnb-space-6);
+  }
+
+  .security-links a {
+    color: var(--gnb-red);
+    font-weight: 600;
+  }
+</style>

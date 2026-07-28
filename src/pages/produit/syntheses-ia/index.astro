@@ -1,0 +1,50 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Synthèses IA"
+  description="[À FOURNIR] Meta description — génération assistée des synthèses d'accompagnement, 150 à 160 caractères."
+  heading="Synthèses IA"
+  eyebrow="Produit"
+  lead="[À FOURNIR] Chapô : du temps rendu sur la rédaction, sans perdre la main sur le contenu."
+  breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Synthèses IA' }]}
+>
+  <PlaceholderSection
+    title="De la donnée du parcours à la synthèse"
+    brief="Expliquer ce que l'IA exploite et ce qu'elle produit."
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Le consultant garde la main"
+    brief="Insister sur la relecture et la modification : l'IA propose, le consultant valide."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Ce que devient la donnée"
+    brief="Traitement des données personnelles dans le cadre de la génération. Renvoyer vers Sécurité & RGPD."
+    tone="white"
+  >
+    <p class="feature-more">
+      <a href="/a-propos/securite-rgpd">Sécurité &amp; RGPD</a>
+    </p>
+  </PlaceholderSection>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .feature-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .feature-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+</style>

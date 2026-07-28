@@ -1,0 +1,73 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { mainNav } from '../../data/navigation';
+
+const produit = mainNav.find((group) => group.label === 'Produit');
+---
+
+<PageLayout
+  title="Produit"
+  description="[À FOURNIR] Meta description — vue d'ensemble des fonctionnalités de Gonabi, 150 à 160 caractères."
+  heading="Tout l'accompagnement, dans un seul outil"
+  eyebrow="Produit"
+  lead="[À FOURNIR] Chapô : ce que couvre la plateforme, du premier rendez-vous à la synthèse finale."
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Les briques de la plateforme</h2>
+      <div class="gnb-grid gnb-grid--3 hub-grid">
+        {
+          produit?.children?.map((page) => (
+            <a href={page.href} class="gnb-card hub-card">
+              <h3>{page.label}</h3>
+              <p>
+                <span class="gnb-todo">[À FOURNIR]</span> Description en une à deux phrases.
+              </p>
+              <span class="hub-card__more" aria-hidden="true">En savoir plus →</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Comment ça s'articule</h2>
+      <p class="gnb-lead">
+        <span class="gnb-todo">[À FOURNIR]</span> Décrire le déroulé type d'un accompagnement, étape par
+        étape, en s'appuyant sur les briques ci-dessus.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .hub-grid {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .hub-card {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gnb-space-2);
+    transition: var(--gnb-transition);
+  }
+
+  .hub-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+
+  .hub-card__more {
+    margin-top: auto;
+    padding-top: var(--gnb-space-4);
+    font-size: var(--gnb-text-sm);
+    font-weight: 600;
+    color: var(--gnb-red);
+  }
+</style>

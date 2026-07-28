@@ -1,0 +1,35 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Gonabi pour les cabinets RH"
+  description="[À FOURNIR] Meta description — Gonabi pour les cabinets RH, 150 à 160 caractères."
+  heading="Gonabi pour les cabinets RH"
+  eyebrow="Solutions"
+  lead="[À FOURNIR] Chapô : l'enjeu principal des cabinets RH, formulé avec leurs mots."
+  breadcrumbs={[{ label: 'Solutions', href: '/solutions' }, { label: 'Cabinets RH' }]}
+>
+  <PlaceholderSection
+    title="Vos enjeux"
+    brief="Trois freins spécifiques à cette cible, issus d'entretiens clients réels."
+    items={['Enjeu 1', 'Enjeu 2', 'Enjeu 3']}
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Ce que Gonabi change"
+    brief="Relier chaque enjeu à une brique produit, avec un lien vers la page correspondante."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Mise en route"
+    brief="Décrire le déploiement type pour cette cible : durée, accompagnement, reprise des données."
+    tone="white"
+  />
+
+  <CtaBand />
+</PageLayout>

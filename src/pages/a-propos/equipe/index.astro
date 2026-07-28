@@ -1,0 +1,56 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="L'équipe"
+  description="[À FOURNIR] Meta description — l'équipe Gonabi, 150 à 160 caractères."
+  heading="L'équipe"
+  eyebrow="À propos"
+  lead="[À FOURNIR] Chapô : composition et complémentarité de l'équipe."
+  breadcrumbs={[{ label: 'À propos', href: '/a-propos' }, { label: "L'équipe" }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Qui fait Gonabi</h2>
+      <p class="gnb-lead team-note">
+        <span class="gnb-todo">[À FOURNIR]</span> Noms, rôles, photos et courtes bios. Aucune personne
+        n'est listée tant que les informations réelles n'ont pas été fournies.
+      </p>
+      <div class="gnb-grid gnb-grid--3 team-grid">
+        <article class="gnb-card">
+          <h3>Prénom Nom</h3>
+          <p><span class="gnb-todo">[À FOURNIR]</span> Rôle et bio courte.</p>
+        </article>
+        <article class="gnb-card">
+          <h3>Prénom Nom</h3>
+          <p><span class="gnb-todo">[À FOURNIR]</span> Rôle et bio courte.</p>
+        </article>
+        <article class="gnb-card">
+          <h3>Prénom Nom</h3>
+          <p><span class="gnb-todo">[À FOURNIR]</span> Rôle et bio courte.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Nous rejoindre"
+    brief="Postes ouverts, ou message clair s'il n'y en a pas. Ne pas inventer d'offre."
+    tone="cream"
+  />
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .team-note {
+    margin-bottom: var(--gnb-space-8);
+  }
+
+  .team-grid {
+    margin-top: var(--gnb-space-8);
+  }
+</style>

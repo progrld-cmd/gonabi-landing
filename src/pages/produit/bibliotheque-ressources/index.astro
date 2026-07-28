@@ -1,0 +1,35 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Bibliothèque de ressources"
+  description="[À FOURNIR] Meta description — bibliothèque de ressources à assigner aux bénéficiaires, 150 à 160 caractères."
+  heading="Bibliothèque de ressources"
+  eyebrow="Produit"
+  lead="[À FOURNIR] Chapô : les supports à assigner au bénéficiaire, au bon moment du parcours."
+  breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Bibliothèque de ressources' }]}
+>
+  <PlaceholderSection
+    title="Ce que contient la bibliothèque"
+    brief="Décrire les types de ressources disponibles. Ne pas annoncer de nombre non vérifié."
+    items={['Type de ressource 1', 'Type de ressource 2', 'Type de ressource 3']}
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Ajouter vos propres supports"
+    brief="Expliquer l'import de contenus propres à la structure."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Assigner au bon moment"
+    brief="Décrire le lien entre ressources et étapes de parcours."
+    tone="white"
+  />
+
+  <CtaBand />
+</PageLayout>

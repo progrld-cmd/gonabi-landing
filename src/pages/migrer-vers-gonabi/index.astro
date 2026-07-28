@@ -1,0 +1,43 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../components/PlaceholderSection.astro';
+import CtaBand from '../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Migrer vers Gonabi"
+  description="[À FOURNIR] Meta description — reprise de l'existant et migration vers Gonabi, 150 à 160 caractères."
+  heading="Migrer vers Gonabi"
+  eyebrow="Migration"
+  lead="[À FOURNIR] Chapô : changer d'outil sans perdre l'historique ni interrompre les accompagnements en cours."
+>
+  <PlaceholderSection
+    title="Ce qu'on reprend de votre existant"
+    brief="Lister les types de données réellement importables. Ne rien promettre qui ne soit outillé."
+    items={['Bénéficiaires', 'Parcours en cours', 'Documents']}
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Les étapes de la migration"
+    brief="Décrire le déroulé, du cadrage à la bascule. Ne pas annoncer de délai non tenable."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Pendant la bascule"
+    brief="Expliquer comment les accompagnements en cours sont traités."
+    tone="white"
+  />
+
+  <PlaceholderSection
+    title="Questions fréquentes sur la migration"
+    brief="Format de données accepté, durée, coût, réversibilité."
+    tone="cream"
+  />
+
+  <CtaBand
+    title="Parlons de votre migration"
+    text="Un échange de cadrage permet d'évaluer le volume à reprendre et le calendrier réaliste."
+  />
+</PageLayout>

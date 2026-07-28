@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PlaceholderSection from '../components/PlaceholderSection.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { DEMO_HREF, mainNav } from '../data/navigation';
+
+const produit = mainNav.find((group) => group.label === 'Produit');
+const solutions = mainNav.find((group) => group.label === 'Solutions');
+
+const partenaires = [
+  { src: '/assets/partners/missions_locales_grayscale.png', alt: 'Missions Locales' },
+  { src: '/assets/partners/aura_grayscale.png', alt: 'Région Auvergne-Rhône-Alpes' },
+  { src: '/assets/partners/cma_grayscale.png', alt: 'Chambre de Métiers et de l’Artisanat' },
+  { src: '/assets/partners/edlv_grayscale.png', alt: 'EDLV' },
+  { src: '/assets/partners/french_tech_grayscale.png', alt: 'French Tech' },
+];
+---
+
+<BaseLayout
+  title="Gonabi"
+  description="[À FOURNIR] Meta description de la page d'accueil — 150 à 160 caractères, reprenant la promesse validée."
+  canonical="/"
+>
+  <section class="home-hero">
+    <div class="gnb-container home-hero__grid">
+      <div>
+        <h1>
+          La plateforme qui structure, automatise et valorise vos accompagnements
+        </h1>
+        <p class="gnb-lead">
+          Créez des parcours sur mesure, automatisez les tâches répétitives et gérez vos suivis en
+          temps réel, au même endroit.
+        </p>
+        <div class="home-hero__actions">
+          <a href={DEMO_HREF} class="gnb-btn gnb-btn--primary">Réserver une démo</a>
+          <a href="/produit" class="gnb-btn gnb-btn--secondary">Découvrir le produit</a>
+        </div>
+      </div>
+
+      <div class="home-hero__visual">
+        <img
+          src="/assets/images/Hero_visual.png"
+          alt="Interface Gonabi : tableau de bord, profil psychométrique et parcours personnalisés"
+          width="640"
+          height="480"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="partners" aria-label="Ils nous font confiance">
+    <div class="gnb-container partners__row">
+      {
+        partenaires.map((partenaire) => (
+          <img src={partenaire.src} alt={partenaire.alt} loading="lazy" class="partners__logo" />
+        ))
+      }
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Le problème que Gonabi résout"
+    brief="Reprendre les 3 freins quotidiens des structures d'accompagnement, formulés avec leurs mots."
+    items={['Frein 1', 'Frein 2', 'Frein 3']}
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Ce que vous pouvez faire avec Gonabi"
+    brief="Présenter chaque brique produit en une phrase, avec un lien vers sa page dédiée."
+    tone="blue"
+  >
+    <div class="gnb-grid gnb-grid--3 home-links">
+      {
+        produit?.children?.map((page) => (
+          <a href={page.href} class="gnb-card home-link-card">
+            <h3>{page.label}</h3>
+            <p>
+              <span class="gnb-todo">[À FOURNIR]</span> Bénéfice en une phrase.
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </PlaceholderSection>
+
+  <PlaceholderSection
+    title="Pour qui"
+    brief="Orienter chaque type de structure vers sa page Solutions."
+    tone="cream"
+  >
+    <div class="gnb-grid gnb-grid--4 home-links">
+      {
+        solutions?.children?.map((page) => (
+          <a href={page.href} class="gnb-card home-link-card">
+            <h3>{page.label}</h3>
+            <p>
+              <span class="gnb-todo">[À FOURNIR]</span> Enjeu principal de cette cible.
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </PlaceholderSection>
+
+  <PlaceholderSection
+    title="Ce qui nous différencie"
+    brief="Développer le différenciateur validé, sans le diluer. Ne pas introduire de chiffre non sourcé."
+    items={['Différenciateur 1', 'Différenciateur 2', 'Différenciateur 3']}
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Ils utilisent Gonabi"
+    brief="Sélection de 3 témoignages clients vérifiés, avec renvoi vers la page Témoignages."
+    tone="cream"
+  >
+    <p class="home-more">
+      <a href="/temoignages">Voir tous les témoignages</a>
+    </p>
+  </PlaceholderSection>
+
+  <PlaceholderSection
+    title="Sécurité, conformité et confiance"
+    brief="Résumer les engagements RGPD et Qualiopi, avec renvoi vers les pages dédiées."
+    tone="white"
+  >
+    <p class="home-more">
+      <a href="/a-propos/securite-rgpd">Sécurité &amp; RGPD</a> ·
+      <a href="/produit/conformite-qualiopi">Conformité Qualiopi</a>
+    </p>
+  </PlaceholderSection>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .home-hero {
+    padding: var(--gnb-space-12) 5%;
+    background: linear-gradient(180deg, var(--gnb-cream) 0%, var(--gnb-cream-light) 100%);
+  }
+
+  .home-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gnb-space-12);
+    align-items: center;
+  }
+
+  .home-hero h1 {
+    margin-bottom: var(--gnb-space-6);
+  }
+
+  .home-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gnb-space-4);
+    margin-top: var(--gnb-space-8);
+  }
+
+  .home-hero__visual img {
+    width: 100%;
+    height: auto;
+  }
+
+  .partners {
+    padding: var(--gnb-space-8) 5%;
+    background: var(--gnb-cream-light);
+    border-block: 1px solid var(--gnb-border-soft);
+  }
+
+  .partners__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: var(--gnb-space-8);
+  }
+
+  .partners__logo {
+    height: 40px;
+    width: auto;
+    opacity: 0.65;
+    transition: opacity 0.3s ease;
+  }
+
+  .partners__logo:hover {
+    opacity: 1;
+  }
+
+  .home-links {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .home-link-card {
+    text-decoration: none;
+    transition: var(--gnb-transition);
+  }
+
+  .home-link-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+
+  .home-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .home-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .home-hero__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

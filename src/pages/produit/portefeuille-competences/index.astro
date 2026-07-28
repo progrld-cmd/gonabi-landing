@@ -1,0 +1,35 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Portefeuille de compétences"
+  description="[À FOURNIR] Meta description — portefeuille de compétences du bénéficiaire, 150 à 160 caractères."
+  heading="Portefeuille de compétences"
+  eyebrow="Produit"
+  lead="[À FOURNIR] Chapô : donner au bénéficiaire une vue claire et transférable de ses compétences."
+  breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Portefeuille de compétences' }]}
+>
+  <PlaceholderSection
+    title="Identifier les compétences"
+    brief="Décrire la collecte : expériences, formations, tests, auto-évaluation."
+    items={['Expériences', 'Formations', 'Auto-évaluation']}
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Un référentiel commun"
+    brief="Préciser le référentiel de compétences utilisé et son origine."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Valoriser et exporter"
+    brief="Décrire les usages en sortie d'accompagnement : CV, entretien, VAE, mobilité."
+    tone="white"
+  />
+
+  <CtaBand />
+</PageLayout>

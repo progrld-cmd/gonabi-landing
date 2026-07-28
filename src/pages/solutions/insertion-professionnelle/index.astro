@@ -1,0 +1,38 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Gonabi pour l'insertion professionnelle"
+  description="[À FOURNIR] Meta description — Gonabi pour les acteurs de l'insertion professionnelle, 150 à 160 caractères."
+  heading="Gonabi pour l'insertion professionnelle"
+  eyebrow="Solutions"
+  lead="[À FOURNIR] Chapô : l'enjeu principal des structures d'insertion, formulé avec leurs mots."
+  breadcrumbs={[
+    { label: 'Solutions', href: '/solutions' },
+    { label: 'Insertion professionnelle' },
+  ]}
+>
+  <PlaceholderSection
+    title="Vos enjeux"
+    brief="Trois freins spécifiques à cette cible, issus d'entretiens clients réels."
+    items={['Enjeu 1', 'Enjeu 2', 'Enjeu 3']}
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Ce que Gonabi change"
+    brief="Relier chaque enjeu à une brique produit, avec un lien vers la page correspondante."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Suivi de cohortes et reporting"
+    brief="Décrire les besoins de pilotage propres aux financeurs publics. Aucun chiffre inventé."
+    tone="white"
+  />
+
+  <CtaBand />
+</PageLayout>

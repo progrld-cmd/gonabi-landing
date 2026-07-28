@@ -1,0 +1,41 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Conformité Qualiopi"
+  description="[À FOURNIR] Meta description — ce que Gonabi apporte pour la conformité Qualiopi, 150 à 160 caractères."
+  heading="Conformité Qualiopi"
+  eyebrow="Produit"
+  lead="[À FOURNIR] Chapô : traçabilité et preuves d'accompagnement, sans travail administratif supplémentaire."
+  breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Conformité Qualiopi' }]}
+>
+  <PlaceholderSection
+    title="Les indicateurs concernés"
+    brief="Lister uniquement les indicateurs du référentiel national qualité sur lesquels l'outil produit réellement des éléments. Ne pas laisser entendre que l'outil certifie."
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Les preuves générées automatiquement"
+    brief="Décrire les traces produites au fil du parcours et leur export."
+    items={['Trace 1', 'Trace 2', 'Trace 3']}
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Préparer un audit"
+    brief="Décrire le rassemblement des pièces au moment de l'audit."
+    tone="white"
+  />
+
+  <PlaceholderSection
+    title="Ce que Gonabi ne fait pas"
+    brief="Clarifier honnêtement la limite : l'outil ne délivre pas la certification. Section à conserver."
+    tone="cream"
+  />
+
+  <CtaBand />
+</PageLayout>

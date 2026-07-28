@@ -1,0 +1,15 @@
+# Build Astro
+dist/
+.astro/
+
+# Dépendances
+node_modules/
+
+# Environnement
+.env
+.env.production
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+*.log

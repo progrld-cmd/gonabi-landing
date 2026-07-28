@@ -1,0 +1,99 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { DEMO_HREF } from '../../data/navigation';
+---
+
+<PageLayout
+  title="Contact"
+  description="[À FOURNIR] Meta description — contacter l'équipe Gonabi, 150 à 160 caractères."
+  heading="Nous contacter"
+  eyebrow="Contact"
+  lead="[À FOURNIR] Chapô : à qui s'adresse chaque canal et sous quel délai on répond."
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container contact-grid">
+      <div>
+        <h2>Par canal</h2>
+        <dl class="contact-list">
+          <dt>Commercial</dt>
+          <dd><span class="gnb-todo">[À FOURNIR]</span> Adresse e-mail.</dd>
+
+          <dt>Support client</dt>
+          <dd><span class="gnb-todo">[À FOURNIR]</span> Adresse e-mail ou lien vers l'aide en ligne.</dd>
+
+          <dt>Protection des données</dt>
+          <dd>
+            <span class="gnb-todo">[À FOURNIR]</span> Contact RGPD — doit correspondre à celui indiqué
+            dans la <a href="/politique-confidentialite.html">politique de confidentialité</a>.
+          </dd>
+
+          <dt>Adresse postale</dt>
+          <dd>
+            <span class="gnb-todo">[À FOURNIR]</span> Siège social — doit correspondre aux
+            <a href="/mentions-legales.html">mentions légales</a>.
+          </dd>
+        </dl>
+      </div>
+
+      <div>
+        <h2>Formulaire</h2>
+        <div class="contact-form-slot">
+          <p>
+            <span class="gnb-todo">[À FOURNIR]</span> Emplacement réservé au formulaire de contact.
+            L'outil de traitement (destinataire, CRM, conformité RGPD du recueil) n'est pas encore
+            arbitré — le formulaire n'est donc pas posé à ce stade.
+          </p>
+        </div>
+
+        <h3>Vous voulez voir l'outil ?</h3>
+        <p class="contact-text">
+          Une démonstration guidée est souvent plus rapide qu'un échange écrit.
+        </p>
+        <a href={DEMO_HREF} class="gnb-btn gnb-btn--primary">Réserver une démo</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gnb-space-12);
+    align-items: start;
+  }
+
+  .contact-list {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .contact-list dt {
+    font-weight: 600;
+    margin-top: var(--gnb-space-6);
+  }
+
+  .contact-list dd {
+    color: var(--gnb-text-muted);
+    margin-top: var(--gnb-space-1);
+  }
+
+  .contact-form-slot {
+    margin: var(--gnb-space-6) 0 var(--gnb-space-8);
+    padding: var(--gnb-space-8);
+    background: var(--gnb-white);
+    border: 1px dashed var(--gnb-border);
+    border-radius: var(--gnb-radius-md);
+    color: var(--gnb-text-muted);
+  }
+
+  .contact-text {
+    color: var(--gnb-text-muted);
+    margin: var(--gnb-space-3) 0 var(--gnb-space-6);
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

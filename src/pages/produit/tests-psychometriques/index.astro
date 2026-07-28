@@ -1,0 +1,41 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Tests psychométriques"
+  description="[À FOURNIR] Meta description — tests psychométriques Gonabi, 150 à 160 caractères."
+  heading="Tests psychométriques"
+  eyebrow="Produit"
+  lead="[À FOURNIR] Chapô : ce que les tests apportent au consultant et au bénéficiaire."
+  breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Tests psychométriques' }]}
+>
+  <PlaceholderSection
+    title="Ce que couvrent les tests"
+    brief="Lister les dimensions évaluées. Ne mentionner que les tests réellement disponibles."
+    items={['Dimension 1', 'Dimension 2', 'Dimension 3']}
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Comment ça se passe pour le bénéficiaire"
+    brief="Décrire le parcours de passation, de l'invitation à la restitution."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Ce que le consultant récupère"
+    brief="Décrire les livrables : profil, restitution, intégration à la synthèse."
+    tone="white"
+  />
+
+  <PlaceholderSection
+    title="Fondements scientifiques"
+    brief="Sources et référentiels utilisés. Ne rien affirmer qui ne soit documenté."
+    tone="cream"
+  />
+
+  <CtaBand />
+</PageLayout>

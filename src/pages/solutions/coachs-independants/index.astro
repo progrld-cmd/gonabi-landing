@@ -1,0 +1,35 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Gonabi pour les coachs indépendants"
+  description="[À FOURNIR] Meta description — Gonabi pour les coachs indépendants, 150 à 160 caractères."
+  heading="Gonabi pour les coachs indépendants"
+  eyebrow="Solutions"
+  lead="[À FOURNIR] Chapô : l'enjeu principal des coachs indépendants, formulé avec leurs mots."
+  breadcrumbs={[{ label: 'Solutions', href: '/solutions' }, { label: 'Coachs indépendants' }]}
+>
+  <PlaceholderSection
+    title="Vos enjeux"
+    brief="Trois freins spécifiques à cette cible, issus d'entretiens clients réels."
+    items={['Enjeu 1', 'Enjeu 2', 'Enjeu 3']}
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Ce que Gonabi change"
+    brief="Relier chaque enjeu à une brique produit, avec un lien vers la page correspondante."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Démarrer seul"
+    brief="Décrire la prise en main sans équipe technique ni paramétrage lourd."
+    tone="white"
+  />
+
+  <CtaBand />
+</PageLayout>

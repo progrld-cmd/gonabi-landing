@@ -1,0 +1,35 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Parcours personnalisés"
+  description="[À FOURNIR] Meta description — création de parcours d'accompagnement sur mesure, 150 à 160 caractères."
+  heading="Parcours personnalisés"
+  eyebrow="Produit"
+  lead="[À FOURNIR] Chapô : construire un parcours adapté à chaque bénéficiaire sans repartir de zéro."
+  breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Parcours personnalisés' }]}
+>
+  <PlaceholderSection
+    title="Construire un parcours"
+    brief="Décrire l'éditeur de parcours : étapes, modules, durées, assignation."
+    items={['Étapes', 'Modules', 'Assignation']}
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Modèles réutilisables"
+    brief="Expliquer la logique de trames dupliquables d'un bénéficiaire à l'autre."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Suivi de l'avancement"
+    brief="Décrire la vision temps réel côté consultant et côté bénéficiaire."
+    tone="white"
+  />
+
+  <CtaBand />
+</PageLayout>

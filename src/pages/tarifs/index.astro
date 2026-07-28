@@ -1,0 +1,66 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../components/PlaceholderSection.astro';
+import CtaBand from '../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Tarifs"
+  description="[À FOURNIR] Meta description — offres et tarifs Gonabi, 150 à 160 caractères."
+  heading="Tarifs"
+  eyebrow="Tarifs"
+  lead="[À FOURNIR] Chapô : logique de tarification, sans chiffre tant qu'il n'est pas validé."
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Les offres</h2>
+      <p class="gnb-lead pricing-warning">
+        <span class="gnb-todo">[À FOURNIR]</span> Aucun montant n'est affiché ici tant que la grille
+        tarifaire n'a pas été validée explicitement. Noms d'offres, paliers et prix sont à renseigner
+        avant mise en ligne.
+      </p>
+
+      <div class="gnb-grid gnb-grid--3 pricing-grid">
+        <article class="gnb-card">
+          <h3>Offre 1</h3>
+          <p><span class="gnb-todo">[À FOURNIR]</span> Positionnement, prix, inclusions.</p>
+        </article>
+        <article class="gnb-card">
+          <h3>Offre 2</h3>
+          <p><span class="gnb-todo">[À FOURNIR]</span> Positionnement, prix, inclusions.</p>
+        </article>
+        <article class="gnb-card">
+          <h3>Offre 3</h3>
+          <p><span class="gnb-todo">[À FOURNIR]</span> Positionnement, prix, inclusions.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Ce qui est inclus dans toutes les offres"
+    brief="Lister le socle commun. Ne rien promettre qui ne soit effectivement livré."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Questions fréquentes sur les tarifs"
+    brief="Engagement, résiliation, facturation, évolution du nombre d'utilisateurs."
+    tone="white"
+  />
+
+  <CtaBand
+    title="Un devis adapté à votre structure"
+    text="Nous cadrons ensemble le périmètre et le nombre d'accompagnements avant de vous proposer un tarif."
+  />
+</PageLayout>
+
+<style>
+  .pricing-warning {
+    margin-bottom: var(--gnb-space-8);
+  }
+
+  .pricing-grid {
+    margin-top: var(--gnb-space-8);
+  }
+</style>
