@@ -5,167 +5,153 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="site-footer__inner">
-    <div class="site-footer__brand">
-      <a href="/" aria-label="Gonabi — Accueil">
-        <img
-          src="/assets/logos/Gonabi_Logo_Horizontal.png"
-          alt="Gonabi"
-          width="160"
-          height="44"
-          loading="lazy"
-        />
-      </a>
-      <p class="site-footer__tagline">
-        La plateforme qui structure, automatise et valorise vos accompagnements.
-      </p>
-      <a href={DEMO_HREF} class="gnb-btn gnb-btn--primary">Réserver une démo</a>
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a href="/" aria-label="Gonabi — Accueil">
+          <img
+            src="/assets/logos/Gonabi_Logo_Horizontal.png"
+            alt="Gonabi"
+            width="150"
+            height="40"
+            loading="lazy"
+          />
+        </a>
+        <p class="site-footer__tagline">
+          La plateforme qui structure, automatise et valorise vos accompagnements.
+        </p>
+        <a href={DEMO_HREF} class="btn btn--secondary">Réserver une démo</a>
+      </div>
+
+      <nav class="site-footer__cols" aria-label="Plan du site">
+        {
+          footerNav.map((group) => (
+            <div class="site-footer__col">
+              <h2 class="eyebrow">{group.label}</h2>
+              <ul>
+                {group.children?.map((link) => (
+                  <li>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </nav>
     </div>
 
-    <nav class="site-footer__cols" aria-label="Plan du site">
-      {
-        footerNav.map((group) => (
-          <div class="site-footer__col">
-            <h2 class="site-footer__col-title">{group.label}</h2>
-            <ul>
-              {group.children?.map((link) => (
-                <li>
-                  <a href={link.href}>{link.label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
-    </nav>
-  </div>
-
-  <div class="site-footer__bottom">
-    <div class="site-footer__bottom-inner">
-      <p class="site-footer__legal-mentions">
-        Gonabi — <span class="gnb-todo">[À FOURNIR]</span> forme juridique, capital, RCS, siège social.
-        Voir les <a href="/mentions-legales.html">mentions légales</a>.
+    <div class="site-footer__bottom">
+      <p class="site-footer__mentions">
+        Gonabi — <span class="gnb-todo">[À FOURNIR]</span> forme juridique, capital, RCS, siège
+        social. Voir les <a href="/mentions-legales.html" class="link">mentions légales</a>.
       </p>
+
       <nav class="site-footer__legal" aria-label="Liens légaux">
         {legalNav.map((link) => <a href={link.href}>{link.label}</a>)}
       </nav>
-      <p class="site-footer__copyright">Copyright © {year} Gonabi. Tous droits réservés.</p>
+
+      <p class="site-footer__copyright">© {year} Gonabi. Tous droits réservés.</p>
     </div>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    background: var(--gnb-cream);
-    border-top: 1px solid var(--gnb-border-soft);
+    background: var(--paper-light);
+    border-top: var(--border-hairline) solid var(--rule-strong);
   }
 
-  .site-footer__inner {
-    max-width: var(--gnb-container);
-    margin-inline: auto;
-    padding: var(--gnb-space-12) 5%;
+  .site-footer__top {
     display: grid;
-    grid-template-columns: minmax(240px, 1fr) 3fr;
-    gap: var(--gnb-space-12);
+    grid-template-columns: minmax(240px, 1fr) 2.4fr;
+    gap: var(--space-16);
+    padding-block: var(--section-y-tight);
   }
 
   .site-footer__brand img {
-    height: 44px;
+    height: 34px;
     width: auto;
-    margin-bottom: var(--gnb-space-4);
+    margin-bottom: var(--space-8);
   }
 
   .site-footer__tagline {
-    font-size: 0.9rem;
-    color: var(--gnb-text-muted);
-    line-height: var(--gnb-leading-relaxed);
-    margin-bottom: var(--gnb-space-6);
-    max-width: 30ch;
+    font-size: var(--size-small);
+    line-height: var(--leading-body);
+    color: var(--text-muted);
+    max-width: 32ch;
+    margin-bottom: var(--space-8);
   }
 
   .site-footer__cols {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--gnb-space-8);
+    gap: var(--space-8);
   }
 
-  .site-footer__col-title {
-    font-family: var(--gnb-font-body);
-    font-size: var(--gnb-text-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--gnb-text);
-    margin-bottom: var(--gnb-space-4);
+  .site-footer__col h2 {
+    margin-bottom: var(--space-4);
   }
 
   .site-footer__col ul {
     list-style: none;
     display: grid;
-    gap: 0.6rem;
+    gap: 10px;
   }
 
   .site-footer__col a {
-    font-size: var(--gnb-text-sm);
-    color: var(--gnb-text-muted);
+    font-size: var(--size-small);
+    color: var(--text-muted);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color var(--duration) var(--ease);
   }
 
   .site-footer__col a:hover {
-    color: var(--gnb-red);
+    color: var(--accent-deep);
   }
 
   .site-footer__bottom {
-    border-top: 1px solid var(--gnb-border-soft);
-  }
-
-  .site-footer__bottom-inner {
-    max-width: var(--gnb-container);
-    margin-inline: auto;
-    padding: var(--gnb-space-6) 5%;
+    border-top: var(--border-hairline) solid var(--rule);
+    padding-block: var(--space-8);
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
-    gap: var(--gnb-space-4);
+    gap: var(--space-4);
   }
 
-  .site-footer__legal-mentions,
+  .site-footer__mentions,
   .site-footer__copyright {
-    font-size: var(--gnb-text-sm);
-    color: var(--gnb-text-muted);
+    font-size: 13px;
+    color: var(--text-muted);
   }
 
-  .site-footer__legal-mentions {
+  .site-footer__mentions {
     flex-basis: 100%;
-  }
-
-  .site-footer__legal-mentions a {
-    color: var(--gnb-text-muted);
+    margin-bottom: var(--space-4);
   }
 
   .site-footer__legal {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--gnb-space-6);
+    gap: var(--space-8);
   }
 
   .site-footer__legal a {
-    font-size: var(--gnb-text-sm);
-    color: var(--gnb-text-muted);
+    font-size: 13px;
+    color: var(--text-muted);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color var(--duration) var(--ease);
   }
 
   .site-footer__legal a:hover {
-    color: var(--gnb-text);
+    color: var(--text);
   }
 
   @media (max-width: 1024px) {
-    .site-footer__inner {
+    .site-footer__top {
       grid-template-columns: 1fr;
-      gap: var(--gnb-space-8);
+      gap: var(--space-16);
     }
 
     .site-footer__cols {
@@ -176,6 +162,7 @@ const year = new Date().getFullYear();
   @media (max-width: 560px) {
     .site-footer__cols {
       grid-template-columns: 1fr;
+      gap: var(--space-8);
     }
   }
 </style>
