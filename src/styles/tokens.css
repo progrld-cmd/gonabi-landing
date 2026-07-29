@@ -35,8 +35,9 @@
   --accent: #ee4036; /* marque, gros titres, filets. 3.54:1 → texte large uniquement */
   --accent-deep: #d93a31; /* fonds de bouton : 4.56:1 avec du blanc — AA validé */
   --accent-wash: #fdeceb;
-  --blue: #1bafd0; /* usage très ponctuel */
-  --blue-deep: #0d7c94; /* la déclinaison lisible du bleu sur papier */
+  --blue: #1bafd0; /* usage très ponctuel, jamais sur du texte */
+  --blue-deep: #0d7c94; /* 4.43:1 sur papier — la déclinaison lisible du bleu */
+  --ochre: #8a6400; /* 4.91:1 — le jaune de marque n'atteint que 1.48:1 sur papier */
 
   /* Filets — la structure du site tient sur ces traits */
   --rule: rgba(1, 43, 48, 0.14);

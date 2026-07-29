@@ -26,9 +26,15 @@ export interface NavGroup {
 /** URL du formulaire de démo — à remplacer quand la destination sera arbitrée. */
 export const DEMO_HREF = '#demo-a-definir';
 
+/**
+ * ⚠️ Ne jamais présenter l'IA comme « illimitée » ni « sans compteur ».
+ * Aucune limite n'est contractualisée dans les CGV : promettre l'illimité
+ * expose l'éditeur en cas d'usage massif. L'IA se décrit comme une
+ * fonctionnalité qui fait gagner du temps, jamais comme un argument tarifaire.
+ */
 export const mainNav: NavGroup[] = [
   {
-    label: 'Produit',
+    label: 'Solution',
     href: '/produit',
     children: [
       {
@@ -44,7 +50,7 @@ export const mainNav: NavGroup[] = [
       {
         label: 'Synthèses IA',
         href: '/produit/syntheses-ia',
-        description: 'La synthèse pré-rédigée à partir du parcours. Sans compteur.',
+        description: 'Pré-rédigées à partir du parcours, entièrement modifiables.',
       },
       {
         label: 'Portefeuille de compétences',
@@ -69,29 +75,29 @@ export const mainNav: NavGroup[] = [
     ],
   },
   {
-    label: 'Solutions',
+    label: 'Pour qui',
     href: '/solutions',
     children: [
       {
         label: 'Cabinets RH',
         href: '/solutions/cabinets-rh',
-        description: 'Plusieurs consultants, une vue commune sur les accompagnements.',
+        description: 'Reprendre le dossier d’un collègue sans mener l’enquête.',
         group: 'Par type de structure',
       },
       {
         label: 'Organismes de formation',
         href: '/solutions/organismes-de-formation',
-        description: 'Accompagner et rester auditable, dans le même outil.',
+        description: 'Ce que votre logiciel de gestion ne couvre pas.',
       },
       {
-        label: 'Coachs indépendants',
+        label: 'Indépendants',
         href: '/solutions/coachs-independants',
-        description: 'La structure d’un cabinet, sans l’équipe qui va avec.',
+        description: 'Vous faites tout. Ce qui se répète doit s’automatiser.',
       },
       {
         label: 'Insertion professionnelle',
         href: '/solutions/insertion-professionnelle',
-        description: 'Missions locales, PLIE : suivre des volumes et en rendre compte.',
+        description: 'Accompagner en volume et le justifier au financeur.',
       },
       {
         label: 'Bilan de compétences',
@@ -221,7 +227,7 @@ export const footerNav: NavGroup[] = [
     children: [
       { label: 'Cabinets RH', href: '/solutions/cabinets-rh' },
       { label: 'Organismes de formation', href: '/solutions/organismes-de-formation' },
-      { label: 'Coachs indépendants', href: '/solutions/coachs-independants' },
+      { label: 'Indépendants', href: '/solutions/coachs-independants' },
       { label: 'Insertion professionnelle', href: '/solutions/insertion-professionnelle' },
       { label: 'Migrer vers Gonabi', href: '/migrer-vers-gonabi' },
       { label: 'Cas d’usage', href: '/cas-usage' },
