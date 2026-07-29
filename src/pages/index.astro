@@ -543,7 +543,7 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
 
   .produit__grid {
     display: grid;
-    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     gap: var(--space-16);
     align-items: start;
   }
@@ -553,7 +553,10 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     top: 120px;
   }
 
+  /* Titre de colonne latérale : il ne peut pas suivre l'échelle des H2 de
+     pleine largeur, « l'accompagnement » déborderait de sa colonne. */
   .produit__title {
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
     margin-top: var(--space-8);
     margin-bottom: var(--space-8);
     max-width: 14ch;
@@ -574,7 +577,9 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
 
   .index-row {
     display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr) 24px;
+    /* Colonnes à parts égales : en 5fr/7fr, « Portefeuille de compétences »
+       déborde de sa colonne juste au-dessus du point de bascule à 1024px. */
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr) 24px;
     gap: var(--space-8);
     align-items: baseline;
     padding: var(--space-8) var(--space-4) var(--space-8) 0;
@@ -596,6 +601,7 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     font-weight: var(--weight-medium);
     letter-spacing: var(--tracking-snug);
     color: var(--on-ink);
+    overflow-wrap: break-word;
   }
 
   .index-row__desc {
@@ -914,13 +920,26 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     }
 
     .index-row {
-      grid-template-columns: 1fr 24px;
+      grid-template-columns: minmax(0, 1fr) 24px;
       gap: var(--space-2) var(--space-4);
       align-items: center;
     }
 
+    /* Placements explicites : sans eux, le `grid-column: 1 / -1` de la
+       description repousse la flèche sur une troisième ligne, seule à gauche. */
+    .index-row__label {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .index-row :global(.index-row__icon) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
     .index-row__desc {
       grid-column: 1 / -1;
+      grid-row: 2;
     }
 
     .segments__list {
