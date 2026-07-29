@@ -61,23 +61,67 @@ const fullTitle = title === 'Gonabi' ? title : `${title} | Gonabi`;
     <link rel="icon" type="image/png" href="/assets/logos/Gonabi_Symbole.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/logos/Gonabi_Symbole.png" />
 
-    <!-- Polices de la charte : Lora (titres) + Inter (corps) -->
+    <!-- Polices de la charte : Lora (titres) + Inter (corps).
+         Graisses limitées à celles réellement utilisées par le système. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Posé avant le premier rendu : conditionne le masquage des blocs à
+         révéler, pour qu'ils n'apparaissent pas puis ne disparaissent pas. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
 
     <slot name="head" />
   </head>
 
   <body>
-    <a class="gnb-skip-link" href="#contenu">Aller au contenu principal</a>
+    <a class="skip-link" href="#contenu">Aller au contenu principal</a>
     <Header />
     <main id="contenu">
       <slot />
     </main>
     <Footer />
+
+    <script>
+      // Révélation au scroll, volontairement discrète. Le masquage vient du CSS
+      // (`.js [data-reveal]`) ; ici on ne fait que le lever, soit au scroll, soit
+      // immédiatement si l'animation n'a pas lieu d'être.
+      const cibles = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const reveler = (cible: Element) => cible.classList.add('is-visible');
+
+      if (!cibles.length || !('IntersectionObserver' in window) || reduit) {
+        // Rien à animer : on lève le masquage plutôt que de laisser la page vide.
+        cibles.forEach(reveler);
+      } else {
+        const observateur = new IntersectionObserver(
+          (entrees) => {
+            entrees.forEach((entree) => {
+              if (!entree.isIntersecting) return;
+              reveler(entree.target);
+              observateur.unobserve(entree.target);
+            });
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.05 }
+        );
+
+        cibles.forEach((cible) => observateur.observe(cible));
+
+        /*
+         * Filet de sécurité. L'observateur ne se déclenche pas tant que le
+         * document n'est pas composité (onglet en arrière-plan, navigateur
+         * headless, moteur exotique) : sans ce garde-fou, toute la page
+         * resterait invisible. Un effet de révélation ne doit jamais pouvoir
+         * faire disparaître du contenu.
+         */
+        window.setTimeout(() => cibles.forEach(reveler), 1600);
+      }
+    </script>
   </body>
 </html>

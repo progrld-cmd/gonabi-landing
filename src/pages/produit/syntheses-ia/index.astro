@@ -2,8 +2,12 @@
 import PageLayout from '../../../layouts/PageLayout.astro';
 import CtaBand from '../../../components/CtaBand.astro';
 
-// Page phare du site. Le positionnement « IA illimitée » est un différenciateur
-// validé : il ne se reformule pas sans validation explicite (voir CLAUDE.md).
+/**
+ * ⚠️ Ne jamais écrire ici que l'IA est « illimitée », « sans compteur » ou
+ * « sans crédit ». Aucune limite d'usage n'est contractualisée dans les CGV :
+ * promettre l'illimité expose l'éditeur en cas d'usage massif. L'argument de
+ * cette page est le temps gagné, pas le modèle tarifaire.
+ */
 const sections = [
   'Contexte et situation',
   'Déroulement de l’accompagnement',
@@ -16,7 +20,7 @@ const sections = [
 
 <PageLayout
   title="Synthèses IA"
-  description="Gonabi pré-rédige la synthèse de fin d'accompagnement à partir du parcours réel du bénéficiaire. L'IA est illimitée : elle n'est pas facturée à la synthèse."
+  description="Gonabi pré-rédige la synthèse de fin d'accompagnement à partir du parcours réel du bénéficiaire. Vous relisez, vous ajustez, vous signez."
   heading="La synthèse est pré-rédigée. Vous gardez la plume."
   eyebrow="Produit"
   lead="Gonabi rassemble ce qui s'est passé pendant l'accompagnement — tests, séances, métiers explorés, plan d'action — et en produit une première version structurée. Vous relisez, vous corrigez, vous signez."
@@ -82,18 +86,19 @@ const sections = [
 
   <section class="gnb-section gnb-section--blue">
     <div class="gnb-container">
-      <h2>L'IA est illimitée</h2>
-      <p class="gnb-lead">
-        Générer une synthèse ne consomme pas de crédit. Reprendre une section parce que le ton ne
-        vous convient pas ne coûte rien non plus. Le prix de Gonabi ne dépend pas du nombre de
-        synthèses que vous produisez.
+      <h2>Ce que ça change sur une semaine</h2>
+      <blockquote class="synthese-quote">
+        Avant, je passais mes jeudis soirs à rédiger mes synthèses. Maintenant, je génère un
+        rapport complet en trois clics pendant la séance. Mes jeudis soirs m'appartiennent à
+        nouveau.
+      </blockquote>
+      <p class="synthese-source">
+        Coach en reconversion, bêta-testeuse, six accompagnements en parallèle.
       </p>
       <p class="gnb-lead">
-        C'est un choix de modèle économique, pas une promotion de lancement. Facturer l'IA à
-        l'usage revient à vous faire hésiter avant chaque génération — exactement au moment où
-        l'outil devrait vous faire gagner du temps.
+        La rédaction d'une synthèse demandait une heure et demie à deux heures. Elle prend
+        désormais une vingtaine de minutes de relecture et d'ajustement.
       </p>
-      <p class="synthese-more"><a href="/tarifs">Voir les offres</a></p>
     </div>
   </section>
 
@@ -166,6 +171,20 @@ const sections = [
     font-weight: 700;
     display: grid;
     place-items: center;
+  }
+
+  .synthese-quote {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 40ch;
+    margin-bottom: var(--space-4);
+  }
+
+  .synthese-source {
+    font-size: var(--size-small);
+    margin-bottom: var(--space-8);
   }
 
   .synthese-more {

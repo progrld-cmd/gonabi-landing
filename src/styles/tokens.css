@@ -1,77 +1,127 @@
 /**
- * Design tokens Gonabi — source unique de vérité pour la charte graphique.
- * Reprend à l'identique les valeurs de l'ancien index.html afin que la refonte
- * reste visuellement cohérente avec l'identité en ligne.
+ * Design tokens Gonabi.
+ *
+ * Direction : éditorial imprimé. Papier crème, encre teal, filets fins pour
+ * structurer plutôt que des cartes, Lora en grand avec un tracking négatif.
+ * Le rouge est un accent rare — une marque au crayon rouge, jamais un fond.
+ *
+ * Toute couleur, taille ou espacement utilisé dans un composant vient d'ici.
+ * Ne jamais écrire une valeur en dur ailleurs.
  */
 
 :root {
-  /* ---------- Couleurs de marque ---------- */
-  --gnb-red: #ee4036;
-  --gnb-red-hover: #d93a31;
-  --gnb-red-light: #fef0ef;
-  --gnb-blue: #1bafd0;
-  --gnb-blue-light: #e8f6f8;
-  --gnb-yellow: #ffc20f;
-  --gnb-yellow-light: #fff8e1;
-  --gnb-green: #4caf50;
+  /* ============================================================
+     COULEURS
+     ============================================================ */
 
-  /* ---------- Fonds ---------- */
-  --gnb-cream: #f9f4ec;
-  --gnb-cream-light: #fdfaf5;
-  --gnb-pink: #f9e8e5;
-  --gnb-white: #ffffff;
+  /* Encre — structure, texte, fonds sombres */
+  --ink: #012b30;
+  --ink-90: rgba(1, 43, 48, 0.9);
+  --ink-70: rgba(1, 43, 48, 0.7);
+  --ink-40: rgba(1, 43, 48, 0.4);
+  --ink-18: rgba(1, 43, 48, 0.18);
+  --ink-08: rgba(1, 43, 48, 0.08);
 
-  /* ---------- Texte ---------- */
-  --gnb-teal: #012b30;
-  --gnb-text: #012b30;
-  --gnb-text-muted: #5a6b6d;
-  --gnb-text-subtle: #8a9a9c;
+  /* Papier — fonds chaleureux */
+  --paper: #f9f4ec;
+  --paper-light: #fdfaf5;
+  --paper-white: #ffffff;
 
-  /* ---------- Bordures & ombres ---------- */
-  --gnb-border: rgba(1, 43, 48, 0.1);
-  --gnb-border-soft: rgba(0, 0, 0, 0.05);
-  --gnb-shadow-sm: 0 2px 8px rgba(1, 43, 48, 0.06);
-  --gnb-shadow-md: 0 8px 25px rgba(1, 43, 48, 0.1);
-  --gnb-shadow-red: 0 8px 25px rgba(238, 64, 54, 0.3);
+  /* Texte */
+  --text: var(--ink);
+  --text-muted: #5a6b6d; /* 5.10:1 sur --paper — AA validé */
 
-  /* ---------- Typographie ---------- */
-  --gnb-font-heading: 'Lora', Georgia, 'Times New Roman', serif;
-  --gnb-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Accents */
+  --accent: #ee4036; /* marque, gros titres, filets. 3.54:1 → texte large uniquement */
+  --accent-deep: #d93a31; /* fonds de bouton : 4.56:1 avec du blanc — AA validé */
+  --accent-wash: #fdeceb;
+  --blue: #1bafd0; /* usage très ponctuel, jamais sur du texte */
+  --blue-deep: #0d7c94; /* 4.43:1 sur papier — la déclinaison lisible du bleu */
+  --ochre: #8a6400; /* 4.91:1 — le jaune de marque n'atteint que 1.48:1 sur papier */
 
-  --gnb-text-xs: 0.75rem;
-  --gnb-text-sm: 0.85rem;
-  --gnb-text-base: 1rem;
-  --gnb-text-lg: 1.125rem;
-  /* Titres fluides — mêmes clamp() que l'ancienne landing */
-  --gnb-text-h1: clamp(2.2rem, 4vw, 3rem);
-  --gnb-text-h2: clamp(1.75rem, 3.5vw, 2.5rem);
-  --gnb-text-h3: clamp(1.25rem, 2vw, 1.5rem);
+  /* Filets — la structure du site tient sur ces traits */
+  --rule: rgba(1, 43, 48, 0.14);
+  --rule-strong: rgba(1, 43, 48, 0.28);
 
-  --gnb-leading-tight: 1.2;
-  --gnb-leading-normal: 1.6;
-  --gnb-leading-relaxed: 1.7;
+  /* Sur fond sombre */
+  --on-ink: #f4ede2;
+  --on-ink-muted: rgba(244, 237, 226, 0.66);
+  --on-ink-rule: rgba(244, 237, 226, 0.18);
+  --on-ink-rule-strong: rgba(244, 237, 226, 0.34);
 
-  /* ---------- Espacements ---------- */
-  --gnb-space-1: 0.25rem;
-  --gnb-space-2: 0.5rem;
-  --gnb-space-3: 0.75rem;
-  --gnb-space-4: 1rem;
-  --gnb-space-6: 1.5rem;
-  --gnb-space-8: 2rem;
-  --gnb-space-12: 3rem;
-  --gnb-space-20: 5rem;
+  /* ============================================================
+     TYPOGRAPHIE — échelle modulaire, ratio 1.333
+     ============================================================ */
 
-  --gnb-section-padding: 5rem 5%;
-  --gnb-container: 1200px;
-  --gnb-container-narrow: 800px;
+  --font-display: 'Lora', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  /* ---------- Rayons ---------- */
-  --gnb-radius-sm: 10px;
-  --gnb-radius-md: 16px;
-  --gnb-radius-lg: 24px;
-  --gnb-radius-pill: 50px;
+  --size-eyebrow: 0.8125rem; /* 13px */
+  --size-small: 0.9375rem; /* 15px */
+  --size-body: 1.125rem; /* 18px — plancher de confort */
+  --size-lead: clamp(1.25rem, 1.6vw, 1.5rem); /* 20 → 24 */
+  --size-h4: 1.25rem;
+  --size-h3: clamp(1.5rem, 2vw, 1.875rem); /* 24 → 30 */
+  /*
+   * Les titres vivent dans des colonnes étroites, pas sur toute la largeur de
+   * l'écran : ces bornes sont calées sur le mot français le plus long du site
+   * (« accompagnements », insécable) pour qu'il tienne dans sa colonne à toutes
+   * les tailles d'écran. Les augmenter réintroduit un débordement de texte.
+   */
+  --size-h2: clamp(2.25rem, 4vw, 3.75rem); /* 36 → 60 */
+  --size-h1: clamp(2.25rem, 5.1vw, 3.75rem); /* 36 → 60 */
+  --size-numeral: clamp(2.5rem, 4.5vw, 4rem); /* numérotation éditoriale */
 
-  /* ---------- Divers ---------- */
-  --gnb-transition: all 0.3s ease;
-  --gnb-header-height: 88px;
+  --leading-display: 1.04;
+  --leading-title: 1.14;
+  --leading-snug: 1.3;
+  --leading-body: 1.65;
+  --leading-lead: 1.5;
+
+  /* Tracking — négatif sur les gros titres, très ouvert sur les sur-titres */
+  --tracking-display: -0.025em;
+  --tracking-title: -0.02em;
+  --tracking-snug: -0.012em;
+  --tracking-eyebrow: 0.16em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* ============================================================
+     ESPACEMENTS — échelle stricte 4 / 8 / 16 / 32 / 64 / 96 / 128
+     ============================================================ */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-8: 32px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Respiration verticale des sections : généreuse au repos, resserrée en mobile */
+  --section-y: clamp(56px, 9vw, 128px);
+  --section-y-tight: clamp(48px, 6vw, 96px);
+  --gutter: clamp(20px, 5vw, 64px);
+
+  /* ============================================================
+     MESURES
+     ============================================================ */
+
+  --container: 1200px;
+  --measure: 680px; /* longueur de ligne confortable pour du texte suivi */
+  --measure-tight: 48ch;
+
+  /* ============================================================
+     COMPOSANTS
+     ============================================================ */
+
+  --radius: 6px;
+  --radius-lg: 10px;
+  --border-hairline: 1px;
+
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --duration: 180ms;
+  --duration-slow: 320ms;
 }

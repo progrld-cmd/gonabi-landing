@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
 import { DEMO_HREF, mainNav } from '../data/navigation';
+import type { IconName } from '../components/Icon.astro';
 
 const produit = mainNav.find((group) => group.label === 'Produit');
 const solutions = mainNav.find((group) => group.label === 'Solutions');
+const segments = solutions?.children?.filter((page) => page.href.startsWith('/solutions/')) ?? [];
 
 const partenaires = [
   { src: '/assets/partners/missions_locales_grayscale.png', alt: 'Missions Locales' },
@@ -14,309 +16,1075 @@ const partenaires = [
   { src: '/assets/partners/french_tech_grayscale.png', alt: 'French Tech' },
 ];
 
-const badges = [
-  'IA illimitée, sans compteur',
-  'Preuves Qualiopi automatiques',
-  'Aucun enregistrement de vos séances',
+/**
+ * Les trois arguments du hero. Chacun est sourcé :
+ * - centralisation : hypothèse n°1 validée en bêta (« la centralisation est la clé »)
+ * - preuves Qualiopi : PRD Conformité Qualiopi v1.1, sprint 1 livré
+ * - personnalisation : besoin fondamental relevé en entretien de clôture bêta
+ * Ne pas y remettre l'IA : aucune limite n'est contractualisée (voir navigation.ts).
+ */
+const reassurances: { icone: IconName; texte: string }[] = [
+  { icone: 'layers', texte: 'Vos outils réunis en un seul' },
+  { icone: 'shield-check', texte: 'Vos preuves Qualiopi générées par l’accompagnement' },
+  { icone: 'compass', texte: 'Vos ressources, vos trames, votre méthode' },
 ];
 
-const problemes = [
+/** Repris de l'ancienne landing : la partie du titre qui change en fondu. */
+const rotations = [
+  { texte: 'en orientation.', couleur: 'blue' },
+  { texte: 'en évolution professionnelle.', couleur: 'red' },
+  { texte: 'en bilan de compétences.', couleur: 'ochre' },
+];
+
+// Freins tirés de verbatims de bêta-testeurs, pas de suppositions.
+const freins = [
   {
-    titre: 'Vos outils ne se parlent pas',
+    titre: 'Vous saisissez la même chose trois fois',
     texte:
-      'Un outil pour les tests, un tableur pour le suivi, une boîte mail pour les documents, un traitement de texte pour les synthèses. Chaque passage de l’un à l’autre se paie en ressaisie.',
+      'Un outil pour les tests, un logiciel pour l’administratif, un serveur partagé pour les documents, un traitement de texte pour les synthèses. Ce que vous entrez quelque part, vous le ressaisissez ailleurs.',
   },
   {
-    titre: 'L’administratif mange le temps d’accompagnement',
+    titre: 'L’administratif répétitif grignote vos journées',
     texte:
-      'Le temps passé à remettre en forme, retrouver, recopier est du temps qui ne va ni au bénéficiaire ni à de nouveaux dossiers.',
+      'Envoyer un contrat, retrouver un document, remettre en forme une synthèse, convenir d’une date. Autant de temps qui ne va ni au bénéficiaire, ni à de nouveaux dossiers.',
   },
   {
-    titre: 'Les preuves se reconstituent après coup',
+    titre: 'Les preuves se reconstituent la veille de l’audit',
     texte:
-      'À l’approche de l’audit, il faut retrouver qui a signé quoi, quand, et sur quelle séance. Nos bêta-testeurs estimaient y passer 2 à 4 heures par audit — un travail refait à chaque cycle.',
+      'Retrouver qui a signé quoi, quand, sur quelle séance. Nos bêta-testeurs estimaient y passer 2 à 4 heures par audit — un travail refait à chaque cycle.',
+  },
+];
+
+// Différenciateurs issus du benchmark concurrentiel du PRD Conformité Qualiopi.
+const differences = [
+  {
+    titre: 'Un outil là où il en fallait quatre',
+    texte:
+      'Les tests dans un catalogue, les métiers dans un autre abonnement, l’administratif dans un logiciel de gestion, les synthèses dans un traitement de texte. Gonabi tient les quatre.',
+  },
+  {
+    titre: 'La conformité naît de l’accompagnement',
+    texte:
+      'Les autres outils qualité vous demandent de saisir vos preuves dans un module à part. Ici, la séance que vous menez les produit.',
+  },
+  {
+    titre: 'Votre méthode reste la vôtre',
+    texte:
+      'Vos ressources, vos trames de parcours, vos supports. L’outil structure votre pratique, il ne la remplace pas par la sienne.',
+  },
+];
+
+const confiance: { icone: IconName; titre: string; texte: string }[] = [
+  {
+    icone: 'eye-off',
+    titre: 'Vos séances ne sont pas enregistrées',
+    texte: 'Ni audio, ni vidéo. Seule la connexion à la plateforme est journalisée.',
+  },
+  {
+    icone: 'lock',
+    titre: 'Les dossiers sont cloisonnés',
+    texte: 'L’accès est limité à l’organisation et au parcours suivi.',
+  },
+  {
+    icone: 'file-text',
+    titre: 'Les preuves sont conservées 5 ans',
+    texte: 'La durée pendant laquelle un dossier financé peut être contrôlé.',
   },
 ];
 ---
 
 <BaseLayout
   title="Gonabi"
-  description="Gonabi réunit tests psychométriques, parcours, exploration métiers et synthèses IA dans un seul outil pour les cabinets RH et organismes de formation. L'IA est illimitée."
+  description="Gonabi réunit tests psychométriques, parcours, exploration métiers, synthèses et preuves Qualiopi dans un seul outil, pour les cabinets RH et les organismes de formation."
   canonical="/"
 >
-  <section class="home-hero">
-    <div class="gnb-container home-hero__grid">
-      <div>
-        <h1>La plateforme qui structure, automatise et valorise vos accompagnements</h1>
-        <p class="gnb-lead">
-          Tests, parcours, exploration métiers, synthèses et preuves de conformité au même endroit.
-          Vous passez moins de temps à administrer, plus de temps à accompagner.
+  <!-- ══════════════ HERO — asymétrique, aligné à gauche ══════════════ -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__content">
+        <p class="eyebrow hero__eyebrow">Plateforme d’accompagnement professionnel</p>
+
+        <h1 class="hero__title">
+          La plateforme qui structure, automatise et valorise vos accompagnements
+          <span class="rotator">
+            {
+              rotations.map((r, i) => (
+                <span
+                  class:list={['rotator__item', `is-${r.couleur}`]}
+                  style={`--step: ${i}`}
+                >
+                  {r.texte}
+                </span>
+              ))
+            }
+          </span>
+        </h1>
+
+        <p class="lead hero__lead">
+          Créez des parcours sur mesure, automatisez les tâches répétitives et gérez vos suivis en
+          temps réel, au même endroit.
         </p>
-        <div class="home-hero__actions">
-          <a href={DEMO_HREF} class="gnb-btn gnb-btn--primary">Réserver une démo</a>
-          <a href="/produit" class="gnb-btn gnb-btn--secondary">Découvrir le produit</a>
+
+        <div class="hero__actions">
+          <a href={DEMO_HREF} class="btn btn--primary">Réserver une démo</a>
+          <a href="/produit" class="btn btn--secondary">Découvrir la solution</a>
         </div>
-        <ul class="home-hero__badges">
-          {badges.map((badge) => <li>{badge}</li>)}
+
+        <ul class="hero__badges">
+          {
+            reassurances.map((item) => (
+              <li>
+                <Icon name={item.icone} size={17} />
+                {item.texte}
+              </li>
+            ))
+          }
         </ul>
       </div>
 
-      <div class="home-hero__visual">
+      <div class="hero__visual">
         <img
           src="/assets/images/Hero_visual.png"
           alt="Interface Gonabi : tableau de bord, profil psychométrique et parcours personnalisés"
-          width="640"
-          height="480"
+          width="760"
+          height="570"
           loading="eager"
+          fetchpriority="high"
         />
       </div>
     </div>
   </section>
 
-  <section class="partners" aria-label="Ils nous font confiance">
-    <div class="gnb-container partners__row">
-      {
-        partenaires.map((partenaire) => (
-          <img src={partenaire.src} alt={partenaire.alt} loading="lazy" class="partners__logo" />
-        ))
-      }
+  <!-- ══════════════ PARTENAIRES — bandeau fin cerné de filets ══════════════ -->
+  <section class="partners">
+    <div class="container partners__inner">
+      <p class="eyebrow partners__label">Ils nous font confiance</p>
+      <ul class="partners__row">
+        {
+          partenaires.map((p) => (
+            <li>
+              <img src={p.src} alt={p.alt} loading="lazy" />
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
-  <section class="gnb-section gnb-section--cream">
-    <div class="gnb-container">
-      <h2>Ce qui vous freine aujourd'hui</h2>
-      <div class="gnb-grid gnb-grid--3 home-grid">
+  <!-- ══════════════ FREINS — rangées numérotées, pas de cartes ══════════════ -->
+  <section class="section section--paper">
+    <div class="container">
+      <header class="block-head" data-reveal>
+        <p class="eyebrow eyebrow--rule">Le constat</p>
+        <h2 class="block-head__title">Ce qui vous freine aujourd’hui</h2>
+      </header>
+
+      <ol class="figures">
         {
-          problemes.map((probleme) => (
-            <article class="gnb-card">
-              <h3>{probleme.titre}</h3>
-              <p>{probleme.texte}</p>
+          freins.map((frein, i) => (
+            <li class="figure" data-reveal>
+              <span class="numeral figure__num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 class="figure__title">{frein.titre}</h3>
+              <p class="figure__text">{frein.texte}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══════════════ TÉMOIGNAGE — bande courte, rythme à part ══════════════ -->
+  <section class="section section--tight section--paper-light">
+    <div class="container">
+      <figure class="quote" data-reveal>
+        <blockquote class="quote__text">
+          Avant, je passais mes jeudis soirs à rédiger mes synthèses. Maintenant, je génère un
+          rapport complet en trois clics pendant la séance. Mes jeudis soirs m’appartiennent à
+          nouveau.
+        </blockquote>
+        <figcaption class="quote__source">
+          Coach en reconversion · bêta-testeuse · six accompagnements en parallèle
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ══════════════ PRODUIT — pleine page encre, index éditorial ══════════════ -->
+  <section class="section section--ink produit">
+    <div class="container produit__grid">
+      <div class="produit__aside">
+        <p class="eyebrow eyebrow--rule">Le produit</p>
+        <h2 class="produit__title">Tout l’accompagnement dans un seul outil</h2>
+        <p class="lead produit__lead">
+          Chaque brique alimente la suivante : les tests nourrissent l’exploration métiers, le
+          parcours produit ses preuves, et la synthèse se rédige à partir de tout ce qui précède.
+        </p>
+        <a href="/produit" class="link-arrow produit__all">
+          Voir la vue d’ensemble
+          <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+
+      <ul class="index-list">
+        {
+          produit?.children?.map((page) => (
+            <li>
+              <a href={page.href} class="index-row">
+                <span class="index-row__label">{page.label}</span>
+                <span class="index-row__desc">{page.description}</span>
+                <Icon name="arrow-up-right" size={18} class="index-row__icon" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════ SEGMENTS — titre à gauche, grille 2×2 à droite ══════════════ -->
+  <section class="section section--paper">
+    <div class="container segments__grid">
+      <div class="segments__aside" data-reveal>
+        <p class="eyebrow eyebrow--rule">Pour qui</p>
+        <h2 class="segments__title">Conçu d’abord pour les structures de 8 à 25&nbsp;consultants</h2>
+        <p class="segments__note">
+          Cabinets RH et organismes de formation qui accompagnent en bilan de compétences,
+          évolution professionnelle ou orientation.
+        </p>
+      </div>
+
+      <div class="segments__list">
+        {
+          segments.map((page) => (
+            <a href={page.href} class="segment" data-reveal>
+              <h3 class="segment__title">{page.label}</h3>
+              <p class="segment__text">{page.description}</p>
+              <span class="segment__more" aria-hidden="true">
+                <Icon name="arrow-right" size={16} />
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ DIFFÉRENCIATION — trois colonnes séparées de filets ══════════════ -->
+  <section class="section section--paper-light">
+    <div class="container">
+      <header class="block-head block-head--wide" data-reveal>
+        <p class="eyebrow eyebrow--rule">La différence</p>
+        <h2 class="block-head__title">Trois choix que nous assumons</h2>
+      </header>
+
+      <div class="columns">
+        {
+          differences.map((item, i) => (
+            <article class="column" data-reveal>
+              <span class="numeral column__num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 class="column__title">{item.titre}</h3>
+              <p class="column__text">{item.texte}</p>
             </article>
           ))
         }
       </div>
+
+      <p class="columns__after">
+        <a href="/produit/syntheses-ia" class="link-arrow">
+          Voir comment se génère une synthèse
+          <Icon name="arrow-right" size={16} />
+        </a>
+      </p>
     </div>
   </section>
 
-  <section class="gnb-section gnb-section--blue">
-    <div class="gnb-container">
-      <h2>Tout l'accompagnement dans un seul outil</h2>
-      <p class="gnb-lead">
-        Chaque brique alimente la suivante : les tests nourrissent l'exploration métiers, le
-        parcours produit ses preuves, et la synthèse se rédige à partir de tout ce qui précède.
-      </p>
-      <div class="gnb-grid gnb-grid--3 home-grid">
+  <!-- ══════════════ MIGRATION — citation en exergue ══════════════ -->
+  <section class="section section--paper migration">
+    <div class="container migration__grid">
+      <blockquote class="pull" data-reveal>
+        <p class="pull__quote">« Encore une plateforme de plus à gérer ? »</p>
+        <footer class="pull__source">
+          La première objection que nous entendons, relevée en entretien de clôture bêta.
+        </footer>
+      </blockquote>
+
+      <div class="migration__body" data-reveal>
+        <p>
+          Elle est juste : un outil qui s’ajoute aux autres sans en remplacer aucun fait perdre du
+          temps au lieu d’en gagner.
+        </p>
+        <p>
+          C’est pourquoi nous commençons toujours par regarder ce que Gonabi remplace chez vous —
+          et ce qu’il ne remplacera pas.
+        </p>
+        <a href="/migrer-vers-gonabi" class="link-arrow">
+          Migrer vers Gonabi
+          <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ CONFIANCE — texte à gauche, liste à droite ══════════════ -->
+  <section class="section section--paper-light">
+    <div class="container trust__grid">
+      <div data-reveal>
+        <p class="eyebrow eyebrow--rule">Confiance</p>
+        <h2 class="trust__title">Des données sensibles, traitées comme telles</h2>
+        <p class="lead trust__lead">
+          Un bilan de compétences produit des informations intimes, protégées par la loi. Nous
+          documentons publiquement ce que nous en faisons — et ce que nous nous interdisons.
+        </p>
+        <a href="/a-propos/securite-rgpd" class="link-arrow">
+          Sécurité &amp; RGPD
+          <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+
+      <ul class="trust__list">
         {
-          produit?.children?.map((page) => (
-            <a href={page.href} class="gnb-card home-link-card">
-              <h3>{page.label}</h3>
-              <p>{page.description}</p>
-            </a>
+          confiance.map((item) => (
+            <li class="trust__item" data-reveal>
+              <Icon name={item.icone} size={22} class="trust__icon" />
+              <div>
+                <h3 class="trust__item-title">{item.titre}</h3>
+                <p class="trust__item-text">{item.texte}</p>
+              </div>
+            </li>
           ))
         }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════ CTA FINAL — bandeau encre, composition large ══════════════ -->
+  <section class="section section--ink cta">
+    <div class="container cta__grid">
+      <h2 class="cta__title">Voir Gonabi tourner sur vos propres cas</h2>
+      <div class="cta__side">
+        <p class="cta__text">
+          Une démonstration guidée, adaptée à votre structure et à vos accompagnements.
+        </p>
+        <a href={DEMO_HREF} class="btn btn--primary">Réserver une démo</a>
       </div>
     </div>
   </section>
-
-  <section class="gnb-section gnb-section--cream">
-    <div class="gnb-container">
-      <h2>Pour qui</h2>
-      <p class="gnb-lead">
-        Gonabi est conçu d'abord pour les cabinets RH et les organismes de formation qui comptent
-        de quelques consultants à une trentaine, et qui accompagnent en bilan de compétences,
-        évolution professionnelle ou orientation.
-      </p>
-      <div class="gnb-grid gnb-grid--4 home-grid">
-        {
-          solutions?.children?.map((page) => (
-            <a href={page.href} class="gnb-card home-link-card">
-              <h3>{page.label}</h3>
-              <p>{page.description}</p>
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="gnb-section gnb-section--cream-light">
-    <div class="gnb-container">
-      <h2>Ce qui nous différencie</h2>
-      <div class="gnb-grid gnb-grid--3 home-grid">
-        <article class="gnb-card">
-          <h3>L'IA n'est pas rationnée</h3>
-          <p>
-            Générer une synthèse ne consomme aucun crédit. Notre prix ne dépend pas du nombre de
-            synthèses que vous produisez — c'est un choix de modèle économique.
-          </p>
-        </article>
-        <article class="gnb-card">
-          <h3>La conformité naît de l'accompagnement</h3>
-          <p>
-            Les preuves Qualiopi ne se saisissent pas dans un module à part : elles sont produites
-            par les séances que vous menez déjà.
-          </p>
-        </article>
-        <article class="gnb-card">
-          <h3>Le bénéficiaire est dans la boucle</h3>
-          <p>
-            Il passe ses tests, suit son parcours et explore ses pistes depuis son propre espace.
-            Vous décidez de ce qu'il voit et quand.
-          </p>
-        </article>
-      </div>
-      <p class="home-more"><a href="/produit/syntheses-ia">Comprendre l'IA illimitée</a></p>
-    </div>
-  </section>
-
-  <section class="gnb-section gnb-section--white">
-    <div class="gnb-container">
-      <h2>Ils utilisent Gonabi</h2>
-      <p class="gnb-lead">
-        <span class="gnb-todo">[À FOURNIR]</span> Aucun témoignage n'est affiché tant que les
-        verbatims n'ont pas été recueillis et autorisés par écrit par les clients concernés.
-      </p>
-      <p class="home-more"><a href="/temoignages">Voir la page témoignages</a></p>
-    </div>
-  </section>
-
-  <section class="gnb-section gnb-section--cream">
-    <div class="gnb-container">
-      <h2>Vous changez d'outil ? C'est l'objection qu'on entend le plus</h2>
-      <p class="gnb-lead">
-        Perdre son historique, faire réapprendre ses consultants, s'arrêter pendant la bascule :
-        ces craintes passent avant le prix dans les échanges que nous avons. Nous leur avons
-        consacré une page entière plutôt qu'un paragraphe rassurant.
-      </p>
-      <p class="home-more"><a href="/migrer-vers-gonabi">Migrer vers Gonabi</a></p>
-    </div>
-  </section>
-
-  <section class="gnb-section gnb-section--cream-light">
-    <div class="gnb-container">
-      <h2>Sécurité et confiance</h2>
-      <p class="gnb-lead">
-        Vous manipulez des données sensibles, couvertes par la confidentialité du bilan de
-        compétences. Nous n'enregistrons pas vos séances, et nous documentons publiquement ce que
-        deviennent les données que vous nous confiez.
-      </p>
-      <p class="home-more">
-        <a href="/a-propos/securite-rgpd">Sécurité &amp; RGPD</a> ·
-        <a href="/produit/conformite-qualiopi">Conformité Qualiopi</a>
-      </p>
-    </div>
-  </section>
-
-  <CtaBand />
 </BaseLayout>
 
 <style>
-  .home-hero {
-    padding: var(--gnb-space-12) 5%;
-    background: linear-gradient(180deg, var(--gnb-cream) 0%, var(--gnb-cream-light) 100%);
+  /* ════════════════════════ HERO ════════════════════════ */
+
+  .hero {
+    background: var(--paper);
+    padding-block: clamp(48px, 7vw, 112px) clamp(56px, 8vw, 128px);
+    overflow: hidden;
   }
 
-  .home-hero__grid {
+  .hero__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--gnb-space-12);
+    /* La colonne texte est la plus large : un H1 à 68px a besoin de place, sinon
+       il part sur huit lignes. Le visuel compense en débordant hors du conteneur
+       jusqu'au bord de l'écran. */
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-16);
     align-items: center;
   }
 
-  .home-hero h1 {
-    margin-bottom: var(--gnb-space-6);
+  .hero__eyebrow {
+    margin-bottom: var(--space-8);
   }
 
-  .home-hero__actions {
+  .hero__title {
+    max-width: 15ch;
+    margin-bottom: var(--space-8);
+  }
+
+  /*
+   * Carrousel du titre, repris de l'ancienne landing. Trois états qui se
+   * succèdent en fondu, en CSS pur — les trois textes restent dans le DOM,
+   * donc lisibles par un lecteur d'écran et indexables.
+   */
+  .rotator {
+    display: block;
+    position: relative;
+    min-height: 1.15em;
+  }
+
+  .rotator__item {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    opacity: 0;
+    animation: rotator 10.5s infinite;
+    /* --step porte le rang de l'élément : 0, 1 puis 2 */
+    animation-delay: calc(var(--step) * 3.5s);
+  }
+
+  .rotator__item.is-blue {
+    color: var(--blue-deep);
+  }
+  .rotator__item.is-red {
+    color: var(--accent);
+  }
+  .rotator__item.is-ochre {
+    color: var(--ochre);
+  }
+
+  @keyframes rotator {
+    0%,
+    2% {
+      opacity: 0;
+    }
+    5%,
+    28% {
+      opacity: 1;
+    }
+    33%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* Mouvement réduit : on fige sur le premier état plutôt que de faire clignoter */
+  @media (prefers-reduced-motion: reduce) {
+    .rotator__item {
+      animation: none;
+    }
+    .rotator__item:first-child {
+      opacity: 1;
+    }
+  }
+
+  .hero__lead {
+    max-width: 46ch;
+  }
+
+  .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--gnb-space-4);
-    margin-top: var(--gnb-space-8);
+    gap: var(--space-4);
+    margin-top: var(--space-8);
   }
 
-  .home-hero__badges {
+  .hero__badges {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--gnb-space-4);
-    margin-top: var(--gnb-space-8);
+    gap: var(--space-4) var(--space-8);
+    margin-top: var(--space-16);
+    padding-top: var(--space-8);
+    border-top: var(--border-hairline) solid var(--rule);
   }
 
-  .home-hero__badges li {
+  .hero__badges li {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: var(--gnb-text-sm);
-    color: var(--gnb-text-muted);
+    gap: 10px;
+    font-size: 13px;
+    letter-spacing: 0.005em;
+    color: var(--text-muted);
   }
 
-  .home-hero__badges li::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--gnb-blue);
+  .hero__badges :global(svg) {
+    color: var(--accent);
     flex-shrink: 0;
   }
 
-  .home-hero__visual img {
-    width: 100%;
-    height: auto;
+  /*
+   * Le visuel sort du conteneur et va jusqu'au bord droit de l'écran : c'est la
+   * grille brisée qui donne son caractère au hero. Sous 1200px le calcul retombe
+   * naturellement sur un simple débord de gouttière. `overflow: hidden` sur
+   * `.hero` empêche tout défilement horizontal.
+   */
+  .hero__visual {
+    position: relative;
+    margin-right: calc((100vw - min(100vw, var(--container))) / -2 - var(--gutter));
   }
 
+  .hero__visual img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Apparition au chargement, échelonnée */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__eyebrow,
+    .hero__title,
+    .hero__lead,
+    .hero__actions,
+    .hero__badges,
+    .hero__visual {
+      animation: rise 620ms var(--ease) backwards;
+    }
+    .hero__eyebrow {
+      animation-delay: 40ms;
+    }
+    .hero__title {
+      animation-delay: 100ms;
+    }
+    .hero__lead {
+      animation-delay: 180ms;
+    }
+    .hero__actions {
+      animation-delay: 250ms;
+    }
+    .hero__badges {
+      animation-delay: 310ms;
+    }
+    .hero__visual {
+      animation-delay: 160ms;
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ════════════════════════ PARTENAIRES ════════════════════════ */
+
   .partners {
-    padding: var(--gnb-space-8) 5%;
-    background: var(--gnb-cream-light);
-    border-block: 1px solid var(--gnb-border-soft);
+    background: var(--paper-light);
+    border-block: var(--border-hairline) solid var(--rule);
+  }
+
+  .partners__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+    padding-block: var(--space-8);
+  }
+
+  .partners__label {
+    flex-shrink: 0;
+    color: var(--ink-40);
   }
 
   .partners__row {
+    list-style: none;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-around;
-    gap: var(--gnb-space-8);
+    justify-content: space-between;
+    flex: 1;
+    gap: var(--space-8);
   }
 
-  .partners__logo {
-    height: 40px;
+  .partners__row img {
+    height: 26px;
     width: auto;
-    opacity: 0.65;
-    transition: opacity 0.3s ease;
+    opacity: 0.5;
+    filter: grayscale(1);
+    transition: opacity var(--duration) var(--ease);
   }
 
-  .partners__logo:hover {
-    opacity: 1;
+  .partners__row img:hover {
+    opacity: 0.85;
   }
 
-  .home-grid {
-    margin-top: var(--gnb-space-8);
+  /* ════════════════════════ EN-TÊTES DE BLOC ════════════════════════ */
+
+  .block-head {
+    max-width: 720px;
+    margin-bottom: var(--space-24);
   }
 
-  .home-link-card {
+  .block-head--wide {
+    max-width: 900px;
+  }
+
+  .block-head__title {
+    margin-top: var(--space-8);
+  }
+
+  /* ════════════════════════ FREINS ════════════════════════ */
+
+  .figures {
+    list-style: none;
+  }
+
+  .figure {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 4fr) minmax(0, 6fr);
+    gap: var(--space-8);
+    align-items: start;
+    padding-block: var(--space-16);
+    border-top: var(--border-hairline) solid var(--rule);
+  }
+
+  .figure:last-child {
+    border-bottom: var(--border-hairline) solid var(--rule);
+  }
+
+  .figure__num {
+    /* Aligne l'œil du chiffre sur la ligne de base du titre */
+    margin-top: -0.12em;
+  }
+
+  .figure__title {
+    font-size: var(--size-h3);
+  }
+
+  .figure__text {
+    color: var(--text-muted);
+    max-width: 56ch;
+  }
+
+  /* ════════════════════════ TÉMOIGNAGE ════════════════════════ */
+
+  .quote {
+    max-width: 900px;
+    position: relative;
+    padding-left: clamp(32px, 5vw, 64px);
+  }
+
+  /* Guillemet ouvrant en très grand, traité comme un ornement typographique */
+  .quote::before {
+    content: '«';
+    position: absolute;
+    left: 0;
+    top: -0.12em;
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .quote__text {
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 2.6vw, 2rem);
+    font-weight: var(--weight-regular);
+    font-style: italic;
+    line-height: 1.35;
+    letter-spacing: var(--tracking-snug);
+    color: var(--text);
+  }
+
+  .quote__source {
+    margin-top: var(--space-8);
+    font-size: var(--size-small);
+    color: var(--text-muted);
+  }
+
+  /* ════════════════════════ PRODUIT (encre) ════════════════════════ */
+
+  .produit__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  .produit__aside {
+    position: sticky;
+    top: 120px;
+  }
+
+  /* Titre de colonne latérale : il ne peut pas suivre l'échelle des H2 de
+     pleine largeur, « l'accompagnement » déborderait de sa colonne. */
+  .produit__title {
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-8);
+    max-width: 14ch;
+  }
+
+  .produit__lead {
+    max-width: 42ch;
+  }
+
+  .produit__all {
+    margin-top: var(--space-8);
+  }
+
+  .index-list {
+    list-style: none;
+    border-top: var(--border-hairline) solid var(--on-ink-rule);
+  }
+
+  .index-row {
+    display: grid;
+    /* Colonnes à parts égales : en 5fr/7fr, « Portefeuille de compétences »
+       déborde de sa colonne juste au-dessus du point de bascule à 1024px. */
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr) 24px;
+    gap: var(--space-8);
+    align-items: baseline;
+    padding: var(--space-8) var(--space-4) var(--space-8) 0;
+    border-bottom: var(--border-hairline) solid var(--on-ink-rule);
     text-decoration: none;
-    transition: var(--gnb-transition);
+    transition:
+      padding-left var(--duration) var(--ease),
+      border-color var(--duration) var(--ease);
   }
 
-  .home-link-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--gnb-shadow-md);
+  .index-row:hover {
+    padding-left: var(--space-4);
+    border-bottom-color: var(--on-ink-rule-strong);
   }
 
-  .home-more {
-    margin-top: var(--gnb-space-6);
+  .index-row__label {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-snug);
+    color: var(--on-ink);
+    overflow-wrap: break-word;
   }
 
-  .home-more a {
-    color: var(--gnb-red);
-    font-weight: 600;
-    text-underline-offset: 3px;
+  .index-row__desc {
+    font-size: var(--size-small);
+    line-height: 1.5;
+    color: var(--on-ink-muted);
   }
 
-  @media (max-width: 900px) {
-    .home-hero__grid {
+  .index-row :global(.index-row__icon) {
+    color: var(--on-ink-muted);
+    transition:
+      transform var(--duration) var(--ease),
+      color var(--duration) var(--ease);
+    align-self: center;
+  }
+
+  .index-row:hover :global(.index-row__icon) {
+    transform: translate(3px, -3px);
+    color: var(--accent);
+  }
+
+  /* ════════════════════════ SEGMENTS ════════════════════════ */
+
+  .segments__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  .segments__title {
+    margin-top: var(--space-8);
+    font-size: var(--size-h3);
+  }
+
+  .segments__note {
+    margin-top: var(--space-4);
+    font-size: var(--size-small);
+    color: var(--text-muted);
+    max-width: 40ch;
+  }
+
+  .segments__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8) var(--space-16);
+  }
+
+  .segment {
+    display: block;
+    padding-top: var(--space-8);
+    border-top: var(--border-hairline) solid var(--rule);
+    text-decoration: none;
+    transition: border-color var(--duration) var(--ease);
+  }
+
+  .segment:hover {
+    border-top-color: var(--accent);
+  }
+
+  .segment__title {
+    font-size: var(--size-h4);
+    margin-bottom: var(--space-4);
+  }
+
+  .segment__text {
+    font-size: var(--size-small);
+    color: var(--text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .segment__more {
+    display: inline-flex;
+    color: var(--ink-40);
+    transition:
+      transform var(--duration) var(--ease),
+      color var(--duration) var(--ease);
+  }
+
+  .segment:hover .segment__more {
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+
+  /* ════════════════════════ DIFFÉRENCIATION ════════════════════════ */
+
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-16);
+  }
+
+  .column {
+    padding-left: var(--space-8);
+    border-left: var(--border-hairline) solid var(--rule);
+  }
+
+  .column:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .column__num {
+    display: block;
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: var(--space-8);
+  }
+
+  .column__title {
+    font-size: var(--size-h4);
+    margin-bottom: var(--space-4);
+  }
+
+  .column__text {
+    font-size: var(--size-small);
+    color: var(--text-muted);
+  }
+
+  .columns__after {
+    margin-top: var(--space-16);
+  }
+
+  /* ════════════════════════ MIGRATION ════════════════════════ */
+
+  .migration__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-16);
+    align-items: center;
+  }
+
+  .pull {
+    border-left: 2px solid var(--accent);
+    padding-left: var(--space-8);
+  }
+
+  .pull__quote {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+    font-weight: var(--weight-medium);
+    font-style: italic;
+    line-height: 1.2;
+    letter-spacing: var(--tracking-title);
+    color: var(--text);
+  }
+
+  .pull__source {
+    margin-top: var(--space-8);
+    font-size: var(--size-small);
+    color: var(--text-muted);
+  }
+
+  .migration__body p {
+    color: var(--text-muted);
+  }
+
+  .migration__body p + p {
+    margin-top: var(--space-4);
+  }
+
+  .migration__body .link-arrow {
+    margin-top: var(--space-8);
+  }
+
+  /* ════════════════════════ CONFIANCE ════════════════════════ */
+
+  .trust__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  .trust__title {
+    margin-top: var(--space-8);
+    font-size: var(--size-h3);
+  }
+
+  .trust__lead {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-8);
+    font-size: var(--size-body);
+  }
+
+  .trust__list {
+    list-style: none;
+  }
+
+  .trust__item {
+    display: flex;
+    gap: var(--space-8);
+    align-items: flex-start;
+    padding-block: var(--space-8);
+    border-top: var(--border-hairline) solid var(--rule);
+  }
+
+  .trust__item:last-child {
+    border-bottom: var(--border-hairline) solid var(--rule);
+  }
+
+  .trust__item :global(.trust__icon) {
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .trust__item-title {
+    font-size: var(--size-h4);
+    margin-bottom: var(--space-2);
+  }
+
+  .trust__item-text {
+    font-size: var(--size-small);
+    color: var(--text-muted);
+  }
+
+  /* ════════════════════════ CTA FINAL ════════════════════════ */
+
+  .cta__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-16);
+    align-items: end;
+  }
+
+  .cta__title {
+    max-width: 15ch;
+  }
+
+  .cta__text {
+    margin-bottom: var(--space-8);
+    max-width: 38ch;
+  }
+
+  /* ════════════════════════ RESPONSIVE ════════════════════════ */
+
+  @media (max-width: 1024px) {
+    /* `minmax(0, 1fr)` et non `1fr` : sinon la largeur intrinsèque de l'image
+       du hero (760px) impose son minimum à la colonne et la fait déborder. */
+    .hero__grid,
+    .produit__grid,
+    .segments__grid,
+    .migration__grid,
+    .trust__grid,
+    .cta__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-16);
+    }
+
+    .hero__visual {
+      margin-right: calc(var(--gutter) * -1);
+      max-width: none;
+    }
+
+    .hero__title {
+      max-width: 18ch;
+    }
+
+    .produit__aside {
+      position: static;
+    }
+
+    .produit__title,
+    .cta__title {
+      max-width: 22ch;
+    }
+
+    .columns {
       grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .column {
+      padding-left: 0;
+      padding-top: var(--space-8);
+      border-left: 0;
+      border-top: var(--border-hairline) solid var(--rule);
+    }
+
+    .column:first-child {
+      padding-top: var(--space-8);
+      border-top: var(--border-hairline) solid var(--rule);
+    }
+
+    .partners__inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-8);
+    }
+
+    .partners__row {
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: var(--space-8) var(--space-16);
+    }
+  }
+
+  @media (max-width: 720px) {
+    /* Plus de débord : sur un petit écran l'image serait rognée par
+       l'`overflow: hidden` du hero au lieu de déborder élégamment. */
+    .hero__visual {
+      margin-right: 0;
+    }
+
+    .figure {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      padding-block: var(--space-8);
+    }
+
+    .figure__num {
+      font-size: 2rem;
+      margin-bottom: var(--space-2);
+    }
+
+    .index-row {
+      grid-template-columns: minmax(0, 1fr) 24px;
+      gap: var(--space-2) var(--space-4);
+      align-items: center;
+    }
+
+    /* Placements explicites : sans eux, le `grid-column: 1 / -1` de la
+       description repousse la flèche sur une troisième ligne, seule à gauche. */
+    .index-row__label {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .index-row :global(.index-row__icon) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .index-row__desc {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .segments__list {
+      grid-template-columns: 1fr;
+    }
+
+    .pull {
+      padding-left: var(--space-4);
     }
   }
 </style>
