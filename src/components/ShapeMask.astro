@@ -1,0 +1,49 @@
+---
+/**
+ * Les trois primitives géométriques du logo Gonabi, décomposées en SVG.
+ * Le "G" du logo est fait d'un demi-disque (jaune), d'un arc concave de
+ * quart de cercle (rouge) et d'un bloc à coin arrondi convexe (turquoise).
+ * Ce composant réutilise ces trois formes comme motifs décoratifs — aplats
+ * derrière une photo, puces de liste, accents de section — pour que le
+ * langage du logo infuse le reste du site plutôt que d'y rester cantonné.
+ *
+ * Usage : <ShapeMask variant="half-disc" color="var(--blue)" size={280} />
+ */
+
+export type ShapeVariant = 'half-disc' | 'arc-concave' | 'block-round';
+
+export interface Props {
+  variant: ShapeVariant;
+  color?: string;
+  size?: number;
+  class?: string;
+  /** Rotation en degrés, pour varier l'orientation d'une occurrence à l'autre. */
+  rotate?: number;
+}
+
+const { variant, color = 'var(--blue)', size = 200, class: className, rotate = 0 } = Astro.props;
+
+// Chemins exprimés dans un viewBox 100×100, calqués sur les proportions du
+// symbole Gonabi (le rayon vaut la moitié du côté du carré englobant).
+const paths: Record<ShapeVariant, string> = {
+  // Demi-disque : moitié gauche d'un cercle plein.
+  'half-disc': 'M50 0 A50 50 0 0 0 50 100 Z',
+  // Arc concave : quart de cercle évidé, coin inférieur-gauche creusé.
+  'arc-concave': 'M0 0 H100 V100 A100 100 0 0 1 0 0 Z',
+  // Bloc à coin arrondi : carré dont un seul coin est un arc convexe.
+  'block-round': 'M0 0 H50 A50 50 0 0 1 100 50 V100 H0 Z',
+};
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 100 100"
+  fill={color}
+  aria-hidden="true"
+  focusable="false"
+  style={rotate ? `transform: rotate(${rotate}deg)` : undefined}
+>
+  <path d={paths[variant]} />
+</svg>

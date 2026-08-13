@@ -77,16 +77,21 @@ h2 {
   letter-spacing: var(--tracking-title);
 }
 
+/*
+ * h3/h4 utilisent Lora (voir la règle h1-h4 ci-dessus) : la charte interdit
+ * explicitement le gras sur Lora, tout titre reste donc à 500 maximum. Le
+ * poids visuel supplémentaire recherché passe par la taille, jamais la graisse.
+ */
 h3 {
   font-size: var(--size-h3);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);
 }
 
 h4 {
   font-size: var(--size-h4);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   line-height: var(--leading-snug);
 }
 

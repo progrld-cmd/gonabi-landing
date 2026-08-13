@@ -37,7 +37,8 @@
   --accent-wash: #fdeceb;
   --blue: #1bafd0; /* usage très ponctuel, jamais sur du texte */
   --blue-deep: #0d7c94; /* 4.43:1 sur papier — la déclinaison lisible du bleu */
-  --ochre: #8a6400; /* 4.91:1 — le jaune de marque n'atteint que 1.48:1 sur papier */
+  --ochre: #8a6400; /* 4.91:1 — le jaune de marque n'atteint que 1.48:1 sur papier, réservé au texte */
+  --yellow: #ffc20f; /* jaune de marque brut — aplats/badges décoratifs uniquement, jamais de texte dessus */
 
   /* Filets — la structure du site tient sur ces traits */
   --rule: rgba(1, 43, 48, 0.14);
@@ -124,4 +125,22 @@
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
   --duration: 180ms;
   --duration-slow: 320ms;
+
+  /*
+   * ============================================================
+   * TUILES & PHOTOS — langage Shapes.co / Culture Amp
+   * ============================================================
+   * Ombre douce et coins très arrondis pour les tuiles UI flottantes
+   * (mesurés sur shapes.co : box-shadow 0 0 9px rgba(0,0,0,.15), radius 20px)
+   * et pour les photos encadrées à la Culture Amp (radius 32px sur le hero).
+   * Usage réservé aux tuiles/photos — les filets fins restent la structure
+   * du reste du site (sections, listes, séparateurs).
+   */
+  --shadow-tile: 0 0 9px rgba(1, 43, 48, 0.15);
+  --shadow-tile-lg: 0 12px 32px rgba(1, 43, 48, 0.16);
+  --radius-tile: 20px;
+  --radius-photo: 32px;
+
+  /* Décalage de l'aplat de couleur derrière une photo (Culture Amp) */
+  --photo-offset: 20px;
 }

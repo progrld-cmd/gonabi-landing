@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import ShapeMask from '../components/ShapeMask.astro';
+import IconBadge from '../components/IconBadge.astro';
+import type { ShapeVariant } from '../components/ShapeMask.astro';
 import { DEMO_HREF, mainNav } from '../data/navigation';
-import type { IconName } from '../components/Icon.astro';
 
 const produit = mainNav.find((group) => group.label === 'Produit');
-const solutions = mainNav.find((group) => group.label === 'Solutions');
+const solutions = mainNav.find((group) => group.label === 'Pour qui');
 const segments = solutions?.children?.filter((page) => page.href.startsWith('/solutions/')) ?? [];
 
 const partenaires = [
@@ -16,17 +18,11 @@ const partenaires = [
   { src: '/assets/partners/french_tech_grayscale.png', alt: 'French Tech' },
 ];
 
-/**
- * Les trois arguments du hero. Chacun est sourcé :
- * - centralisation : hypothèse n°1 validée en bêta (« la centralisation est la clé »)
- * - preuves Qualiopi : PRD Conformité Qualiopi v1.1, sprint 1 livré
- * - personnalisation : besoin fondamental relevé en entretien de clôture bêta
- * Ne pas y remettre l'IA : aucune limite n'est contractualisée (voir navigation.ts).
- */
-const reassurances: { icone: IconName; texte: string }[] = [
-  { icone: 'layers', texte: 'Vos outils réunis en un seul' },
-  { icone: 'shield-check', texte: 'Vos preuves Qualiopi générées par l’accompagnement' },
-  { icone: 'compass', texte: 'Vos ressources, vos trames, votre méthode' },
+/** Puces sous le CTA hero — formes du logo, pas d'icônes pictogrammes. */
+const reassurances: { shape: ShapeVariant; color: string; texte: string }[] = [
+  { shape: 'block-round', color: 'var(--blue)', texte: 'Vos outils réunis en un seul' },
+  { shape: 'arc-concave', color: 'var(--accent)', texte: 'Vos preuves Qualiopi générées par l’accompagnement' },
+  { shape: 'half-disc', color: 'var(--ochre)', texte: 'Vos ressources, vos trames, votre méthode' },
 ];
 
 /** Repris de l'ancienne landing : la partie du titre qui change en fondu. */
@@ -36,7 +32,15 @@ const rotations = [
   { texte: 'en bilan de compétences.', couleur: 'ochre' },
 ];
 
-// Freins tirés de verbatims de bêta-testeurs, pas de suppositions.
+const heroTiles = [
+  { icon: 'layers' as const, label: 'Tableau de bord' },
+  { icon: 'file-text' as const, label: 'Synthèse IA' },
+];
+
+// Freins tirés de verbatims de bêta-testeurs. Traitement en rangées à
+// séparateurs fins et marqueur rond — pas de photo : ce sont des constats de
+// douleur, pas des preuves de fonctionnalité, et une photo de personne
+// « stressée » serait un cliché fabriqué de toutes pièces.
 const freins = [
   {
     titre: 'Vous saisissez la même chose trois fois',
@@ -56,37 +60,78 @@ const freins = [
 ];
 
 // Différenciateurs issus du benchmark concurrentiel du PRD Conformité Qualiopi.
-const differences = [
+const differences: { titre: string; texte: string; shape: ShapeVariant; color: string }[] = [
   {
     titre: 'Un outil là où il en fallait quatre',
     texte:
       'Les tests dans un catalogue, les métiers dans un autre abonnement, l’administratif dans un logiciel de gestion, les synthèses dans un traitement de texte. Gonabi tient les quatre.',
+    shape: 'block-round',
+    color: 'var(--blue)',
   },
   {
     titre: 'La conformité naît de l’accompagnement',
     texte:
       'Les autres outils qualité vous demandent de saisir vos preuves dans un module à part. Ici, la séance que vous menez les produit.',
+    shape: 'arc-concave',
+    color: 'var(--accent)',
   },
   {
     titre: 'Votre méthode reste la vôtre',
     texte:
       'Vos ressources, vos trames de parcours, vos supports. L’outil structure votre pratique, il ne la remplace pas par la sienne.',
+    shape: 'half-disc',
+    color: 'var(--yellow)',
   },
 ];
 
-const confiance: { icone: IconName; titre: string; texte: string }[] = [
+/**
+ * Un segment = un onglet. Chaque panneau a sa propre photo — jamais la même
+ * deux fois, ce qui laisserait croire à quatre profils clients identiques.
+ */
+const segmentVisuals: Record<string, { src: string; alt: string; shape: ShapeVariant; color: string }> = {
+  '/solutions/cabinets-rh': {
+    src: '/assets/photos/poignee-main-arc.jpg',
+    alt: 'Poignée de main entre deux professionnels',
+    shape: 'block-round',
+    color: 'var(--blue)',
+  },
+  '/solutions/organismes-de-formation': {
+    src: '/assets/photos/visio-groupe-casque.jpg',
+    alt: 'Formatrice au casque en visioconférence de groupe',
+    shape: 'arc-concave',
+    color: 'var(--accent)',
+  },
+  '/solutions/coachs-independants': {
+    src: '/assets/photos/bureau-maison-lampe.jpg',
+    alt: 'Consultant indépendant travaillant depuis son bureau à domicile',
+    shape: 'half-disc',
+    color: 'var(--yellow)',
+  },
+  '/solutions/insertion-professionnelle': {
+    src: '/assets/photos/laptop-cuisine-lumineuse.jpg',
+    alt: 'Professionnelle de l’accompagnement travaillant sur son ordinateur portable',
+    shape: 'block-round',
+    color: 'var(--yellow)',
+  },
+};
+
+/** Badges pleins, mêmes formes que Différenciation pour la cohérence. */
+const confiance: { shape: ShapeVariant; color: string; titre: string; texte: string }[] = [
   {
-    icone: 'eye-off',
+    shape: 'half-disc',
+    color: 'var(--yellow)',
     titre: 'Vos séances ne sont pas enregistrées',
     texte: 'Ni audio, ni vidéo. Seule la connexion à la plateforme est journalisée.',
   },
   {
-    icone: 'lock',
+    shape: 'arc-concave',
+    color: 'var(--accent)',
     titre: 'Les dossiers sont cloisonnés',
     texte: 'L’accès est limité à l’organisation et au parcours suivi.',
   },
   {
-    icone: 'file-text',
+    shape: 'block-round',
+    color: 'var(--blue)',
     titre: 'Les preuves sont conservées 5 ans',
     texte: 'La durée pendant laquelle un dossier financé peut être contrôlé.',
   },
@@ -98,7 +143,7 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
   description="Gonabi réunit tests psychométriques, parcours, exploration métiers, synthèses et preuves Qualiopi dans un seul outil, pour les cabinets RH et les organismes de formation."
   canonical="/"
 >
-  <!-- ══════════════ HERO — asymétrique, aligné à gauche ══════════════ -->
+  <!-- ══════════════ HERO ══════════════ -->
   <section class="hero">
     <div class="container hero__grid">
       <div class="hero__content">
@@ -109,10 +154,7 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
           <span class="rotator">
             {
               rotations.map((r, i) => (
-                <span
-                  class:list={['rotator__item', `is-${r.couleur}`]}
-                  style={`--step: ${i}`}
-                >
+                <span class:list={['rotator__item', `is-${r.couleur}`]} style={`--step: ${i}`}>
                   {r.texte}
                 </span>
               ))
@@ -134,7 +176,7 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
           {
             reassurances.map((item) => (
               <li>
-                <Icon name={item.icone} size={17} />
+                <ShapeMask variant={item.shape} color={item.color} size={14} class="hero__badge-shape" />
                 {item.texte}
               </li>
             ))
@@ -143,19 +185,53 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
       </div>
 
       <div class="hero__visual">
-        <img
-          src="/assets/images/Hero_visual.png"
-          alt="Interface Gonabi : tableau de bord, profil psychométrique et parcours personnalisés"
-          width="760"
-          height="570"
-          loading="eager"
-          fetchpriority="high"
-        />
+        <div class="hero__stage">
+          <!-- Bloc de couleur : même gabarit que la photo, décalé de 20px -->
+          <div class="hero__color-block"></div>
+
+          <div class="hero__photo-frame">
+            <img
+              src="/assets/photos/hero-laptop-cafe.jpg"
+              alt="Consultante travaillant sur son ordinateur portable"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+
+          <!-- Bande verticale de couleurs de marque -->
+          <div class="hero__stripe" aria-hidden="true">
+            <span style="background: var(--accent)"></span>
+            <span style="background: var(--blue)"></span>
+            <span style="background: var(--yellow)"></span>
+          </div>
+
+          <!-- Tuiles à cheval sur le bord de la photo -->
+          <div class="hero__tiles">
+            {
+              heroTiles.map((tile) => (
+                <div class="hero-tile">
+                  <Icon name={tile.icon} size={16} />
+                  <span>{tile.label}</span>
+                </div>
+              ))
+            }
+          </div>
+
+          <div class="hero-tile hero-tile--parcours">
+            <p class="hero-tile__title">Nouveau parcours</p>
+            <ol class="hero-tile__steps">
+              <li><span class="hero-tile__step-num">1</span> Tests</li>
+              <li><span class="hero-tile__step-num">2</span> Compétences</li>
+              <li><span class="hero-tile__step-num is-muted">3</span> —</li>
+              <li><span class="hero-tile__step-num">4</span> Bilan</li>
+            </ol>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════ PARTENAIRES — bandeau fin cerné de filets ══════════════ -->
+  <!-- ══════════════ PARTENAIRES ══════════════ -->
   <section class="partners">
     <div class="container partners__inner">
       <p class="eyebrow partners__label">Ils nous font confiance</p>
@@ -171,71 +247,28 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     </div>
   </section>
 
-  <!-- ══════════════ FREINS — rangées numérotées, pas de cartes ══════════════ -->
+  <!-- ══════════════ FREINS — rangées à marqueur rond, pas de numéros ══════════════ -->
   <section class="section section--paper">
-    <div class="container">
+    <div class="container container--narrow">
       <header class="block-head" data-reveal>
         <p class="eyebrow eyebrow--rule">Le constat</p>
-        <h2 class="block-head__title">Ce qui vous freine aujourd’hui</h2>
+        <h2 class="block-head__title">Ce qui vous freine <em>aujourd’hui</em></h2>
       </header>
 
-      <ol class="figures">
+      <ul class="rows">
         {
           freins.map((frein, i) => (
-            <li class="figure" data-reveal>
-              <span class="numeral figure__num" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <h3 class="figure__title">{frein.titre}</h3>
-              <p class="figure__text">{frein.texte}</p>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
-
-  <!-- ══════════════ TÉMOIGNAGE — bande courte, rythme à part ══════════════ -->
-  <section class="section section--tight section--paper-light">
-    <div class="container">
-      <figure class="quote" data-reveal>
-        <blockquote class="quote__text">
-          Avant, je passais mes jeudis soirs à rédiger mes synthèses. Maintenant, je génère un
-          rapport complet en trois clics pendant la séance. Mes jeudis soirs m’appartiennent à
-          nouveau.
-        </blockquote>
-        <figcaption class="quote__source">
-          Coach en reconversion · bêta-testeuse · six accompagnements en parallèle
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- ══════════════ PRODUIT — pleine page encre, index éditorial ══════════════ -->
-  <section class="section section--ink produit">
-    <div class="container produit__grid">
-      <div class="produit__aside">
-        <p class="eyebrow eyebrow--rule">Le produit</p>
-        <h2 class="produit__title">Tout l’accompagnement dans un seul outil</h2>
-        <p class="lead produit__lead">
-          Chaque brique alimente la suivante : les tests nourrissent l’exploration métiers, le
-          parcours produit ses preuves, et la synthèse se rédige à partir de tout ce qui précède.
-        </p>
-        <a href="/produit" class="link-arrow produit__all">
-          Voir la vue d’ensemble
-          <Icon name="arrow-right" size={16} />
-        </a>
-      </div>
-
-      <ul class="index-list">
-        {
-          produit?.children?.map((page) => (
-            <li>
-              <a href={page.href} class="index-row">
-                <span class="index-row__label">{page.label}</span>
-                <span class="index-row__desc">{page.description}</span>
-                <Icon name="arrow-up-right" size={18} class="index-row__icon" />
-              </a>
+            <li class="row" data-reveal>
+              <ShapeMask
+                variant={(['half-disc', 'arc-concave', 'block-round'] as const)[i % 3]}
+                color={['var(--blue)', 'var(--accent)', 'var(--yellow)'][i % 3]}
+                size={18}
+                class="row__marker"
+              />
+              <div>
+                <h3 class="row__title">{frein.titre}</h3>
+                <p class="row__text">{frein.texte}</p>
+              </div>
             </li>
           ))
         }
@@ -243,49 +276,147 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     </div>
   </section>
 
-  <!-- ══════════════ SEGMENTS — titre à gauche, grille 2×2 à droite ══════════════ -->
-  <section class="section section--paper">
-    <div class="container segments__grid">
-      <div class="segments__aside" data-reveal>
-        <p class="eyebrow eyebrow--rule">Pour qui</p>
-        <h2 class="segments__title">Conçu d’abord pour les structures de 8 à 25&nbsp;consultants</h2>
-        <p class="segments__note">
-          Cabinets RH et organismes de formation qui accompagnent en bilan de compétences,
-          évolution professionnelle ou orientation.
+  <!-- ══════════════ TÉMOIGNAGE — carte blanche arrondie sur fond crème ══════════════ -->
+  <section class="section section--tight section--paper-light">
+    <div class="container">
+      <figure class="quote-card" data-reveal>
+        <blockquote class="quote-card__text">
+          Avant, je passais mes jeudis soirs à rédiger mes synthèses. Maintenant, je génère un
+          rapport complet en trois clics pendant la séance. Mes jeudis soirs m’appartiennent à
+          nouveau.
+        </blockquote>
+        <figcaption class="quote-card__source">
+          <span class="quote-card__avatar" aria-hidden="true">C</span>
+          Coach en reconversion · bêta-testeuse · six accompagnements en parallèle
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ══════════════ PRODUIT — fond clair, panneau illustratif + badge chiffré ══════════════ -->
+  <section class="section section--paper-light">
+    <div class="container produit__grid">
+      <div class="produit__aside" data-reveal>
+        <p class="eyebrow eyebrow--rule">Le produit</p>
+        <h2 class="produit__title">Tout l’accompagnement dans <em>un seul</em> outil</h2>
+        <p class="lead produit__lead">
+          Chaque brique alimente la suivante : les tests nourrissent l’exploration métiers, le
+          parcours produit ses preuves, et la synthèse se rédige à partir de tout ce qui précède.
         </p>
+
+        <ul class="produit__tags">
+          {
+            produit?.children?.map((page) => (
+              <li>
+                <a href={page.href}>{page.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <a href="/produit" class="link-arrow produit__all">
+          Voir la vue d’ensemble
+          <Icon name="arrow-right" size={16} />
+        </a>
       </div>
 
-      <div class="segments__list">
+      <div class="produit__visual">
+        <div class="produit__color-block"></div>
+
+        <div class="produit-panel">
+          <p class="produit-panel__title">Nouveau parcours</p>
+          <div class="produit-panel__row">
+            <span class="chip chip--blue">Tests</span>
+            <span class="produit-panel__bar"><span style="width: 82%; background: var(--blue)" /></span>
+          </div>
+          <div class="produit-panel__row">
+            <span class="chip chip--red">Compétences</span>
+            <span class="produit-panel__bar"><span style="width: 54%; background: var(--accent)" /></span>
+          </div>
+          <div class="produit-panel__row">
+            <span class="chip chip--yellow">Synthèse</span>
+            <span class="produit-panel__bar"><span style="width: 20%; background: var(--yellow)" /></span>
+          </div>
+        </div>
+
+        <div class="stat-badge">
+          <span class="stat-badge__num">2-4H</span>
+          <span class="stat-badge__label">gagnées par audit</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ POUR QUI — onglets pilules, un panneau photo+texte ══════════════ -->
+  <section class="section section--paper" id="pour-qui">
+    <div class="container">
+      <header class="block-head" data-reveal>
+        <p class="eyebrow eyebrow--rule">Pour qui</p>
+        <h2 class="block-head__title">
+          Conçu d’abord pour les structures de <em>8 à 25 consultants</em>
+        </h2>
+      </header>
+
+      <!--
+        `<details name="segment-tabs">` : accordéon exclusif natif du
+        navigateur (un seul ouvert à la fois), sans état CSS custom à
+        maintenir. La version précédente (radios + sélecteurs `:checked`
+        combinés à des attributs) se désynchronisait de façon incohérente à
+        la vérification — `<details name>` élimine la classe de bug entière.
+      -->
+      <div class="tabs">
         {
-          segments.map((page) => (
-            <a href={page.href} class="segment" data-reveal>
-              <h3 class="segment__title">{page.label}</h3>
-              <p class="segment__text">{page.description}</p>
-              <span class="segment__more" aria-hidden="true">
-                <Icon name="arrow-right" size={16} />
-              </span>
-            </a>
-          ))
+          segments.map((page, i) => {
+            const visual = segmentVisuals[page.href];
+            return (
+              <details class="tabs__item" name="segment-tabs" open={i === 0}>
+                <summary class="tabs__summary">
+                  <span>{page.label}</span>
+                  <Icon name="arrow-right" size={18} class="tabs__chevron" />
+                </summary>
+                <div class="tabs__panel">
+                  <div class="tabs__panel-text">
+                    <p>{page.description}</p>
+                    <a href={page.href} class="link-arrow">
+                      En savoir plus
+                      <Icon name="arrow-right" size={16} />
+                    </a>
+                  </div>
+                  {visual && (
+                    <div class="tabs__panel-visual">
+                      <ShapeMask
+                        variant={visual.shape}
+                        color={visual.color}
+                        size={200}
+                        class="tabs__panel-backdrop"
+                      />
+                      <div class="tabs__panel-photo">
+                        <img src={visual.src} alt={visual.alt} loading="lazy" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </details>
+            );
+          })
         }
       </div>
     </div>
   </section>
 
-  <!-- ══════════════ DIFFÉRENCIATION — trois colonnes séparées de filets ══════════════ -->
+  <!-- ══════════════ DIFFÉRENCIATION — badges pleins ══════════════ -->
   <section class="section section--paper-light">
     <div class="container">
       <header class="block-head block-head--wide" data-reveal>
         <p class="eyebrow eyebrow--rule">La différence</p>
-        <h2 class="block-head__title">Trois choix que nous assumons</h2>
+        <h2 class="block-head__title">Trois choix que nous <em>assumons</em></h2>
       </header>
 
       <div class="columns">
         {
-          differences.map((item, i) => (
+          differences.map((item) => (
             <article class="column" data-reveal>
-              <span class="numeral column__num" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
+              <IconBadge shape={item.shape} color={item.color} />
               <h3 class="column__title">{item.titre}</h3>
               <p class="column__text">{item.texte}</p>
             </article>
@@ -329,12 +460,12 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     </div>
   </section>
 
-  <!-- ══════════════ CONFIANCE — texte à gauche, liste à droite ══════════════ -->
+  <!-- ══════════════ CONFIANCE — badges pleins, rangées à filets ══════════════ -->
   <section class="section section--paper-light">
     <div class="container trust__grid">
       <div data-reveal>
         <p class="eyebrow eyebrow--rule">Confiance</p>
-        <h2 class="trust__title">Des données sensibles, traitées comme telles</h2>
+        <h2 class="trust__title">Des données sensibles, <em>traitées comme telles</em></h2>
         <p class="lead trust__lead">
           Un bilan de compétences produit des informations intimes, protégées par la loi. Nous
           documentons publiquement ce que nous en faisons — et ce que nous nous interdisons.
@@ -349,7 +480,7 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
         {
           confiance.map((item) => (
             <li class="trust__item" data-reveal>
-              <Icon name={item.icone} size={22} class="trust__icon" />
+              <IconBadge shape={item.shape} color={item.color} size={40} />
               <div>
                 <h3 class="trust__item-title">{item.titre}</h3>
                 <p class="trust__item-text">{item.texte}</p>
@@ -361,12 +492,12 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     </div>
   </section>
 
-  <!-- ══════════════ CTA FINAL — bandeau encre, composition large ══════════════ -->
-  <section class="section section--ink cta">
-    <div class="container cta__grid">
-      <h2 class="cta__title">Voir Gonabi tourner sur vos propres cas</h2>
-      <div class="cta__side">
-        <p class="cta__text">
+  <!-- ══════════════ CTA FINAL — carte pleine couleur, centrée ══════════════ -->
+  <section class="section cta">
+    <div class="container">
+      <div class="cta-card">
+        <h2 class="cta-card__title">Voir Gonabi tourner sur <em>vos propres cas</em></h2>
+        <p class="cta-card__text">
           Une démonstration guidée, adaptée à votre structure et à vos accompagnements.
         </p>
         <a href={DEMO_HREF} class="btn btn--primary">Réserver une démo</a>
@@ -381,15 +512,11 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
   .hero {
     background: var(--paper);
     padding-block: clamp(48px, 7vw, 112px) clamp(56px, 8vw, 128px);
-    overflow: hidden;
   }
 
   .hero__grid {
     display: grid;
-    /* La colonne texte est la plus large : un H1 à 68px a besoin de place, sinon
-       il part sur huit lignes. Le visuel compense en débordant hors du conteneur
-       jusqu'au bord de l'écran. */
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     gap: var(--space-16);
     align-items: center;
   }
@@ -404,24 +531,24 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
   }
 
   /*
-   * Carrousel du titre, repris de l'ancienne landing. Trois états qui se
-   * succèdent en fondu, en CSS pur — les trois textes restent dans le DOM,
-   * donc lisibles par un lecteur d'écran et indexables.
+   * Empilement en grille plutôt qu'en position absolue : les trois phrases
+   * n'ont pas la même longueur et certaines passent sur deux lignes selon la
+   * largeur d'écran. Avec `position: absolute` sur les items, le conteneur ne
+   * réservait la hauteur que d'une ligne — la phrase la plus longue débordait
+   * alors sur le texte suivant (chapô). En grille, les trois textes occupent
+   * la même cellule (`grid-area: 1/1`) et le conteneur se dimensionne
+   * automatiquement sur le plus grand des trois, quel que soit le nombre de
+   * lignes qu'il occupe.
    */
   .rotator {
-    display: block;
-    position: relative;
-    min-height: 1.15em;
+    display: grid;
   }
 
   .rotator__item {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
+    grid-area: 1 / 1;
+    align-self: start;
     opacity: 0;
     animation: rotator 10.5s infinite;
-    /* --step porte le rang de l'élément : 0, 1 puis 2 */
     animation-delay: calc(var(--step) * 3.5s);
   }
 
@@ -450,7 +577,6 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     }
   }
 
-  /* Mouvement réduit : on fige sur le premier état plutôt que de faire clignoter */
   @media (prefers-reduced-motion: reduce) {
     .rotator__item {
       animation: none;
@@ -490,28 +616,152 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     color: var(--text-muted);
   }
 
-  .hero__badges :global(svg) {
-    color: var(--accent);
-    flex-shrink: 0;
+  /* ── Visuel : bloc de couleur plein + photo + bande + tuiles à cheval ── */
+
+  .hero__visual {
+    position: relative;
+    padding: 24px 24px 44px 8px;
   }
 
   /*
-   * Le visuel sort du conteneur et va jusqu'au bord droit de l'écran : c'est la
-   * grille brisée qui donne son caractère au hero. Sous 1200px le calcul retombe
-   * naturellement sur un simple débord de gouttière. `overflow: hidden` sur
-   * `.hero` empêche tout défilement horizontal.
+   * `.hero__stage` porte la vraie taille (aspect-ratio) ; le bloc de couleur
+   * et le cadre photo sont tous deux `inset: 0` sur cette même boîte, donc
+   * strictement du même gabarit — le bloc est juste décalé de 20px en x/y.
+   * L'ancienne version dimensionnait le bloc en `%` de `.hero__visual` (qui
+   * inclut son padding) pendant que la photo suivait le flux normal : les
+   * deux gabarits divergeaient et le bloc débordait largement de la photo.
    */
-  .hero__visual {
+  .hero__stage {
     position: relative;
-    margin-right: calc((100vw - min(100vw, var(--container))) / -2 - var(--gutter));
+    aspect-ratio: 4 / 3;
   }
 
-  .hero__visual img {
+  .hero__color-block {
+    position: absolute;
+    inset: 0;
+    transform: translate(20px, 20px);
+    background: var(--blue);
+    border-radius: var(--radius-photo);
+    z-index: 0;
+  }
+
+  .hero__photo-frame {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: var(--radius-photo);
+    overflow: hidden;
+    box-shadow: var(--shadow-tile-lg);
+    /* Le texte alternatif d'une image non chargée ne doit pas s'afficher en
+       gros caractères sombres dans le cadre : neutralisé le temps que les
+       photos réelles arrivent, sans effet une fois l'image chargée. */
+    background: var(--paper-light);
+    color: transparent;
+    font-size: 0;
+  }
+
+  .hero__photo-frame img {
     width: 100%;
-    border-radius: var(--radius-lg);
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
   }
 
-  /* Apparition au chargement, échelonnée */
+  .hero__stripe {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    z-index: 2;
+    display: grid;
+    gap: 4px;
+    width: 10px;
+  }
+
+  .hero__stripe span {
+    display: block;
+    height: 44px;
+    border-radius: 4px;
+  }
+
+  .hero__tiles {
+    position: absolute;
+    top: -14px;
+    left: -14px;
+    z-index: 2;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .hero-tile {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--paper-white);
+    border-radius: var(--radius-tile);
+    box-shadow: var(--shadow-tile);
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .hero-tile :global(svg) {
+    color: var(--blue-deep);
+    flex-shrink: 0;
+  }
+
+  /* À cheval sur le bord bas de la photo : moitié dessus, moitié dessous */
+  .hero-tile--parcours {
+    position: absolute;
+    bottom: -28px;
+    left: 24px;
+    z-index: 2;
+    display: block;
+    padding: 14px 18px;
+    white-space: normal;
+    min-width: 168px;
+  }
+
+  .hero-tile__title {
+    font-size: 12px;
+    font-weight: var(--weight-semibold);
+    margin-bottom: var(--space-2);
+  }
+
+  .hero-tile__steps {
+    list-style: none;
+    display: grid;
+    gap: 6px;
+  }
+
+  .hero-tile__steps li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .hero-tile__step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent-wash);
+    color: var(--accent-deep);
+    font-size: 10px;
+    font-weight: var(--weight-semibold);
+    flex-shrink: 0;
+  }
+
+  .hero-tile__step-num.is-muted {
+    background: var(--ink-08);
+    color: var(--ink-40);
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .hero__eyebrow,
     .hero__title,
@@ -581,9 +831,9 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
   }
 
   .partners__row img {
-    height: 26px;
+    height: 42px;
     width: auto;
-    opacity: 0.5;
+    opacity: 0.55;
     filter: grayscale(1);
     transition: opacity var(--duration) var(--ease);
   }
@@ -594,9 +844,14 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
 
   /* ════════════════════════ EN-TÊTES DE BLOC ════════════════════════ */
 
+  .container--narrow {
+    max-width: 860px;
+  }
+
   .block-head {
     max-width: 720px;
     margin-bottom: var(--space-24);
+    text-align: left;
   }
 
   .block-head--wide {
@@ -607,60 +862,65 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     margin-top: var(--space-8);
   }
 
-  /* ════════════════════════ FREINS ════════════════════════ */
+  .block-head__title em,
+  h2 em,
+  h3 em {
+    font-style: italic;
+    font-weight: var(--weight-regular);
+  }
 
-  .figures {
+  .block-head .lead {
+    margin-top: var(--space-4);
+  }
+
+  /* ════════════════════════ FREINS (rangées) ════════════════════════ */
+
+  .rows {
     list-style: none;
   }
 
-  .figure {
-    display: grid;
-    grid-template-columns: 110px minmax(0, 4fr) minmax(0, 6fr);
+  .row {
+    display: flex;
+    align-items: flex-start;
     gap: var(--space-8);
-    align-items: start;
     padding-block: var(--space-16);
     border-top: var(--border-hairline) solid var(--rule);
   }
 
-  .figure:last-child {
+  .row:last-child {
     border-bottom: var(--border-hairline) solid var(--rule);
   }
 
-  .figure__num {
-    /* Aligne l'œil du chiffre sur la ligne de base du titre */
-    margin-top: -0.12em;
+  /* Puce décorative — pas un bouton : rien ne se déplie ici, tout le
+     contenu est déjà affiché. Un « + » cliquable aurait promis une
+     interaction qui n'existe pas. */
+  .row :global(.row__marker) {
+    flex-shrink: 0;
+    margin-top: 10px;
   }
 
-  .figure__title {
+  .row__title {
     font-size: var(--size-h3);
+    margin-bottom: var(--space-2);
   }
 
-  .figure__text {
+  .row__text {
     color: var(--text-muted);
     max-width: 56ch;
   }
 
-  /* ════════════════════════ TÉMOIGNAGE ════════════════════════ */
+  /* ════════════════════════ TÉMOIGNAGE (carte) ════════════════════════ */
 
-  .quote {
+  .quote-card {
     max-width: 900px;
-    position: relative;
-    padding-left: clamp(32px, 5vw, 64px);
+    margin-inline: auto;
+    background: var(--paper-white);
+    border-radius: var(--radius-photo);
+    box-shadow: var(--shadow-tile);
+    padding: clamp(32px, 5vw, 64px);
   }
 
-  /* Guillemet ouvrant en très grand, traité comme un ornement typographique */
-  .quote::before {
-    content: '«';
-    position: absolute;
-    left: 0;
-    top: -0.12em;
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 6vw, 5rem);
-    line-height: 1;
-    color: var(--accent);
-  }
-
-  .quote__text {
+  .quote-card__text {
     font-family: var(--font-display);
     font-size: clamp(1.375rem, 2.6vw, 2rem);
     font-weight: var(--weight-regular);
@@ -670,160 +930,269 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     color: var(--text);
   }
 
-  .quote__source {
+  .quote-card__source {
     margin-top: var(--space-8);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
     font-size: var(--size-small);
     color: var(--text-muted);
   }
 
-  /* ════════════════════════ PRODUIT (encre) ════════════════════════ */
+  .quote-card__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: var(--weight-medium);
+    flex-shrink: 0;
+  }
+
+  /* ════════════════════════ PRODUIT (fond clair) ════════════════════════ */
 
   .produit__grid {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: var(--space-16);
-    align-items: start;
+    gap: var(--space-24);
+    align-items: center;
   }
 
-  .produit__aside {
-    position: sticky;
-    top: 120px;
-  }
-
-  /* Titre de colonne latérale : il ne peut pas suivre l'échelle des H2 de
-     pleine largeur, « l'accompagnement » déborderait de sa colonne. */
   .produit__title {
-    font-size: clamp(2rem, 3.2vw, 2.75rem);
     margin-top: var(--space-8);
     margin-bottom: var(--space-8);
-    max-width: 14ch;
+    max-width: 16ch;
   }
 
   .produit__lead {
     max-width: 42ch;
+    margin-bottom: var(--space-16);
   }
 
-  .produit__all {
-    margin-top: var(--space-8);
-  }
-
-  .index-list {
+  .produit__tags {
     list-style: none;
-    border-top: var(--border-hairline) solid var(--on-ink-rule);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-16);
   }
 
-  .index-row {
-    display: grid;
-    /* Colonnes à parts égales : en 5fr/7fr, « Portefeuille de compétences »
-       déborde de sa colonne juste au-dessus du point de bascule à 1024px. */
-    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr) 24px;
-    gap: var(--space-8);
-    align-items: baseline;
-    padding: var(--space-8) var(--space-4) var(--space-8) 0;
-    border-bottom: var(--border-hairline) solid var(--on-ink-rule);
+  .produit__tags a {
+    display: inline-block;
+    font-size: var(--size-small);
+    color: var(--text-muted);
     text-decoration: none;
-    transition:
-      padding-left var(--duration) var(--ease),
-      border-color var(--duration) var(--ease);
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: 1px;
+    transition: color var(--duration) var(--ease);
   }
 
-  .index-row:hover {
-    padding-left: var(--space-4);
-    border-bottom-color: var(--on-ink-rule-strong);
+  .produit__tags a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
   }
 
-  .index-row__label {
+  .produit__visual {
+    position: relative;
+    padding: 32px 24px 40px 32px;
+  }
+
+  .produit__color-block {
+    position: absolute;
+    inset: 0;
+    background: var(--yellow);
+    border-radius: var(--radius-photo);
+    z-index: 0;
+  }
+
+  .produit-panel {
+    position: relative;
+    z-index: 1;
+    background: var(--paper-white);
+    border-radius: var(--radius-tile);
+    box-shadow: var(--shadow-tile-lg);
+    padding: var(--space-16);
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .produit-panel__title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: var(--weight-medium);
+    margin-bottom: var(--space-4);
+  }
+
+  .produit-panel__row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: var(--weight-semibold);
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .chip--blue {
+    background: var(--blue-deep);
+  }
+  .chip--red {
+    background: var(--accent-deep);
+  }
+  .chip--yellow {
+    background: var(--ochre);
+  }
+
+  .produit-panel__bar {
+    display: block;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--ink-08);
+    overflow: hidden;
+  }
+
+  .produit-panel__bar span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+  }
+
+  .stat-badge {
+    position: absolute;
+    bottom: -24px;
+    right: -8px;
+    z-index: 2;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    width: 116px;
+    height: 116px;
+    border-radius: 50%;
+    background: var(--paper-white);
+    box-shadow: var(--shadow-tile-lg);
+  }
+
+  .stat-badge__num {
+    display: block;
     font-family: var(--font-display);
     font-size: 1.375rem;
     font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-snug);
-    color: var(--on-ink);
-    overflow-wrap: break-word;
+    color: var(--text);
   }
 
-  .index-row__desc {
-    font-size: var(--size-small);
-    line-height: 1.5;
-    color: var(--on-ink-muted);
-  }
-
-  .index-row :global(.index-row__icon) {
-    color: var(--on-ink-muted);
-    transition:
-      transform var(--duration) var(--ease),
-      color var(--duration) var(--ease);
-    align-self: center;
-  }
-
-  .index-row:hover :global(.index-row__icon) {
-    transform: translate(3px, -3px);
-    color: var(--accent);
-  }
-
-  /* ════════════════════════ SEGMENTS ════════════════════════ */
-
-  .segments__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
-    gap: var(--space-16);
-    align-items: start;
-  }
-
-  .segments__title {
-    margin-top: var(--space-8);
-    font-size: var(--size-h3);
-  }
-
-  .segments__note {
-    margin-top: var(--space-4);
-    font-size: var(--size-small);
-    color: var(--text-muted);
-    max-width: 40ch;
-  }
-
-  .segments__list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-8) var(--space-16);
-  }
-
-  .segment {
+  .stat-badge__label {
     display: block;
-    padding-top: var(--space-8);
-    border-top: var(--border-hairline) solid var(--rule);
-    text-decoration: none;
-    transition: border-color var(--duration) var(--ease);
-  }
-
-  .segment:hover {
-    border-top-color: var(--accent);
-  }
-
-  .segment__title {
-    font-size: var(--size-h4);
-    margin-bottom: var(--space-4);
-  }
-
-  .segment__text {
-    font-size: var(--size-small);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--text-muted);
-    margin-bottom: var(--space-4);
+    margin-top: 2px;
   }
 
-  .segment__more {
-    display: inline-flex;
+  /* ════════════════════════ ONGLETS « POUR QUI » (details natif) ════════════════════════ */
+
+  .tabs {
+    border-top: var(--border-hairline) solid var(--rule);
+  }
+
+  .tabs__item {
+    border-bottom: var(--border-hairline) solid var(--rule);
+  }
+
+  .tabs__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding-block: var(--space-8);
+    font-family: var(--font-display);
+    font-size: var(--size-h4);
+    font-weight: var(--weight-medium);
+    color: var(--text);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  /* Retire le triangle de divulgation par défaut du navigateur */
+  .tabs__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .tabs__summary :global(.tabs__chevron) {
+    flex-shrink: 0;
     color: var(--ink-40);
-    transition:
-      transform var(--duration) var(--ease),
-      color var(--duration) var(--ease);
+    transition: transform var(--duration) var(--ease);
   }
 
-  .segment:hover .segment__more {
-    transform: translateX(4px);
+  /* `[open]` est géré nativement par le navigateur : toujours synchronisé */
+  .tabs__item[open] .tabs__summary :global(.tabs__chevron) {
+    transform: rotate(90deg);
     color: var(--accent);
   }
 
-  /* ════════════════════════ DIFFÉRENCIATION ════════════════════════ */
+  .tabs__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 5fr);
+    gap: var(--space-16);
+    align-items: center;
+    padding-bottom: var(--space-16);
+  }
+
+  .tabs__panel-text {
+    max-width: 42ch;
+  }
+
+  .tabs__panel-text p {
+    color: var(--text-muted);
+    margin-bottom: var(--space-8);
+  }
+
+  .tabs__panel-visual {
+    position: relative;
+    padding: 20px 20px 0 0;
+    max-width: 320px;
+  }
+
+  .tabs__panel-visual :global(.tabs__panel-backdrop) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+  }
+
+  .tabs__panel-photo {
+    position: relative;
+    z-index: 1;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-tile);
+    overflow: hidden;
+    box-shadow: var(--shadow-tile-lg);
+    margin-left: -20px;
+    background: var(--paper-light);
+    color: transparent;
+    font-size: 0;
+  }
+
+  .tabs__panel-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ════════════════════════ DIFFÉRENCIATION (badges) ════════════════════════ */
 
   .columns {
     display: grid;
@@ -832,19 +1201,11 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
   }
 
   .column {
-    padding-left: var(--space-8);
-    border-left: var(--border-hairline) solid var(--rule);
+    padding-top: var(--space-8);
+    border-top: var(--border-hairline) solid var(--rule);
   }
 
-  .column:first-child {
-    padding-left: 0;
-    border-left: 0;
-  }
-
-  .column__num {
-    display: block;
-    font-size: 2rem;
-    color: var(--accent);
+  .column :global(.icon-badge) {
     margin-bottom: var(--space-8);
   }
 
@@ -940,12 +1301,6 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     border-bottom: var(--border-hairline) solid var(--rule);
   }
 
-  .trust__item :global(.trust__icon) {
-    color: var(--accent);
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
   .trust__item-title {
     font-size: var(--size-h4);
     margin-bottom: var(--space-2);
@@ -956,72 +1311,68 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
     color: var(--text-muted);
   }
 
-  /* ════════════════════════ CTA FINAL ════════════════════════ */
+  /* ════════════════════════ CTA FINAL (carte pleine couleur) ════════════════════════ */
 
-  .cta__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: var(--space-16);
-    align-items: end;
+  .cta {
+    background: var(--paper);
   }
 
-  .cta__title {
-    max-width: 15ch;
+  .cta-card {
+    background: var(--ink);
+    border-radius: var(--radius-photo);
+    padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 64px);
+    text-align: center;
   }
 
-  .cta__text {
+  .cta-card__title {
+    color: var(--on-ink);
+    max-width: 20ch;
+    margin-inline: auto;
+    margin-bottom: var(--space-4);
+  }
+
+  .cta-card__text {
+    color: var(--on-ink-muted);
+    max-width: 44ch;
+    margin-inline: auto;
     margin-bottom: var(--space-8);
-    max-width: 38ch;
   }
 
   /* ════════════════════════ RESPONSIVE ════════════════════════ */
 
   @media (max-width: 1024px) {
-    /* `minmax(0, 1fr)` et non `1fr` : sinon la largeur intrinsèque de l'image
-       du hero (760px) impose son minimum à la colonne et la fait déborder. */
     .hero__grid,
     .produit__grid,
-    .segments__grid,
     .migration__grid,
-    .trust__grid,
-    .cta__grid {
+    .trust__grid {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-16);
     }
 
-    .hero__visual {
-      margin-right: calc(var(--gutter) * -1);
+    .tabs__panel {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .tabs__panel-visual {
       max-width: none;
+      margin-top: var(--space-8);
+    }
+
+    .hero__visual {
+      padding: 40px 16px 56px 16px;
     }
 
     .hero__title {
       max-width: 18ch;
     }
 
-    .produit__aside {
-      position: static;
-    }
-
-    .produit__title,
-    .cta__title {
+    .produit__title {
       max-width: 22ch;
     }
 
     .columns {
       grid-template-columns: 1fr;
-      gap: var(--space-8);
-    }
-
-    .column {
-      padding-left: 0;
-      padding-top: var(--space-8);
-      border-left: 0;
-      border-top: var(--border-hairline) solid var(--rule);
-    }
-
-    .column:first-child {
-      padding-top: var(--space-8);
-      border-top: var(--border-hairline) solid var(--rule);
+      gap: var(--space-16);
     }
 
     .partners__inner {
@@ -1039,52 +1390,34 @@ const confiance: { icone: IconName; titre: string; texte: string }[] = [
   }
 
   @media (max-width: 720px) {
-    /* Plus de débord : sur un petit écran l'image serait rognée par
-       l'`overflow: hidden` du hero au lieu de déborder élégamment. */
-    .hero__visual {
-      margin-right: 0;
-    }
-
-    .figure {
-      grid-template-columns: 1fr;
+    .row {
+      flex-direction: column;
       gap: var(--space-4);
-      padding-block: var(--space-8);
     }
 
-    .figure__num {
-      font-size: 2rem;
-      margin-bottom: var(--space-2);
+    .row__marker {
+      display: none;
     }
 
-    .index-row {
-      grid-template-columns: minmax(0, 1fr) 24px;
-      gap: var(--space-2) var(--space-4);
-      align-items: center;
-    }
-
-    /* Placements explicites : sans eux, le `grid-column: 1 / -1` de la
-       description repousse la flèche sur une troisième ligne, seule à gauche. */
-    .index-row__label {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .index-row :global(.index-row__icon) {
-      grid-column: 2;
-      grid-row: 1;
-    }
-
-    .index-row__desc {
-      grid-column: 1 / -1;
-      grid-row: 2;
-    }
-
-    .segments__list {
-      grid-template-columns: 1fr;
+    .tabs__panel-photo {
+      margin-left: 0;
     }
 
     .pull {
       padding-left: var(--space-4);
+    }
+
+    .hero__tiles,
+    .hero-tile--parcours,
+    .hero__stripe {
+      display: none;
+    }
+
+    .stat-badge {
+      width: 92px;
+      height: 92px;
+      right: 4px;
+      bottom: -16px;
     }
   }
 </style>
