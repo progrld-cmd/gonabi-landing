@@ -130,6 +130,24 @@
             max-height: none !important;
         }
 
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--red-primary);
+        }
+
         .btn {
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
@@ -1547,6 +1565,9 @@
             <a href="#" class="logo" aria-label="Gonabi - Accueil">
                 <img src="assets/logos/Gonabi_Logo_Horizontal.png" alt="Gonabi" class="logo-img">
             </a>
+            <div class="nav-links">
+                <a href="tarifs.html">Tarifs</a>
+            </div>
         </nav>
     </header>
 
