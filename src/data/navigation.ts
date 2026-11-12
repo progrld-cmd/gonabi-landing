@@ -23,8 +23,13 @@ export interface NavGroup {
   children?: NavLink[];
 }
 
-/** URL du formulaire de démo — à remplacer quand la destination sera arbitrée. */
-export const DEMO_HREF = '#demo-a-definir';
+/**
+ * Destination du bouton « Réserver une démo ».
+ * Comme sur gonabi.fr : un seul CTA sur tout le site, qui mène au formulaire
+ * de bêta en bas de la home (`#beta`). Le `/` initial fait que le lien
+ * fonctionne aussi depuis les 36 autres pages, qui n'ont pas ce formulaire.
+ */
+export const DEMO_HREF = '/#beta';
 
 /**
  * ⚠️ Ne jamais présenter l'IA comme « illimitée » ni « sans compteur ».

@@ -14,7 +14,18 @@ function isActive(href?: string) {
 <header class="site-header">
   <nav class="site-nav" aria-label="Navigation principale">
     <a href="/" class="site-nav__logo" aria-label="Gonabi — Accueil">
-      <img src="/assets/logos/Gonabi_Logo_Horizontal.png" alt="Gonabi" width="150" height="40" />
+      {/*
+        Version détourée du logo. Le fichier d'origine est un carré de 1000×500
+        dont la marque n'occupe que 501×116 au centre : réglé à 46px de hauteur,
+        le logo affiché mesurait réellement 10px. Le détourage rend la hauteur
+        CSS égale à la hauteur perçue.
+      */}
+      <img
+        src="/assets/logos/Gonabi_Logo_Horizontal_trim.png"
+        alt="Gonabi"
+        width="501"
+        height="116"
+      />
     </a>
 
     <ul class="site-nav__list">
@@ -185,14 +196,15 @@ function isActive(href?: string) {
     flex-shrink: 0;
   }
 
+  /* Hauteur de la marque elle-même, le fichier étant détouré. */
   .site-nav__logo img {
-    height: 64px;
+    height: 34px;
     width: auto;
   }
 
   @media (max-width: 1100px) {
     .site-nav__logo img {
-      height: 52px;
+      height: 28px;
     }
   }
 

@@ -27,6 +27,13 @@
   --paper-light: #fdfaf5;
   --paper-white: #ffffff;
 
+  /*
+   * Second sol sombre. Le thème sombre a besoin de deux tons pour distinguer
+   * une section de la suivante sans jamais repasser au clair (voir le verrou
+   * de thème : une page a un thème, ses sections ne s'inversent pas).
+   */
+  --ink-deep: #001a1d;
+
   /* Texte */
   --text: var(--ink);
   --text-muted: #5a6b6d; /* 5.10:1 sur --paper — AA validé */
@@ -39,6 +46,18 @@
   --blue-deep: #0d7c94; /* 4.43:1 sur papier — la déclinaison lisible du bleu */
   --ochre: #8a6400; /* 4.91:1 — le jaune de marque n'atteint que 1.48:1 sur papier, réservé au texte */
   --yellow: #ffc20f; /* jaune de marque brut — aplats/badges décoratifs uniquement, jamais de texte dessus */
+
+  /*
+   * Teintes pastel dérivées des couleurs de marque.
+   * Ce sont les fonds de cartes du langage Lattice / Leapsome : une carte n'est
+   * pas blanche sur blanc, elle porte une teinte claire de la marque, et le
+   * visuel produit vit dedans. Aucune couleur nouvelle n'est introduite, ce
+   * sont les trois couleurs de la charte désaturées.
+   */
+  --tint-blue: #e4f3f8;
+  --tint-red: #fdeceb;
+  --tint-yellow: #fff4d8;
+  --tint-teal: #e8efef;
 
   /* Filets — la structure du site tient sur ces traits */
   --rule: rgba(1, 43, 48, 0.14);
@@ -57,7 +76,13 @@
   --font-display: 'Lora', Georgia, 'Times New Roman', serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  --size-eyebrow: 0.8125rem; /* 13px */
+  /*
+   * Le sur-titre est lu, pas chuchoté : les trois références du benchmark
+   * (shapes.co, cultureamp.com, confirm.com) le posent autour de 17-19px en
+   * graisse normale et sans tracking notable. À 13px + 0.16em il se lisait
+   * comme une étiquette de gabarit.
+   */
+  --size-eyebrow: 1rem; /* 16px */
   --size-small: 0.9375rem; /* 15px */
   --size-body: 1.125rem; /* 18px — plancher de confort */
   --size-lead: clamp(1.25rem, 1.6vw, 1.5rem); /* 20 → 24 */
@@ -70,20 +95,45 @@
    * les tailles d'écran. Les augmenter réintroduit un débordement de texte.
    */
   --size-h2: clamp(2.25rem, 4vw, 3.75rem); /* 36 → 60 */
-  --size-h1: clamp(2.25rem, 5.1vw, 3.75rem); /* 36 → 60 */
+  /*
+   * 56px et non 64 : mesuré sur la home, le titre tient en trois lignes à 56px
+   * sur toute la largeur du conteneur, contre quatre à 64px. Trois lignes est
+   * la proportion de cultureamp.com (H1 48px, trois lignes courtes).
+   */
+  --size-h1: clamp(2.25rem, 5.1vw, 3.5rem); /* 36 → 56 */
   --size-numeral: clamp(2.5rem, 4.5vw, 4rem); /* numérotation éditoriale */
+  /*
+   * Un seul chiffre par page a le droit à cette taille : celui qui porte la
+   * preuve. Hors de ce cas, --size-numeral suffit. Un display utilisé deux fois
+   * n'est plus un display.
+   */
+  --size-display: clamp(4.5rem, 15vw, 11rem);
+  /*
+   * Titre de hero pleine page. Distinct de --size-h1, qui sert aux hero de
+   * pages intérieures posés dans une colonne de texte.
+   */
+  --size-hero: clamp(2.5rem, 5.2vw, 4.25rem);
+  /* Numérotation de rang (01, 02, 03) — discrète, elle scande sans crier. */
+  --size-rank: 0.8125rem;
 
-  --leading-display: 1.04;
-  --leading-title: 1.14;
+  --leading-display: 1.0;
+  --leading-title: 1.06;
   --leading-snug: 1.3;
   --leading-body: 1.65;
   --leading-lead: 1.5;
 
-  /* Tracking — négatif sur les gros titres, très ouvert sur les sur-titres */
-  --tracking-display: -0.025em;
-  --tracking-title: -0.02em;
-  --tracking-snug: -0.012em;
-  --tracking-eyebrow: 0.16em;
+  /*
+   * Tracking — à zéro sur les titres.
+   * Mesuré sur les trois références : confirm.com (Cotford 80px/80px),
+   * cultureamp.com (Tiempos 60px/68px) et shapes.co posent leurs titres à
+   * letter-spacing normal. Le tracking négatif sur une serif resserre les
+   * empattements et donne l'aspect « gabarit » — c'est le premier réglage
+   * qui distingue une page dessinée d'une page paramétrée.
+   */
+  --tracking-display: 0em;
+  --tracking-title: 0em;
+  --tracking-snug: 0em;
+  --tracking-eyebrow: 0.04em;
 
   --weight-regular: 400;
   --weight-medium: 500;
@@ -118,8 +168,18 @@
      COMPOSANTS
      ============================================================ */
 
-  --radius: 6px;
-  --radius-lg: 10px;
+  /*
+   * Barème de rayon, en trois valeurs et une règle explicite :
+   *   --radius       petits éléments (badges, champs, puces)
+   *   --radius-lg    cartes, photos, panneaux
+   *   --radius-pill  boutons d'action, et eux seuls
+   * Une carte à angle vif posée à côté d'un bouton en pilule est une faute ;
+   * c'est pour éviter ce mélange que la règle est écrite ici plutôt que
+   * décidée composant par composant.
+   */
+  --radius: 8px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
   --border-hairline: 1px;
 
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
@@ -128,19 +188,15 @@
 
   /*
    * ============================================================
-   * TUILES & PHOTOS — langage Shapes.co / Culture Amp
+   * PAS D'OMBRE
    * ============================================================
-   * Ombre douce et coins très arrondis pour les tuiles UI flottantes
-   * (mesurés sur shapes.co : box-shadow 0 0 9px rgba(0,0,0,.15), radius 20px)
-   * et pour les photos encadrées à la Culture Amp (radius 32px sur le hero).
-   * Usage réservé aux tuiles/photos — les filets fins restent la structure
-   * du reste du site (sections, listes, séparateurs).
+   * Les tokens --shadow-tile / --radius-tile / --radius-photo / --photo-offset
+   * ont été retirés. Ils venaient du benchmark shapes.co et Culture Amp :
+   * tuiles flottantes, ombres douces, coins à 20-32px. C'est le langage inverse
+   * de celui retenu ici — aplats nets, haut contraste, angle vif.
+   *
+   * Sans ombre, la hiérarchie vient d'ailleurs : du fond (crème, crème clair,
+   * encre), du filet 1px, et de l'espace. Si un bloc a besoin d'une ombre pour
+   * se détacher, c'est que son fond est mal choisi.
    */
-  --shadow-tile: 0 0 9px rgba(1, 43, 48, 0.15);
-  --shadow-tile-lg: 0 12px 32px rgba(1, 43, 48, 0.16);
-  --radius-tile: 20px;
-  --radius-photo: 32px;
-
-  /* Décalage de l'aplat de couleur derrière une photo (Culture Amp) */
-  --photo-offset: 20px;
 }

@@ -1,14 +1,27 @@
 ---
+/**
+ * Home Gonabi.
+ *
+ * Troisième passe. Les visuels produit sont maintenant de vraies captures
+ * (déposées par Gérald dans public/assets/photos/), plus des illustrations.
+ * Chaque section a été reprise sur une référence précise fournie par Gérald :
+ *
+ *   §1 Hero      — grande capture réelle, sans cadre coloré (Setpoint/Alan)
+ *   §2 Partenaires — marquee grands logos, sans étiquette (gonabi.fr actuel)
+ *   §3 Produit    — onglets sobres à soulignement + badge icône (Culture Amp,
+ *                   Leapsome « Docs & eSign »)
+ *   §4 Différence — rangée d'icônes (Zendesk « Avantages »)
+ *   §5 Pour qui   — onglets qui tournent seuls, texte + photo (Alan)
+ *   §6 Témoignage — carrousel sombre, guillemets = formes du logo (référence
+ *                   « Dash0 »)
+ *   §7 Confiance  — cartes claires + surligneur (Spara)
+ *   §8 Formulaire — reproduction exacte du formulaire de gonabi.fr actuel
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import ShapeMask from '../components/ShapeMask.astro';
-import IconBadge from '../components/IconBadge.astro';
 import type { ShapeVariant } from '../components/ShapeMask.astro';
-import { DEMO_HREF, mainNav } from '../data/navigation';
-
-const produit = mainNav.find((group) => group.label === 'Produit');
-const solutions = mainNav.find((group) => group.label === 'Pour qui');
-const segments = solutions?.children?.filter((page) => page.href.startsWith('/solutions/')) ?? [];
+import { DEMO_HREF } from '../data/navigation';
 
 const partenaires = [
   { src: '/assets/partners/missions_locales_grayscale.png', alt: 'Missions Locales' },
@@ -18,1406 +31,1394 @@ const partenaires = [
   { src: '/assets/partners/french_tech_grayscale.png', alt: 'French Tech' },
 ];
 
-/** Puces sous le CTA hero — formes du logo, pas d'icônes pictogrammes. */
-const reassurances: { shape: ShapeVariant; color: string; texte: string }[] = [
-  { shape: 'block-round', color: 'var(--blue)', texte: 'Vos outils réunis en un seul' },
-  { shape: 'arc-concave', color: 'var(--accent)', texte: 'Vos preuves Qualiopi générées par l’accompagnement' },
-  { shape: 'half-disc', color: 'var(--ochre)', texte: 'Vos ressources, vos trames, votre méthode' },
+const specialites = [
+  { texte: 'Bilan de compétences', fond: 'var(--tint-blue)', encre: 'var(--blue-deep)' },
+  { texte: 'Orientation', fond: 'var(--tint-red)', encre: 'var(--accent-deep)' },
+  { texte: 'Évolution professionnelle', fond: 'var(--tint-yellow)', encre: 'var(--ochre)' },
 ];
 
-/** Repris de l'ancienne landing : la partie du titre qui change en fondu. */
-const rotations = [
-  { texte: 'en orientation.', couleur: 'blue' },
-  { texte: 'en évolution professionnelle.', couleur: 'red' },
-  { texte: 'en bilan de compétences.', couleur: 'ochre' },
+/** Onglets produit — quatre captures réelles de l'application. */
+const fonctionnalites: {
+  badge: string;
+  icon: 'layers' | 'compass' | 'shield-check' | 'users';
+  titre: string;
+  texte: string;
+  href: string;
+  src: string;
+  alt: string;
+}[] = [
+  {
+    badge: 'Tests et compétences',
+    icon: 'layers',
+    titre: 'Le profil se construit pendant les séances',
+    texte:
+      'Tests psychométriques passés en autonomie, compétences identifiées et structurées, métiers explorés. Tout reste exploitable en rendez-vous.',
+    href: '/produit/tests-psychometriques',
+    src: '/assets/photos/riasec-profil.png',
+    alt: 'Écran Gonabi : profil RIASEC détaillé par dimension',
+  },
+  {
+    badge: 'Parcours',
+    icon: 'compass',
+    titre: 'Vos trames, réutilisées d’un dossier à l’autre',
+    texte:
+      'Vous montez le parcours une fois, avec vos modules et vos ressources. Il ressert ensuite sans être remonté.',
+    href: '/produit/parcours-personnalises',
+    src: '/assets/photos/parcours-liste.png',
+    alt: 'Écran Gonabi : liste des parcours, bilan de compétences, orientation lycéen, reconversion',
+  },
+  {
+    badge: 'Conformité Qualiopi',
+    icon: 'shield-check',
+    titre: 'Chaque séance dépose sa preuve au bon endroit',
+    texte:
+      'Le jour de l’audit, le dossier est déjà constitué : checklist par critère, export en un clic.',
+    href: '/produit/conformite-qualiopi',
+    src: '/assets/photos/qualiopi-audit.png',
+    alt: 'Écran Gonabi : préparation de l’audit Qualiopi, checklist pré-audit et export du dossier',
+  },
+  {
+    badge: 'Vue d’ensemble',
+    icon: 'users',
+    titre: 'Tous vos dossiers au même endroit',
+    texte:
+      'Où en est chaque bénéficiaire, qui le suit, ce qu’il reste à faire. Sans ouvrir quatre outils pour le savoir.',
+    href: '/produit',
+    src: '/assets/photos/suivi-beneficiaires.png',
+    alt: 'Écran Gonabi : suivi des bénéficiaires avec statut, consultant, parcours et progression',
+  },
 ];
 
-const heroTiles = [
-  { icon: 'layers' as const, label: 'Tableau de bord' },
-  { icon: 'file-text' as const, label: 'Synthèse IA' },
-];
-
-// Freins tirés de verbatims de bêta-testeurs. Traitement en rangées à
-// séparateurs fins et marqueur rond — pas de photo : ce sont des constats de
-// douleur, pas des preuves de fonctionnalité, et une photo de personne
-// « stressée » serait un cliché fabriqué de toutes pièces.
-const freins = [
-  {
-    titre: 'Vous saisissez la même chose trois fois',
-    texte:
-      'Un outil pour les tests, un logiciel pour l’administratif, un serveur partagé pour les documents, un traitement de texte pour les synthèses. Ce que vous entrez quelque part, vous le ressaisissez ailleurs.',
-  },
-  {
-    titre: 'L’administratif répétitif grignote vos journées',
-    texte:
-      'Envoyer un contrat, retrouver un document, remettre en forme une synthèse, convenir d’une date. Autant de temps qui ne va ni au bénéficiaire, ni à de nouveaux dossiers.',
-  },
-  {
-    titre: 'Les preuves se reconstituent la veille de l’audit',
-    texte:
-      'Retrouver qui a signé quoi, quand, sur quelle séance. Nos bêta-testeurs estimaient y passer 2 à 4 heures par audit — un travail refait à chaque cycle.',
-  },
-];
-
-// Différenciateurs issus du benchmark concurrentiel du PRD Conformité Qualiopi.
-const differences: { titre: string; texte: string; shape: ShapeVariant; color: string }[] = [
-  {
-    titre: 'Un outil là où il en fallait quatre',
-    texte:
-      'Les tests dans un catalogue, les métiers dans un autre abonnement, l’administratif dans un logiciel de gestion, les synthèses dans un traitement de texte. Gonabi tient les quatre.',
-    shape: 'block-round',
-    color: 'var(--blue)',
-  },
-  {
-    titre: 'La conformité naît de l’accompagnement',
-    texte:
-      'Les autres outils qualité vous demandent de saisir vos preuves dans un module à part. Ici, la séance que vous menez les produit.',
-    shape: 'arc-concave',
-    color: 'var(--accent)',
-  },
-  {
-    titre: 'Votre méthode reste la vôtre',
-    texte:
-      'Vos ressources, vos trames de parcours, vos supports. L’outil structure votre pratique, il ne la remplace pas par la sienne.',
-    shape: 'half-disc',
-    color: 'var(--yellow)',
-  },
-];
+/** Différenciateurs — arguments fournis par Gérald. */
+const differences: { icon: 'compass' | 'layers' | 'zap' | 'users'; titre: string; texte: string }[] =
+  [
+    {
+      icon: 'compass',
+      titre: 'Pensé pour l’accompagnement',
+      texte: 'Pas un outil générique détourné de son usage.',
+    },
+    {
+      icon: 'layers',
+      titre: 'Tout dans un même espace',
+      texte: 'Tests, compétences, parcours et synthèses réunis.',
+    },
+    {
+      icon: 'zap',
+      titre: 'Automatisation native',
+      texte: 'Relances, rapports et synthèses générés sans y penser.',
+    },
+    {
+      icon: 'users',
+      titre: 'Expérience fluide',
+      texte: 'Pour le professionnel comme pour le bénéficiaire.',
+    },
+  ];
 
 /**
- * Un segment = un onglet. Chaque panneau a sa propre photo — jamais la même
- * deux fois, ce qui laisserait croire à quatre profils clients identiques.
+ * Pour qui — onglets qui tournent automatiquement. Chaque persona a sa photo
+ * et sa teinte de fond, tirées des couleurs de marque en rotation.
  */
-const segmentVisuals: Record<string, { src: string; alt: string; shape: ShapeVariant; color: string }> = {
-  '/solutions/cabinets-rh': {
-    src: '/assets/photos/poignee-main-arc.jpg',
-    alt: 'Poignée de main entre deux professionnels',
-    shape: 'block-round',
-    color: 'var(--blue)',
-  },
-  '/solutions/organismes-de-formation': {
-    src: '/assets/photos/visio-groupe-casque.jpg',
-    alt: 'Formatrice au casque en visioconférence de groupe',
-    shape: 'arc-concave',
-    color: 'var(--accent)',
-  },
-  '/solutions/coachs-independants': {
-    src: '/assets/photos/bureau-maison-lampe.jpg',
-    alt: 'Consultant indépendant travaillant depuis son bureau à domicile',
-    shape: 'half-disc',
-    color: 'var(--yellow)',
-  },
-  '/solutions/insertion-professionnelle': {
-    src: '/assets/photos/laptop-cuisine-lumineuse.jpg',
-    alt: 'Professionnelle de l’accompagnement travaillant sur son ordinateur portable',
-    shape: 'block-round',
-    color: 'var(--yellow)',
-  },
-};
-
-/** Badges pleins, mêmes formes que Différenciation pour la cohérence. */
-const confiance: { shape: ShapeVariant; color: string; titre: string; texte: string }[] = [
+const cibles: {
+  titre: string;
+  texte: string;
+  href: string;
+  src: string;
+  alt: string;
+  fond: string;
+}[] = [
   {
-    shape: 'half-disc',
-    color: 'var(--yellow)',
-    titre: 'Vos séances ne sont pas enregistrées',
+    titre: 'Centres de bilan et cabinets RH',
+    texte: 'Optimisez vos accompagnements et gagnez en performance.',
+    href: '/solutions/cabinets-rh',
+    src: '/assets/photos/handshake-cabinet-rh.webp',
+    alt: 'Consultante RH accueillant un candidat, poignée de main',
+    fond: 'var(--tint-blue)',
+  },
+  {
+    titre: 'Coachs et consultants indépendants',
+    texte: 'Gagnez du temps sur la gestion, concentrez-vous sur l’accompagnement.',
+    href: '/solutions/coachs-independants',
+    src: '/assets/photos/bureau-domicile-coach.webp',
+    alt: 'Coach indépendant travaillant depuis son bureau à domicile',
+    fond: 'var(--tint-red)',
+  },
+  {
+    titre: 'Organismes publics et parapublics',
+    texte: 'Proposez des parcours individualisés à grande échelle.',
+    href: '/solutions/insertion-professionnelle',
+    src: '/assets/photos/visio-groupe-collectif.webp',
+    alt: 'Conseillère en visioconférence de groupe avec plusieurs bénéficiaires',
+    fond: 'var(--tint-yellow)',
+  },
+  {
+    titre: 'Organismes de formation',
+    texte: 'Ce que votre logiciel de gestion ne couvre pas.',
+    href: '/solutions/organismes-de-formation',
+    src: '/assets/photos/bureau-lumineux-formatrice.webp',
+    alt: 'Formatrice au bureau, poste de travail lumineux',
+    fond: 'var(--tint-teal)',
+  },
+];
+
+/** Témoignages — textes repris tels quels de l'ancienne landing. */
+const temoignages: { citation: string; nom: string; role: string }[] = [
+  {
+    citation:
+      'Utile pour nous, praticiens ; et pour les bénéficiaires, une vraie plus-value : parcours plus lisible, expérience plus fluide et compétences à s’orienter qui se développent séance après séance.',
+    nom: 'Hélène B.',
+    role: 'DRH',
+  },
+  {
+    citation:
+      'Les tests que j’utilisais dataient des années 90 alors que mes clients me parlaient de soft skills et de télétravail. Gonabi évalue enfin les compétences d’aujourd’hui. Mes bilans sont devenus percutants et mon taux de recommandation a explosé.',
+    nom: 'Marc D.',
+    role: 'Psychologue du travail',
+  },
+  {
+    citation:
+      'Avant, on courait après des mails, des docs et des liens de visio. Avec Gonabi, tout est dans un seul espace : parcours, contenus, tests, échanges. On lance un accompagnement sans bricoler et tout le monde sait quoi faire. Je respire enfin.',
+    nom: 'Stéphanie F.',
+    role: 'Consultante en cabinet RH',
+  },
+  {
+    citation:
+      'Je voulais arrêter de « faire l’administratif le soir ». Les relances intelligentes et les documents pré-remplis de Gonabi m’ont rendu mes soirées. Je me sens à nouveau coach, pas secrétaire.',
+    nom: 'Claire V.',
+    role: 'Coach indépendante',
+  },
+  {
+    citation:
+      'Gérer des cohortes d’étudiants par tableurs et emails, c’était la pagaille. Avec Gonabi, on a des parcours clairs, des ressources au bon endroit et des rappels automatiques. Les étudiants avancent sans se perdre, l’équipe aussi.',
+    nom: 'Samir K.',
+    role: 'Responsable orientation universitaire',
+  },
+  {
+    citation:
+      'Nos publics sont très variés et on passe notre temps à recoller les morceaux entre outils. Avec Gonabi, on peut partager une feuille de route unique et tous avoir le même niveau d’infos. Moins d’énergie sur l’organisation, plus sur l’accompagnement humain.',
+    nom: 'Amina B.',
+    role: 'Conseillère mission locale',
+  },
+];
+
+const formesTemoignage: ShapeVariant[] = ['half-disc', 'arc-concave', 'block-round'];
+const couleursTemoignage = ['var(--blue)', 'var(--accent)', 'var(--yellow)'];
+
+const confiance = [
+  {
+    shape: 'block-round' as ShapeVariant,
+    color: 'var(--blue)',
+    titre: 'Séances non enregistrées',
     texte: 'Ni audio, ni vidéo. Seule la connexion à la plateforme est journalisée.',
   },
   {
-    shape: 'arc-concave',
+    shape: 'arc-concave' as ShapeVariant,
     color: 'var(--accent)',
-    titre: 'Les dossiers sont cloisonnés',
+    titre: 'Dossiers cloisonnés',
     texte: 'L’accès est limité à l’organisation et au parcours suivi.',
   },
   {
-    shape: 'block-round',
-    color: 'var(--blue)',
-    titre: 'Les preuves sont conservées 5 ans',
-    texte: 'La durée pendant laquelle un dossier financé peut être contrôlé.',
+    shape: 'half-disc' as ShapeVariant,
+    color: 'var(--yellow)',
+    titre: 'Preuves de réalisation conservées 5 ans',
+    texte: 'Émargements et connexions, pendant la durée où un dossier financé peut être contrôlé. Pas le contenu des bilans.',
   },
 ];
 ---
 
 <BaseLayout
   title="Gonabi"
-  description="Gonabi réunit tests psychométriques, parcours, exploration métiers, synthèses et preuves Qualiopi dans un seul outil, pour les cabinets RH et les organismes de formation."
+  description="Gonabi réunit tests psychométriques, parcours, exploration métiers, synthèses et preuves Qualiopi dans un seul outil, pour les professionnels de l’accompagnement."
   canonical="/"
 >
-  <!-- ══════════════ HERO ══════════════ -->
+  {/* ═════════ 1 — HERO ═════════ */}
   <section class="hero">
     <div class="container hero__grid">
       <div class="hero__content">
-        <p class="eyebrow hero__eyebrow">Plateforme d’accompagnement professionnel</p>
+        <span class="switcher">
+          {
+            specialites.map((s, i) => (
+              <span
+                class="switcher__item"
+                style={`--step: ${i}; --fond: ${s.fond}; --encre: ${s.encre}`}
+              >
+                {s.texte}
+              </span>
+            ))
+          }
+        </span>
 
-        <h1 class="hero__title">
-          La plateforme qui structure, automatise et valorise vos accompagnements
-          <span class="rotator">
-            {
-              rotations.map((r, i) => (
-                <span class:list={['rotator__item', `is-${r.couleur}`]} style={`--step: ${i}`}>
-                  {r.texte}
-                </span>
-              ))
-            }
-          </span>
-        </h1>
+        <h1 class="hero__title">Un seul outil, du premier rendez-vous à la synthèse.</h1>
 
-        <p class="lead hero__lead">
+        <p class="hero__lead">
           Créez des parcours sur mesure, automatisez les tâches répétitives et gérez vos suivis en
           temps réel, au même endroit.
         </p>
 
-        <div class="hero__actions">
-          <a href={DEMO_HREF} class="btn btn--primary">Réserver une démo</a>
-          <a href="/produit" class="btn btn--secondary">Découvrir la solution</a>
-        </div>
-
-        <ul class="hero__badges">
-          {
-            reassurances.map((item) => (
-              <li>
-                <ShapeMask variant={item.shape} color={item.color} size={14} class="hero__badge-shape" />
-                {item.texte}
-              </li>
-            ))
-          }
-        </ul>
+        <a href={DEMO_HREF} class="btn btn--primary hero__cta">Réserver une démo</a>
       </div>
 
+      {/* Capture réelle, sans cadre coloré : l'image porte le hero seule. */}
       <div class="hero__visual">
-        <div class="hero__stage">
-          <!-- Bloc de couleur : même gabarit que la photo, décalé de 20px -->
-          <div class="hero__color-block"></div>
-
-          <div class="hero__photo-frame">
-            <img
-              src="/assets/photos/hero-laptop-cafe.jpg"
-              alt="Consultante travaillant sur son ordinateur portable"
-              loading="eager"
-              fetchpriority="high"
-            />
-          </div>
-
-          <!-- Bande verticale de couleurs de marque -->
-          <div class="hero__stripe" aria-hidden="true">
-            <span style="background: var(--accent)"></span>
-            <span style="background: var(--blue)"></span>
-            <span style="background: var(--yellow)"></span>
-          </div>
-
-          <!-- Tuiles à cheval sur le bord de la photo -->
-          <div class="hero__tiles">
-            {
-              heroTiles.map((tile) => (
-                <div class="hero-tile">
-                  <Icon name={tile.icon} size={16} />
-                  <span>{tile.label}</span>
-                </div>
-              ))
-            }
-          </div>
-
-          <div class="hero-tile hero-tile--parcours">
-            <p class="hero-tile__title">Nouveau parcours</p>
-            <ol class="hero-tile__steps">
-              <li><span class="hero-tile__step-num">1</span> Tests</li>
-              <li><span class="hero-tile__step-num">2</span> Compétences</li>
-              <li><span class="hero-tile__step-num is-muted">3</span> —</li>
-              <li><span class="hero-tile__step-num">4</span> Bilan</li>
-            </ol>
-          </div>
-        </div>
+        <img
+          class="photo"
+          src="/assets/photos/mon-equipe-dashboard.png"
+          alt="Tableau de bord Gonabi : bénéficiaires, consultants, activité et répartition des dispositifs"
+          fetchpriority="high"
+        />
       </div>
     </div>
   </section>
 
-  <!-- ══════════════ PARTENAIRES ══════════════ -->
+  {/*
+    ═════════ 2 — PARTENAIRES ═════════
+    Reproduction du bandeau de gonabi.fr : grands logos (64px), espacement
+    large, aucune étiquette au-dessus. `mix-blend-mode: multiply` efface le
+    fond blanc opaque des fichiers, `grayscale` + opacité fait le reste.
+  */}
   <section class="partners">
-    <div class="container partners__inner">
-      <p class="eyebrow partners__label">Ils nous font confiance</p>
-      <ul class="partners__row">
+    <div class="marquee">
+      <ul class="marquee__track">
         {
-          partenaires.map((p) => (
-            <li>
-              <img src={p.src} alt={p.alt} loading="lazy" />
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-
-  <!-- ══════════════ FREINS — rangées à marqueur rond, pas de numéros ══════════════ -->
-  <section class="section section--paper">
-    <div class="container container--narrow">
-      <header class="block-head" data-reveal>
-        <p class="eyebrow eyebrow--rule">Le constat</p>
-        <h2 class="block-head__title">Ce qui vous freine <em>aujourd’hui</em></h2>
-      </header>
-
-      <ul class="rows">
-        {
-          freins.map((frein, i) => (
-            <li class="row" data-reveal>
-              <ShapeMask
-                variant={(['half-disc', 'arc-concave', 'block-round'] as const)[i % 3]}
-                color={['var(--blue)', 'var(--accent)', 'var(--yellow)'][i % 3]}
-                size={18}
-                class="row__marker"
-              />
-              <div>
-                <h3 class="row__title">{frein.titre}</h3>
-                <p class="row__text">{frein.texte}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-
-  <!-- ══════════════ TÉMOIGNAGE — carte blanche arrondie sur fond crème ══════════════ -->
-  <section class="section section--tight section--paper-light">
-    <div class="container">
-      <figure class="quote-card" data-reveal>
-        <blockquote class="quote-card__text">
-          Avant, je passais mes jeudis soirs à rédiger mes synthèses. Maintenant, je génère un
-          rapport complet en trois clics pendant la séance. Mes jeudis soirs m’appartiennent à
-          nouveau.
-        </blockquote>
-        <figcaption class="quote-card__source">
-          <span class="quote-card__avatar" aria-hidden="true">C</span>
-          Coach en reconversion · bêta-testeuse · six accompagnements en parallèle
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- ══════════════ PRODUIT — fond clair, panneau illustratif + badge chiffré ══════════════ -->
-  <section class="section section--paper-light">
-    <div class="container produit__grid">
-      <div class="produit__aside" data-reveal>
-        <p class="eyebrow eyebrow--rule">Le produit</p>
-        <h2 class="produit__title">Tout l’accompagnement dans <em>un seul</em> outil</h2>
-        <p class="lead produit__lead">
-          Chaque brique alimente la suivante : les tests nourrissent l’exploration métiers, le
-          parcours produit ses preuves, et la synthèse se rédige à partir de tout ce qui précède.
-        </p>
-
-        <ul class="produit__tags">
-          {
-            produit?.children?.map((page) => (
-              <li>
-                <a href={page.href}>{page.label}</a>
+          [0, 1, 2].map((copie) =>
+            partenaires.map((p) => (
+              <li aria-hidden={copie > 0 ? 'true' : undefined}>
+                <img src={p.src} alt={copie === 0 ? p.alt : ''} loading="lazy" />
               </li>
             ))
-          }
-        </ul>
-
-        <a href="/produit" class="link-arrow produit__all">
-          Voir la vue d’ensemble
-          <Icon name="arrow-right" size={16} />
-        </a>
-      </div>
-
-      <div class="produit__visual">
-        <div class="produit__color-block"></div>
-
-        <div class="produit-panel">
-          <p class="produit-panel__title">Nouveau parcours</p>
-          <div class="produit-panel__row">
-            <span class="chip chip--blue">Tests</span>
-            <span class="produit-panel__bar"><span style="width: 82%; background: var(--blue)" /></span>
-          </div>
-          <div class="produit-panel__row">
-            <span class="chip chip--red">Compétences</span>
-            <span class="produit-panel__bar"><span style="width: 54%; background: var(--accent)" /></span>
-          </div>
-          <div class="produit-panel__row">
-            <span class="chip chip--yellow">Synthèse</span>
-            <span class="produit-panel__bar"><span style="width: 20%; background: var(--yellow)" /></span>
-          </div>
-        </div>
-
-        <div class="stat-badge">
-          <span class="stat-badge__num">2-4H</span>
-          <span class="stat-badge__label">gagnées par audit</span>
-        </div>
-      </div>
+          )
+        }
+      </ul>
     </div>
   </section>
 
-  <!-- ══════════════ POUR QUI — onglets pilules, un panneau photo+texte ══════════════ -->
-  <section class="section section--paper" id="pour-qui">
+  {/*
+    ═════════ 3 — PRODUIT ═════════
+    Titre sur une ligne, sans-serif puis serif. Onglets sobres à soulignement
+    (pas de pilules), badge icône + petit intitulé au-dessus de chaque titre
+    de panneau — motif « Docs & eSign ». Rotation automatique par défaut.
+  */}
+  <section class="features">
     <div class="container">
-      <header class="block-head" data-reveal>
-        <p class="eyebrow eyebrow--rule">Pour qui</p>
-        <h2 class="block-head__title">
-          Conçu d’abord pour les structures de <em>8 à 25 consultants</em>
-        </h2>
-      </header>
+      <h2 class="features__title">
+        <span class="mixed-sans">Une seule plateforme,</span>
+        <span class="mixed-serif">du test à la preuve</span>
+      </h2>
 
-      <!--
-        `<details name="segment-tabs">` : accordéon exclusif natif du
-        navigateur (un seul ouvert à la fois), sans état CSS custom à
-        maintenir. La version précédente (radios + sélecteurs `:checked`
-        combinés à des attributs) se désynchronisait de façon incohérente à
-        la vérification — `<details name>` élimine la classe de bug entière.
-      -->
-      <div class="tabs">
+      <div class="features__nav" data-autotabs>
+        <button type="button" class="carousel-arrow" data-tab-prev aria-label="Fonctionnalité précédente">
+          <Icon name="arrow-left" size={18} />
+        </button>
+
+        <div class="features__tabs" role="tablist" aria-label="Fonctionnalités de Gonabi">
+          {
+            fonctionnalites.map((f, i) => (
+              <button
+                type="button"
+                role="tab"
+                id={`tab-${i}`}
+                aria-controls={`panel-${i}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                tabindex={i === 0 ? 0 : -1}
+                class="sober-tab"
+              >
+                {f.badge}
+              </button>
+            ))
+          }
+        </div>
+
+        <button type="button" class="carousel-arrow" data-tab-next aria-label="Fonctionnalité suivante">
+          <Icon name="arrow-right" size={18} />
+        </button>
+      </div>
+
+      {
+        fonctionnalites.map((f, i) => (
+          <div
+            role="tabpanel"
+            id={`panel-${i}`}
+            aria-labelledby={`tab-${i}`}
+            class="features__panel"
+            hidden={i !== 0}
+          >
+            <div class="features__text">
+              <span class="mini-badge">
+                <Icon name={f.icon} size={14} />
+                {f.badge}
+              </span>
+              <h3 class="features__panel-title">{f.titre}</h3>
+              <p class="features__panel-text">{f.texte}</p>
+              <a href={f.href} class="btn btn--secondary">
+                En savoir plus
+              </a>
+            </div>
+            <div class="features__media">
+              <img class="photo" src={f.src} alt={f.alt} loading="lazy" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* ═════════ 4 — POURQUOI GONABI EST DIFFÉRENT ═════════ */}
+  <section class="diff">
+    <div class="container">
+      <h2 class="diff__title">Pourquoi Gonabi est <em>différent</em></h2>
+
+      <div class="diff__row">
         {
-          segments.map((page, i) => {
-            const visual = segmentVisuals[page.href];
-            return (
-              <details class="tabs__item" name="segment-tabs" open={i === 0}>
-                <summary class="tabs__summary">
-                  <span>{page.label}</span>
-                  <Icon name="arrow-right" size={18} class="tabs__chevron" />
-                </summary>
-                <div class="tabs__panel">
-                  <div class="tabs__panel-text">
-                    <p>{page.description}</p>
-                    <a href={page.href} class="link-arrow">
-                      En savoir plus
-                      <Icon name="arrow-right" size={16} />
-                    </a>
-                  </div>
-                  {visual && (
-                    <div class="tabs__panel-visual">
-                      <ShapeMask
-                        variant={visual.shape}
-                        color={visual.color}
-                        size={200}
-                        class="tabs__panel-backdrop"
-                      />
-                      <div class="tabs__panel-photo">
-                        <img src={visual.src} alt={visual.alt} loading="lazy" />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </details>
-            );
-          })
+          differences.map((d) => (
+            <div class="diff__item" data-reveal>
+              <span class="diff__icon">
+                <Icon name={d.icon} size={20} />
+              </span>
+              <h3 class="diff__item-title">{d.titre}</h3>
+              <p class="diff__item-text">{d.texte}</p>
+            </div>
+          ))
         }
       </div>
     </div>
   </section>
 
-  <!-- ══════════════ DIFFÉRENCIATION — badges pleins ══════════════ -->
-  <section class="section section--paper-light">
+  {/*
+    ═════════ 5 — POUR QUI ═════════
+    Onglets qui tournent tout seuls, texte + photo en vis-à-vis — structure
+    reprise de la référence Alan (Leaders / Managers / Employees / HR teams).
+  */}
+  <section class="audience" id="pour-qui">
     <div class="container">
-      <header class="block-head block-head--wide" data-reveal>
-        <p class="eyebrow eyebrow--rule">La différence</p>
-        <h2 class="block-head__title">Trois choix que nous <em>assumons</em></h2>
-      </header>
+      <h2 class="audience__title">
+        Conçu pour tous les professionnels de <em>l’accompagnement</em>
+      </h2>
 
-      <div class="columns">
+      <div class="audience__nav" data-autotabs>
         {
-          differences.map((item) => (
-            <article class="column" data-reveal>
-              <IconBadge shape={item.shape} color={item.color} />
-              <h3 class="column__title">{item.titre}</h3>
-              <p class="column__text">{item.texte}</p>
-            </article>
+          cibles.map((c, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`aud-tab-${i}`}
+              aria-controls={`aud-panel-${i}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              class="sober-tab"
+            >
+              {c.titre}
+            </button>
           ))
         }
       </div>
 
-      <p class="columns__after">
-        <a href="/produit/syntheses-ia" class="link-arrow">
-          Voir comment se génère une synthèse
-          <Icon name="arrow-right" size={16} />
-        </a>
-      </p>
-    </div>
-  </section>
+      {
+        cibles.map((c, i) => (
+          <div
+            role="tabpanel"
+            id={`aud-panel-${i}`}
+            aria-labelledby={`aud-tab-${i}`}
+            class="audience__panel"
+            hidden={i !== 0}
+          >
+            <div class="audience__text">
+              <p class="audience__lead">{c.texte}</p>
+              <a href={c.href} class="link-arrow">
+                En savoir plus
+                <Icon name="arrow-right" size={16} />
+              </a>
+            </div>
+            <div class="audience__media" style={`--fond: ${c.fond}`}>
+              <img class="photo" src={c.src} alt={c.alt} loading="lazy" />
+            </div>
+          </div>
+        ))
+      }
 
-  <!-- ══════════════ MIGRATION — citation en exergue ══════════════ -->
-  <section class="section section--paper migration">
-    <div class="container migration__grid">
-      <blockquote class="pull" data-reveal>
-        <p class="pull__quote">« Encore une plateforme de plus à gérer ? »</p>
-        <footer class="pull__source">
-          La première objection que nous entendons, relevée en entretien de clôture bêta.
-        </footer>
-      </blockquote>
-
-      <div class="migration__body" data-reveal>
-        <p>
-          Elle est juste : un outil qui s’ajoute aux autres sans en remplacer aucun fait perdre du
-          temps au lieu d’en gagner.
-        </p>
-        <p>
-          C’est pourquoi nous commençons toujours par regarder ce que Gonabi remplace chez vous —
-          et ce qu’il ne remplacera pas.
-        </p>
-        <a href="/migrer-vers-gonabi" class="link-arrow">
-          Migrer vers Gonabi
-          <Icon name="arrow-right" size={16} />
-        </a>
+      <div class="audience__arrows">
+        <button type="button" class="carousel-arrow" data-tab-prev aria-label="Cible précédente">
+          <Icon name="arrow-left" size={18} />
+        </button>
+        <button type="button" class="carousel-arrow" data-tab-next aria-label="Cible suivante">
+          <Icon name="arrow-right" size={18} />
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════ CONFIANCE — badges pleins, rangées à filets ══════════════ -->
-  <section class="section section--paper-light">
-    <div class="container trust__grid">
-      <div data-reveal>
-        <p class="eyebrow eyebrow--rule">Confiance</p>
-        <h2 class="trust__title">Des données sensibles, <em>traitées comme telles</em></h2>
-        <p class="lead trust__lead">
+  {/*
+    ═════════ 6 — TÉMOIGNAGES ═════════
+    Carrousel sombre, un témoignage à la fois. Les guillemets sont les trois
+    formes géométriques du logo, pas des caractères typographiques.
+  */}
+  <section class="voices">
+    <div class="container voices__inner">
+      <button type="button" class="carousel-arrow carousel-arrow--voices" data-voice-prev aria-label="Témoignage précédent">
+        <Icon name="arrow-left" size={20} />
+      </button>
+
+      <div class="voices__stage">
+        {
+          temoignages.map((t, i) => (
+            <figure class="voice" hidden={i !== 0} data-voice-slide>
+              <ShapeMask
+                variant={formesTemoignage[i % 3]}
+                color={couleursTemoignage[i % 3]}
+                size={30}
+                class="voice__mark"
+              />
+              <blockquote class="voice__quote">{t.citation}</blockquote>
+              <figcaption class="voice__author">
+                {t.nom}
+                <span class="voice__role">{t.role}</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+
+      <button type="button" class="carousel-arrow carousel-arrow--voices" data-voice-next aria-label="Témoignage suivant">
+        <Icon name="arrow-right" size={20} />
+      </button>
+    </div>
+
+    <div class="voices__dots" role="tablist" aria-label="Aller à un témoignage">
+      {
+        temoignages.map((_, i) => (
+          <button
+            type="button"
+            class="voice-dot"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-label={`Témoignage ${i + 1}`}
+            data-voice-dot={i}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  {/*
+    ═════════ 7 — CONFIANCE ═════════
+    Titre surligné + rangée de cartes claires — référence Spara.
+  */}
+  <section class="trust">
+    <div class="container">
+      <header class="trust__head">
+        <h2 class="trust__title">
+          Des données sensibles, <span class="highlight">traitées comme telles</span>
+        </h2>
+        <p class="trust__lead">
           Un bilan de compétences produit des informations intimes, protégées par la loi. Nous
-          documentons publiquement ce que nous en faisons — et ce que nous nous interdisons.
+          documentons publiquement ce que nous en faisons, et ce que nous nous interdisons.
         </p>
-        <a href="/a-propos/securite-rgpd" class="link-arrow">
-          Sécurité &amp; RGPD
-          <Icon name="arrow-right" size={16} />
-        </a>
-      </div>
+      </header>
 
-      <ul class="trust__list">
+      <div class="trust__grid">
         {
           confiance.map((item) => (
-            <li class="trust__item" data-reveal>
-              <IconBadge shape={item.shape} color={item.color} size={40} />
-              <div>
-                <h3 class="trust__item-title">{item.titre}</h3>
-                <p class="trust__item-text">{item.texte}</p>
-              </div>
-            </li>
+            <div class="trust__card" data-reveal>
+              <span class="trust__card-mark">
+                <ShapeMask variant={item.shape} color={item.color} size={18} />
+              </span>
+              <h3 class="trust__card-title">{item.titre}</h3>
+              <p class="trust__card-text">{item.texte}</p>
+            </div>
           ))
         }
-      </ul>
+      </div>
+
+      <a href="/a-propos/securite-rgpd" class="link-arrow trust__cta">
+        Sécurité et RGPD
+        <Icon name="arrow-right" size={16} />
+      </a>
     </div>
   </section>
 
-  <!-- ══════════════ CTA FINAL — carte pleine couleur, centrée ══════════════ -->
-  <section class="section cta">
-    <div class="container">
-      <div class="cta-card">
-        <h2 class="cta-card__title">Voir Gonabi tourner sur <em>vos propres cas</em></h2>
-        <p class="cta-card__text">
-          Une démonstration guidée, adaptée à votre structure et à vos accompagnements.
-        </p>
-        <a href={DEMO_HREF} class="btn btn--primary">Réserver une démo</a>
-      </div>
+  {/*
+    ═════════ 8 — FORMULAIRE ═════════
+    Reproduction exacte du formulaire actuellement en ligne sur gonabi.fr :
+    fond encre, carte vitrée (fond blanc à 10 %), champs translucides.
+    Même endpoint Formspree que l'original.
+  */}
+  <section class="signup" id="beta">
+    <div class="container signup__container">
+      <h2 class="signup__title">Voyez comment Gonabi peut améliorer vos accompagnements.</h2>
+
+      <form
+        class="signup__form"
+        action="https://formspree.io/f/mzdbzqwy"
+        method="POST"
+        aria-label="Formulaire de réservation de démo"
+      >
+        <div class="signup__row">
+          <div class="field">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required autocomplete="given-name" />
+          </div>
+          <div class="field">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" placeholder="Votre nom" required autocomplete="family-name" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Adresse email</label>
+          <input type="email" id="email" name="email" placeholder="votre@email.com" required autocomplete="email" />
+        </div>
+
+        <button type="submit" class="btn btn--primary signup__submit">Réserver une démo</button>
+
+        <ul class="signup__reassure">
+          <li><Icon name="check" size={14} /> Sans engagement</li>
+          <li><Icon name="check" size={14} /> Données sécurisées</li>
+          <li><Icon name="check" size={14} /> Accès en 24 h</li>
+        </ul>
+      </form>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  /* ════════════════════════ HERO ════════════════════════ */
+  /* ============================================================
+     1 — HERO
+     ============================================================ */
 
   .hero {
-    background: var(--paper);
-    padding-block: clamp(48px, 7vw, 112px) clamp(56px, 8vw, 128px);
+    background: var(--paper-light);
+    padding-block: clamp(40px, 5vw, 72px) clamp(56px, 7vw, 96px);
   }
 
   .hero__grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: var(--space-16);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(40px, 5vw, 72px);
     align-items: center;
   }
 
-  .hero__eyebrow {
-    margin-bottom: var(--space-8);
+  .switcher {
+    display: inline-grid;
+    justify-items: start;
+    margin-bottom: var(--space-4);
   }
 
-  .hero__title {
-    max-width: 15ch;
-    margin-bottom: var(--space-8);
-  }
-
-  /*
-   * Empilement en grille plutôt qu'en position absolue : les trois phrases
-   * n'ont pas la même longueur et certaines passent sur deux lignes selon la
-   * largeur d'écran. Avec `position: absolute` sur les items, le conteneur ne
-   * réservait la hauteur que d'une ligne — la phrase la plus longue débordait
-   * alors sur le texte suivant (chapô). En grille, les trois textes occupent
-   * la même cellule (`grid-area: 1/1`) et le conteneur se dimensionne
-   * automatiquement sur le plus grand des trois, quel que soit le nombre de
-   * lignes qu'il occupe.
-   */
-  .rotator {
-    display: grid;
-  }
-
-  .rotator__item {
+  .switcher__item {
     grid-area: 1 / 1;
-    align-self: start;
+    white-space: nowrap;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: var(--weight-semibold);
+    letter-spacing: 0.02em;
+    color: var(--encre);
+    background: var(--fond);
+    border-radius: var(--radius-pill);
+    padding: 8px 16px;
     opacity: 0;
-    animation: rotator 10.5s infinite;
-    animation-delay: calc(var(--step) * 3.5s);
+    animation: switcher 9s var(--ease) infinite;
+    animation-delay: calc(var(--step) * 3s);
   }
 
-  .rotator__item.is-blue {
-    color: var(--blue-deep);
-  }
-  .rotator__item.is-red {
-    color: var(--accent);
-  }
-  .rotator__item.is-ochre {
-    color: var(--ochre);
-  }
-
-  @keyframes rotator {
+  @keyframes switcher {
     0%,
     2% {
       opacity: 0;
+      transform: translateY(6px);
     }
-    5%,
-    28% {
-      opacity: 1;
-    }
-    33%,
-    100% {
-      opacity: 0;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .rotator__item {
-      animation: none;
-    }
-    .rotator__item:first-child {
-      opacity: 1;
-    }
-  }
-
-  .hero__lead {
-    max-width: 46ch;
-  }
-
-  .hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin-top: var(--space-8);
-  }
-
-  .hero__badges {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4) var(--space-8);
-    margin-top: var(--space-16);
-    padding-top: var(--space-8);
-    border-top: var(--border-hairline) solid var(--rule);
-  }
-
-  .hero__badges li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    letter-spacing: 0.005em;
-    color: var(--text-muted);
-  }
-
-  /* ── Visuel : bloc de couleur plein + photo + bande + tuiles à cheval ── */
-
-  .hero__visual {
-    position: relative;
-    padding: 24px 24px 44px 8px;
-  }
-
-  /*
-   * `.hero__stage` porte la vraie taille (aspect-ratio) ; le bloc de couleur
-   * et le cadre photo sont tous deux `inset: 0` sur cette même boîte, donc
-   * strictement du même gabarit — le bloc est juste décalé de 20px en x/y.
-   * L'ancienne version dimensionnait le bloc en `%` de `.hero__visual` (qui
-   * inclut son padding) pendant que la photo suivait le flux normal : les
-   * deux gabarits divergeaient et le bloc débordait largement de la photo.
-   */
-  .hero__stage {
-    position: relative;
-    aspect-ratio: 4 / 3;
-  }
-
-  .hero__color-block {
-    position: absolute;
-    inset: 0;
-    transform: translate(20px, 20px);
-    background: var(--blue);
-    border-radius: var(--radius-photo);
-    z-index: 0;
-  }
-
-  .hero__photo-frame {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    border-radius: var(--radius-photo);
-    overflow: hidden;
-    box-shadow: var(--shadow-tile-lg);
-    /* Le texte alternatif d'une image non chargée ne doit pas s'afficher en
-       gros caractères sombres dans le cadre : neutralisé le temps que les
-       photos réelles arrivent, sans effet une fois l'image chargée. */
-    background: var(--paper-light);
-    color: transparent;
-    font-size: 0;
-  }
-
-  .hero__photo-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 20%;
-  }
-
-  .hero__stripe {
-    position: absolute;
-    top: -16px;
-    right: -16px;
-    z-index: 2;
-    display: grid;
-    gap: 4px;
-    width: 10px;
-  }
-
-  .hero__stripe span {
-    display: block;
-    height: 44px;
-    border-radius: 4px;
-  }
-
-  .hero__tiles {
-    position: absolute;
-    top: -14px;
-    left: -14px;
-    z-index: 2;
-    display: grid;
-    gap: var(--space-2);
-  }
-
-  .hero-tile {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    background: var(--paper-white);
-    border-radius: var(--radius-tile);
-    box-shadow: var(--shadow-tile);
-    padding: 10px 16px;
-    font-size: 13px;
-    font-weight: var(--weight-semibold);
-    color: var(--text);
-    white-space: nowrap;
-  }
-
-  .hero-tile :global(svg) {
-    color: var(--blue-deep);
-    flex-shrink: 0;
-  }
-
-  /* À cheval sur le bord bas de la photo : moitié dessus, moitié dessous */
-  .hero-tile--parcours {
-    position: absolute;
-    bottom: -28px;
-    left: 24px;
-    z-index: 2;
-    display: block;
-    padding: 14px 18px;
-    white-space: normal;
-    min-width: 168px;
-  }
-
-  .hero-tile__title {
-    font-size: 12px;
-    font-weight: var(--weight-semibold);
-    margin-bottom: var(--space-2);
-  }
-
-  .hero-tile__steps {
-    list-style: none;
-    display: grid;
-    gap: 6px;
-  }
-
-  .hero-tile__steps li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  .hero-tile__step-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--accent-wash);
-    color: var(--accent-deep);
-    font-size: 10px;
-    font-weight: var(--weight-semibold);
-    flex-shrink: 0;
-  }
-
-  .hero-tile__step-num.is-muted {
-    background: var(--ink-08);
-    color: var(--ink-40);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .hero__eyebrow,
-    .hero__title,
-    .hero__lead,
-    .hero__actions,
-    .hero__badges,
-    .hero__visual {
-      animation: rise 620ms var(--ease) backwards;
-    }
-    .hero__eyebrow {
-      animation-delay: 40ms;
-    }
-    .hero__title {
-      animation-delay: 100ms;
-    }
-    .hero__lead {
-      animation-delay: 180ms;
-    }
-    .hero__actions {
-      animation-delay: 250ms;
-    }
-    .hero__badges {
-      animation-delay: 310ms;
-    }
-    .hero__visual {
-      animation-delay: 160ms;
-    }
-  }
-
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(18px);
-    }
-    to {
+    7%,
+    30% {
       opacity: 1;
       transform: none;
     }
+    36%,
+    100% {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
   }
 
-  /* ════════════════════════ PARTENAIRES ════════════════════════ */
+  .hero__title {
+    font-size: var(--size-h1);
+    max-width: 15ch;
+  }
+
+  .hero__lead {
+    font-size: var(--size-lead);
+    line-height: var(--leading-lead);
+    color: var(--text-muted);
+    max-width: 42ch;
+    margin-top: var(--space-8);
+  }
+
+  .hero__cta {
+    margin-top: var(--space-8);
+  }
+
+  /* Pas de cadre coloré : l'image est la seule matière visuelle du bloc. */
+  .hero__visual img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: var(--border-hairline) solid var(--rule);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .switcher,
+    .hero__title,
+    .hero__lead,
+    .hero__cta,
+    .hero__visual {
+      animation: hero-enter 780ms var(--ease) backwards;
+    }
+
+    .hero__title {
+      animation-delay: 70ms;
+    }
+    .hero__lead {
+      animation-delay: 150ms;
+    }
+    .hero__cta {
+      animation-delay: 230ms;
+    }
+    .hero__visual {
+      animation-delay: 120ms;
+    }
+
+    @keyframes hero-enter {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+    }
+  }
+
+  /* ============================================================
+     BANDEAU DÉFILANT — partenaires
+     ============================================================ */
 
   .partners {
     background: var(--paper-light);
-    border-block: var(--border-hairline) solid var(--rule);
+    padding-block: clamp(32px, 5vw, 56px);
+    border-top: var(--border-hairline) solid var(--rule);
+    border-bottom: var(--border-hairline) solid var(--rule);
   }
 
-  .partners__inner {
+  .marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .marquee__track {
     display: flex;
     align-items: center;
-    gap: var(--space-16);
-    padding-block: var(--space-8);
-  }
-
-  .partners__label {
-    flex-shrink: 0;
-    color: var(--ink-40);
-  }
-
-  .partners__row {
+    gap: clamp(64px, 9vw, 128px);
     list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex: 1;
-    gap: var(--space-8);
+    width: max-content;
+    /* Trois copies : à -33,33% la boucle est invisible. */
+    animation: marquee 42s linear infinite;
   }
 
-  .partners__row img {
-    height: 42px;
+  .marquee:hover .marquee__track,
+  .marquee:focus-within .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-33.3333%);
+    }
+  }
+
+  .partners .marquee__track img {
+    height: 64px;
     width: auto;
-    opacity: 0.55;
+    /* Fond blanc opaque des fichiers, effacé sur le crème par le blend mode. */
+    mix-blend-mode: multiply;
     filter: grayscale(1);
+    opacity: 0.55;
     transition: opacity var(--duration) var(--ease);
   }
 
-  .partners__row img:hover {
-    opacity: 0.85;
+  .partners .marquee__track img:hover {
+    opacity: 1;
   }
 
-  /* ════════════════════════ EN-TÊTES DE BLOC ════════════════════════ */
-
-  .container--narrow {
-    max-width: 860px;
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+      width: auto;
+      overflow-x: auto;
+    }
+    .marquee {
+      mask-image: none;
+    }
   }
 
-  .block-head {
-    max-width: 720px;
-    margin-bottom: var(--space-24);
-    text-align: left;
-  }
+  /* ============================================================
+     ONGLETS SOBRES — partagés par §3 et §5
+     ============================================================ */
 
-  .block-head--wide {
-    max-width: 900px;
-  }
-
-  .block-head__title {
-    margin-top: var(--space-8);
-  }
-
-  .block-head__title em,
-  h2 em,
-  h3 em {
-    font-style: italic;
-    font-weight: var(--weight-regular);
-  }
-
-  .block-head .lead {
-    margin-top: var(--space-4);
-  }
-
-  /* ════════════════════════ FREINS (rangées) ════════════════════════ */
-
-  .rows {
-    list-style: none;
-  }
-
-  .row {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-8);
-    padding-block: var(--space-16);
-    border-top: var(--border-hairline) solid var(--rule);
-  }
-
-  .row:last-child {
-    border-bottom: var(--border-hairline) solid var(--rule);
-  }
-
-  /* Puce décorative — pas un bouton : rien ne se déplie ici, tout le
-     contenu est déjà affiché. Un « + » cliquable aurait promis une
-     interaction qui n'existe pas. */
-  .row :global(.row__marker) {
-    flex-shrink: 0;
-    margin-top: 10px;
-  }
-
-  .row__title {
-    font-size: var(--size-h3);
-    margin-bottom: var(--space-2);
-  }
-
-  .row__text {
+  .sober-tab {
+    font-family: var(--font-body);
+    font-size: var(--size-small);
+    font-weight: var(--weight-medium);
     color: var(--text-muted);
-    max-width: 56ch;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    padding: var(--space-2) 0;
+    cursor: pointer;
+    text-align: left;
+    transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
   }
 
-  /* ════════════════════════ TÉMOIGNAGE (carte) ════════════════════════ */
-
-  .quote-card {
-    max-width: 900px;
-    margin-inline: auto;
-    background: var(--paper-white);
-    border-radius: var(--radius-photo);
-    box-shadow: var(--shadow-tile);
-    padding: clamp(32px, 5vw, 64px);
-  }
-
-  .quote-card__text {
-    font-family: var(--font-display);
-    font-size: clamp(1.375rem, 2.6vw, 2rem);
-    font-weight: var(--weight-regular);
-    font-style: italic;
-    line-height: 1.35;
-    letter-spacing: var(--tracking-snug);
+  .sober-tab:hover {
     color: var(--text);
   }
 
-  .quote-card__source {
-    margin-top: var(--space-8);
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    font-size: var(--size-small);
-    color: var(--text-muted);
-  }
-
-  .quote-card__avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--blue);
-    color: #fff;
-    font-family: var(--font-display);
-    font-weight: var(--weight-medium);
-    flex-shrink: 0;
-  }
-
-  /* ════════════════════════ PRODUIT (fond clair) ════════════════════════ */
-
-  .produit__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: var(--space-24);
-    align-items: center;
-  }
-
-  .produit__title {
-    margin-top: var(--space-8);
-    margin-bottom: var(--space-8);
-    max-width: 16ch;
-  }
-
-  .produit__lead {
-    max-width: 42ch;
-    margin-bottom: var(--space-16);
-  }
-
-  .produit__tags {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-4);
-    margin-bottom: var(--space-16);
-  }
-
-  .produit__tags a {
-    display: inline-block;
-    font-size: var(--size-small);
-    color: var(--text-muted);
-    text-decoration: none;
-    border-bottom: 1px solid var(--rule-strong);
-    padding-bottom: 1px;
-    transition: color var(--duration) var(--ease);
-  }
-
-  .produit__tags a:hover {
-    color: var(--accent);
+  .sober-tab[aria-selected='true'] {
+    color: var(--text);
+    font-weight: var(--weight-semibold);
     border-bottom-color: var(--accent);
   }
 
-  .produit__visual {
-    position: relative;
-    padding: 32px 24px 40px 32px;
-  }
-
-  .produit__color-block {
-    position: absolute;
-    inset: 0;
-    background: var(--yellow);
-    border-radius: var(--radius-photo);
-    z-index: 0;
-  }
-
-  .produit-panel {
-    position: relative;
-    z-index: 1;
-    background: var(--paper-white);
-    border-radius: var(--radius-tile);
-    box-shadow: var(--shadow-tile-lg);
-    padding: var(--space-16);
+  .carousel-arrow {
     display: grid;
-    gap: var(--space-8);
-  }
-
-  .produit-panel__title {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: var(--weight-medium);
-    margin-bottom: var(--space-4);
-  }
-
-  .produit-panel__row {
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    align-items: center;
-    gap: var(--space-4);
-  }
-
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    padding: 4px 12px;
-    font-size: 12px;
-    font-weight: var(--weight-semibold);
-    color: #fff;
-    white-space: nowrap;
-  }
-
-  .chip--blue {
-    background: var(--blue-deep);
-  }
-  .chip--red {
-    background: var(--accent-deep);
-  }
-  .chip--yellow {
-    background: var(--ochre);
-  }
-
-  .produit-panel__bar {
-    display: block;
-    height: 8px;
-    border-radius: 999px;
-    background: var(--ink-08);
-    overflow: hidden;
-  }
-
-  .produit-panel__bar span {
-    display: block;
-    height: 100%;
-    border-radius: 999px;
-  }
-
-  .stat-badge {
-    position: absolute;
-    bottom: -24px;
-    right: -8px;
-    z-index: 2;
-    display: grid;
-    place-content: center;
-    text-align: center;
-    width: 116px;
-    height: 116px;
-    border-radius: 50%;
-    background: var(--paper-white);
-    box-shadow: var(--shadow-tile-lg);
-  }
-
-  .stat-badge__num {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 1.375rem;
-    font-weight: var(--weight-medium);
-    color: var(--text);
-  }
-
-  .stat-badge__label {
-    display: block;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    margin-top: 2px;
-  }
-
-  /* ════════════════════════ ONGLETS « POUR QUI » (details natif) ════════════════════════ */
-
-  .tabs {
-    border-top: var(--border-hairline) solid var(--rule);
-  }
-
-  .tabs__item {
-    border-bottom: var(--border-hairline) solid var(--rule);
-  }
-
-  .tabs__summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-8);
-    padding-block: var(--space-8);
-    font-family: var(--font-display);
-    font-size: var(--size-h4);
-    font-weight: var(--weight-medium);
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: var(--radius-pill);
+    border: var(--border-hairline) solid var(--rule-strong);
+    background: transparent;
     color: var(--text);
     cursor: pointer;
-    list-style: none;
+    transition: background-color var(--duration) var(--ease), border-color var(--duration) var(--ease);
   }
 
-  /* Retire le triangle de divulgation par défaut du navigateur */
-  .tabs__summary::-webkit-details-marker {
+  .carousel-arrow:hover {
+    background: var(--ink-08);
+    border-color: var(--ink);
+  }
+
+  /* ============================================================
+     3 — PRODUIT
+     ============================================================ */
+
+  .features {
+    background: var(--paper);
+    padding-block: clamp(72px, 10vw, 144px);
+  }
+
+  /* Titre mixte : premier segment en sans-serif, second en serif italique. */
+  .features__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4ch;
+    max-width: 52ch;
+    margin-bottom: var(--space-16);
+  }
+
+  .mixed-sans {
+    font-family: var(--font-body);
+    font-weight: var(--weight-medium);
+    font-size: 0.62em;
+    color: var(--text-muted);
+  }
+
+  .mixed-serif {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.1;
+    padding-bottom: 0.06em;
+  }
+
+  .diff__title em {
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.1;
+    padding-bottom: 0.06em;
+  }
+
+  .features__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding-bottom: var(--space-8);
+    border-bottom: var(--border-hairline) solid var(--rule);
+    margin-bottom: var(--space-16);
+  }
+
+  .features__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(20px, 3vw, 40px);
+    flex: 1;
+  }
+
+  .features__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+  }
+
+  .features__panel[hidden] {
     display: none;
   }
 
-  .tabs__summary :global(.tabs__chevron) {
-    flex-shrink: 0;
-    color: var(--ink-40);
-    transition: transform var(--duration) var(--ease);
-  }
-
-  /* `[open]` est géré nativement par le navigateur : toujours synchronisé */
-  .tabs__item[open] .tabs__summary :global(.tabs__chevron) {
-    transform: rotate(90deg);
-    color: var(--accent);
-  }
-
-  .tabs__panel {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 5fr);
-    gap: var(--space-16);
+  /* Badge icône + intitulé — motif « Docs & eSign ». */
+  .mini-badge {
+    display: inline-flex;
     align-items: center;
-    padding-bottom: var(--space-16);
+    gap: var(--space-2);
+    font-family: var(--font-body);
+    font-size: var(--size-small);
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+    margin-bottom: var(--space-4);
   }
 
-  .tabs__panel-text {
-    max-width: 42ch;
+  .mini-badge :global(svg) {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 6px;
+    box-sizing: border-box;
+    border-radius: var(--radius);
+    background: var(--ink);
+    color: var(--on-ink);
   }
 
-  .tabs__panel-text p {
+  .features__panel-title {
+    font-size: var(--size-h3);
+    max-width: 18ch;
+  }
+
+  .features__panel-text {
     color: var(--text-muted);
-    margin-bottom: var(--space-8);
+    max-width: 46ch;
+    margin-block: var(--space-4) var(--space-8);
   }
 
-  .tabs__panel-visual {
-    position: relative;
-    padding: 20px 20px 0 0;
-    max-width: 320px;
+  .features__media img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: var(--border-hairline) solid var(--rule);
   }
 
-  .tabs__panel-visual :global(.tabs__panel-backdrop) {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 0;
-  }
+  /* ============================================================
+     4 — POURQUOI GONABI EST DIFFÉRENT
+     ============================================================ */
 
-  .tabs__panel-photo {
-    position: relative;
-    z-index: 1;
-    aspect-ratio: 4 / 3;
-    border-radius: var(--radius-tile);
-    overflow: hidden;
-    box-shadow: var(--shadow-tile-lg);
-    margin-left: -20px;
+  .diff {
     background: var(--paper-light);
-    color: transparent;
-    font-size: 0;
+    padding-block: clamp(72px, 10vw, 128px);
+    border-top: var(--border-hairline) solid var(--rule);
   }
 
-  .tabs__panel-photo img {
+  .diff__title {
+    font-size: var(--size-h2);
+    text-align: center;
+    margin-bottom: var(--space-16);
+  }
+
+  .diff__row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-8);
+  }
+
+  .diff__item {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .diff__icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
+    background: var(--tint-blue);
+    color: var(--blue-deep);
+    margin-bottom: var(--space-2);
+  }
+
+  .diff__item-title {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .diff__item-text {
+    font-size: var(--size-small);
+    color: var(--text-muted);
+  }
+
+  /* ============================================================
+     5 — POUR QUI
+     ============================================================ */
+
+  .audience {
+    background: var(--paper);
+    padding-block: clamp(72px, 10vw, 144px);
+  }
+
+  .audience__title {
+    font-size: var(--size-h2);
+    max-width: 26ch;
+    margin-bottom: var(--space-16);
+  }
+
+  .audience__title em {
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.1;
+    padding-bottom: 0.06em;
+  }
+
+  .audience__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(20px, 3vw, 40px);
+    padding-bottom: var(--space-8);
+    border-bottom: var(--border-hairline) solid var(--rule);
+    margin-bottom: var(--space-16);
+  }
+
+  .audience__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+  }
+
+  .audience__panel[hidden] {
+    display: none;
+  }
+
+  .audience__lead {
+    font-size: var(--size-lead);
+    line-height: var(--leading-lead);
+    max-width: 30ch;
+    margin-bottom: var(--space-4);
+  }
+
+  .audience__media {
+    background: var(--fond);
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .audience__media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  /* ════════════════════════ DIFFÉRENCIATION (badges) ════════════════════════ */
-
-  .columns {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-16);
-  }
-
-  .column {
-    padding-top: var(--space-8);
-    border-top: var(--border-hairline) solid var(--rule);
-  }
-
-  .column :global(.icon-badge) {
-    margin-bottom: var(--space-8);
-  }
-
-  .column__title {
-    font-size: var(--size-h4);
-    margin-bottom: var(--space-4);
-  }
-
-  .column__text {
-    font-size: var(--size-small);
-    color: var(--text-muted);
-  }
-
-  .columns__after {
+  .audience__arrows {
+    display: flex;
+    gap: var(--space-4);
     margin-top: var(--space-16);
   }
 
-  /* ════════════════════════ MIGRATION ════════════════════════ */
+  /* ============================================================
+     6 — TÉMOIGNAGES
+     ============================================================ */
 
-  .migration__grid {
+  .voices {
+    background: var(--ink);
+    padding-block: clamp(80px, 11vw, 152px);
+  }
+
+  .voices__inner {
     display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: var(--space-16);
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
+    gap: clamp(16px, 3vw, 40px);
   }
 
-  .pull {
-    border-left: 2px solid var(--accent);
-    padding-left: var(--space-8);
+  .carousel-arrow--voices {
+    border-color: var(--on-ink-rule-strong);
+    color: var(--on-ink);
   }
 
-  .pull__quote {
+  .carousel-arrow--voices:hover {
+    background: rgba(244, 237, 226, 0.08);
+    border-color: var(--on-ink);
+  }
+
+  .voices__stage {
+    max-width: 46rem;
+    margin-inline: auto;
+    text-align: center;
+    min-height: 14rem;
+    display: grid;
+    align-content: center;
+  }
+
+  .voice {
+    display: grid;
+    justify-items: center;
+    grid-area: 1 / 1;
+  }
+
+  .voice__mark {
+    margin-bottom: var(--space-8);
+  }
+
+  .voice__quote {
     font-family: var(--font-display);
-    font-size: clamp(1.75rem, 3.2vw, 2.75rem);
-    font-weight: var(--weight-medium);
-    font-style: italic;
-    line-height: 1.2;
-    letter-spacing: var(--tracking-title);
-    color: var(--text);
+    font-size: var(--size-h3);
+    line-height: var(--leading-title);
+    color: var(--on-ink);
   }
 
-  .pull__source {
+  .voice__author {
     margin-top: var(--space-8);
     font-size: var(--size-small);
-    color: var(--text-muted);
+    font-weight: var(--weight-semibold);
+    color: var(--on-ink);
   }
 
-  .migration__body p {
-    color: var(--text-muted);
+  .voice__role {
+    display: block;
+    font-weight: var(--weight-regular);
+    color: var(--on-ink-muted);
   }
 
-  .migration__body p + p {
-    margin-top: var(--space-4);
+  .voices__dots {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-16);
   }
 
-  .migration__body .link-arrow {
-    margin-top: var(--space-8);
+  .voice-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    border: 0;
+    background: var(--on-ink-rule-strong);
+    cursor: pointer;
+    padding: 0;
+    transition: background-color var(--duration) var(--ease);
   }
 
-  /* ════════════════════════ CONFIANCE ════════════════════════ */
+  .voice-dot[aria-selected='true'] {
+    background: var(--accent);
+  }
 
-  .trust__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-    gap: var(--space-16);
-    align-items: start;
+  /* ============================================================
+     7 — CONFIANCE
+     ============================================================ */
+
+  .trust {
+    background: var(--tint-teal);
+    padding-block: clamp(72px, 10vw, 144px);
+  }
+
+  .trust__head {
+    text-align: center;
+    max-width: 46rem;
+    margin-inline: auto;
+    margin-bottom: var(--space-16);
   }
 
   .trust__title {
-    margin-top: var(--space-8);
-    font-size: var(--size-h3);
+    font-size: var(--size-h2);
   }
 
   .trust__lead {
-    margin-top: var(--space-8);
-    margin-bottom: var(--space-8);
-    font-size: var(--size-body);
+    color: var(--text-muted);
+    margin-top: var(--space-4);
   }
 
-  .trust__list {
-    list-style: none;
+  .trust__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
   }
 
-  .trust__item {
-    display: flex;
-    gap: var(--space-8);
-    align-items: flex-start;
-    padding-block: var(--space-8);
-    border-top: var(--border-hairline) solid var(--rule);
+  .trust__card {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-8);
+    background: var(--paper-white);
+    border-radius: var(--radius-lg);
   }
 
-  .trust__item:last-child {
-    border-bottom: var(--border-hairline) solid var(--rule);
-  }
-
-  .trust__item-title {
-    font-size: var(--size-h4);
+  .trust__card-mark {
     margin-bottom: var(--space-2);
   }
 
-  .trust__item-text {
+  .trust__card-title {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .trust__card-text {
     font-size: var(--size-small);
     color: var(--text-muted);
   }
 
-  /* ════════════════════════ CTA FINAL (carte pleine couleur) ════════════════════════ */
-
-  .cta {
-    background: var(--paper);
+  .trust__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-16);
   }
 
-  .cta-card {
+  /* ============================================================
+     8 — FORMULAIRE
+     ============================================================ */
+
+  .signup {
     background: var(--ink);
-    border-radius: var(--radius-photo);
-    padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 64px);
+    padding-block: clamp(72px, 10vw, 128px);
+  }
+
+  .signup__container {
+    max-width: 640px;
     text-align: center;
   }
 
-  .cta-card__title {
+  .signup__title {
+    font-size: var(--size-h2);
     color: var(--on-ink);
-    max-width: 20ch;
-    margin-inline: auto;
-    margin-bottom: var(--space-4);
   }
 
-  .cta-card__text {
+  .signup__form {
+    margin-top: var(--space-16);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: clamp(24px, 4vw, 40px);
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .signup__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .field {
+    display: grid;
+    gap: var(--space-2);
+    text-align: left;
+  }
+
+  .field label {
+    font-size: var(--size-small);
     color: var(--on-ink-muted);
-    max-width: 44ch;
-    margin-inline: auto;
-    margin-bottom: var(--space-8);
   }
 
-  /* ════════════════════════ RESPONSIVE ════════════════════════ */
+  .field input {
+    width: 100%;
+    padding: 13px 16px;
+    font-size: var(--size-small);
+    color: var(--on-ink);
+    background: rgba(255, 255, 255, 0.05);
+    border: var(--border-hairline) solid var(--on-ink-rule-strong);
+    border-radius: var(--radius);
+  }
+
+  .field input::placeholder {
+    color: var(--on-ink-muted);
+  }
+
+  .field input:focus-visible {
+    outline: none;
+    border-color: var(--on-ink);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .signup__submit {
+    width: 100%;
+    margin-top: var(--space-2);
+  }
+
+  .signup__reassure {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4) var(--space-8);
+    margin-top: var(--space-2);
+  }
+
+  .signup__reassure li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.8125rem;
+    color: var(--on-ink-muted);
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
 
   @media (max-width: 1024px) {
-    .hero__grid,
-    .produit__grid,
-    .migration__grid,
+    .diff__row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .trust__grid {
       grid-template-columns: minmax(0, 1fr);
-      gap: var(--space-16);
     }
+  }
 
-    .tabs__panel {
+  @media (max-width: 900px) {
+    .hero__grid,
+    .features__panel,
+    .audience__panel {
       grid-template-columns: minmax(0, 1fr);
-    }
-
-    .tabs__panel-visual {
-      max-width: none;
-      margin-top: var(--space-8);
-    }
-
-    .hero__visual {
-      padding: 40px 16px 56px 16px;
     }
 
     .hero__title {
-      max-width: 18ch;
+      max-width: none;
     }
 
-    .produit__title {
-      max-width: 22ch;
+    .audience__lead {
+      max-width: none;
     }
 
-    .columns {
-      grid-template-columns: 1fr;
-      gap: var(--space-16);
+    .voices__inner {
+      grid-template-columns: minmax(0, 1fr);
     }
 
-    .partners__inner {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-8);
-    }
-
-    .partners__row {
-      width: 100%;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      gap: var(--space-8) var(--space-16);
+    .carousel-arrow--voices {
+      display: none;
     }
   }
 
-  @media (max-width: 720px) {
-    .row {
-      flex-direction: column;
-      gap: var(--space-4);
+  @media (max-width: 640px) {
+    .diff__row {
+      grid-template-columns: minmax(0, 1fr);
     }
 
-    .row__marker {
-      display: none;
+    .signup__row {
+      grid-template-columns: minmax(0, 1fr);
     }
 
-    .tabs__panel-photo {
-      margin-left: 0;
-    }
-
-    .pull {
-      padding-left: var(--space-4);
-    }
-
-    .hero__tiles,
-    .hero-tile--parcours,
-    .hero__stripe {
-      display: none;
-    }
-
-    .stat-badge {
-      width: 92px;
-      height: 92px;
-      right: 4px;
-      bottom: -16px;
+    .partners .marquee__track img {
+      height: 44px;
     }
   }
 </style>
+
+<script>
+  /*
+   * Onglets rotatifs — partagés par les sections « Produit » et « Pour qui ».
+   * Chaque conteneur `[data-autotabs]` pointe vers un groupe de boutons
+   * `role=tab` et de panneaux `role=tabpanel` qui le suivent dans le DOM
+   * (jusqu'au prochain `[data-autotabs]` ou la fin de la section).
+   * Rotation automatique par défaut, arrêtée dès qu'on interagit : reprendre
+   * la main sur un carrousel ne doit jamais être annulé par la rotation.
+   */
+  const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-autotabs]').forEach((nav) => {
+    const section = nav.closest('section');
+    if (!section) return;
+
+    const onglets = Array.from(nav.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panneaux = onglets.map((o) =>
+      section.querySelector<HTMLElement>(`#${o.getAttribute('aria-controls')}`)
+    );
+    if (!onglets.length) return;
+
+    let actif = 0;
+    let minuteur: number | undefined;
+
+    const afficher = (index: number) => {
+      actif = index;
+      onglets.forEach((onglet, i) => {
+        const choisi = i === index;
+        onglet.setAttribute('aria-selected', String(choisi));
+        onglet.tabIndex = choisi ? 0 : -1;
+        if (panneaux[i]) panneaux[i]!.hidden = !choisi;
+      });
+    };
+
+    const arreter = () => {
+      if (minuteur !== undefined) window.clearInterval(minuteur);
+      minuteur = undefined;
+    };
+
+    const suivant = (pas: number) => {
+      arreter();
+      afficher((actif + pas + onglets.length) % onglets.length);
+    };
+
+    onglets.forEach((onglet, i) => {
+      onglet.addEventListener('click', () => suivant(i - actif));
+      onglet.addEventListener('keydown', (evenement) => {
+        if (evenement.key !== 'ArrowRight' && evenement.key !== 'ArrowLeft') return;
+        evenement.preventDefault();
+        suivant(evenement.key === 'ArrowRight' ? 1 : -1);
+        onglets[actif].focus();
+      });
+    });
+
+    section.querySelectorAll<HTMLButtonElement>('[data-tab-prev]').forEach((b) =>
+      b.addEventListener('click', () => suivant(-1))
+    );
+    section.querySelectorAll<HTMLButtonElement>('[data-tab-next]').forEach((b) =>
+      b.addEventListener('click', () => suivant(1))
+    );
+
+    if (!reduit) {
+      minuteur = window.setInterval(() => afficher((actif + 1) % onglets.length), 6000);
+    }
+  });
+
+  /*
+   * Carrousel de témoignages. Structure distincte des onglets : une seule
+   * diapositive visible, navigation par flèches + puces, rotation automatique
+   * par défaut.
+   */
+  const scene = document.querySelector<HTMLElement>('.voices');
+  if (scene) {
+    const slides = Array.from(scene.querySelectorAll<HTMLElement>('[data-voice-slide]'));
+    const dots = Array.from(scene.querySelectorAll<HTMLButtonElement>('[data-voice-dot]'));
+    let actif = 0;
+    let minuteur: number | undefined;
+
+    const afficher = (index: number) => {
+      actif = (index + slides.length) % slides.length;
+      slides.forEach((s, i) => (s.hidden = i !== actif));
+      dots.forEach((d, i) => d.setAttribute('aria-selected', String(i === actif)));
+    };
+
+    const arreter = () => {
+      if (minuteur !== undefined) window.clearInterval(minuteur);
+      minuteur = undefined;
+    };
+
+    scene.querySelector('[data-voice-prev]')?.addEventListener('click', () => {
+      arreter();
+      afficher(actif - 1);
+    });
+    scene.querySelector('[data-voice-next]')?.addEventListener('click', () => {
+      arreter();
+      afficher(actif + 1);
+    });
+    dots.forEach((dot, i) =>
+      dot.addEventListener('click', () => {
+        arreter();
+        afficher(i);
+      })
+    );
+
+    if (!reduit) {
+      minuteur = window.setInterval(() => afficher(actif + 1), 7000);
+    }
+  }
+</script>

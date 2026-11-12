@@ -81,11 +81,47 @@ const fullTitle = title === 'Gonabi' ? title : `${title} | Gonabi`;
 
   <body>
     <a class="skip-link" href="#contenu">Aller au contenu principal</a>
+    {/*
+      Sentinelle de défilement. Elle sert à savoir si la page est en haut sans
+      écouter l'événement `scroll` : un IntersectionObserver suffit, et il ne
+      s'exécute pas à chaque image. Tant qu'elle est visible, l'en-tête n'a ni
+      fond ni filet ; dès qu'elle sort du champ, il prend les deux.
+    */}
+    <div id="scroll-sentinel" aria-hidden="true"></div>
     <Header />
     <main id="contenu">
       <slot />
     </main>
     <Footer />
+
+    <script>
+      // Photo absente : on retire l'image plutôt que d'afficher l'icône de
+      // fichier cassé du navigateur. Le cadre est teinté en CSS, il reste donc
+      // un aplat propre à la place. Une photo qui manque ne doit jamais donner
+      // l'impression que la page est en panne.
+      document.querySelectorAll('img.photo').forEach((image) => {
+        image.addEventListener('error', () => image.remove(), { once: true });
+      });
+    </script>
+
+    <script>
+      // En-tête transparent en haut de page, plein dès qu'on défile.
+      // Motivation : sur un hero pleine page en photo, un bandeau opaque
+      // coupe l'image ; une fois le hero passé, la nav a besoin d'un fond
+      // pour rester lisible. C'est un changement d'état, pas une décoration.
+      const sentinelle = document.querySelector('#scroll-sentinel');
+      const entete = document.querySelector('.site-header');
+
+      if (sentinelle && entete && 'IntersectionObserver' in window) {
+        new IntersectionObserver(
+          ([entree]) => entete.classList.toggle('is-stuck', !entree.isIntersecting),
+          { threshold: 0 }
+        ).observe(sentinelle);
+      } else {
+        // Sans observateur, on garde l'en-tête plein : lisible en toutes circonstances.
+        entete?.classList.add('is-stuck');
+      }
+    </script>
 
     <script>
       // Révélation au scroll, volontairement discrète. Le masquage vient du CSS

@@ -63,35 +63,37 @@ h4 {
   overflow-wrap: break-word;
 }
 
+/*
+ * Graisse des titres Lora : 400, pas 500. Les références (Culture Amp,
+ * Leapsome, Confirm) composent toutes leurs titres serif dans la graisse la
+ * plus fine disponible — c'est ce qui leur donne cet aspect éditorial plutôt
+ * que « gras générique ». La charte interdit le gras sur Lora ; on descend
+ * maintenant au régulier plutôt que de rester au médium.
+ */
 h1 {
   font-size: var(--size-h1);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-regular);
   line-height: var(--leading-display);
   letter-spacing: var(--tracking-display);
 }
 
 h2 {
   font-size: var(--size-h2);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-regular);
   line-height: var(--leading-title);
   letter-spacing: var(--tracking-title);
 }
 
-/*
- * h3/h4 utilisent Lora (voir la règle h1-h4 ci-dessus) : la charte interdit
- * explicitement le gras sur Lora, tout titre reste donc à 500 maximum. Le
- * poids visuel supplémentaire recherché passe par la taille, jamais la graisse.
- */
 h3 {
   font-size: var(--size-h3);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-regular);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);
 }
 
 h4 {
   font-size: var(--size-h4);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-regular);
   line-height: var(--leading-snug);
 }
 
@@ -114,28 +116,28 @@ a {
   border-radius: 2px;
 }
 
-/* Sur-titre en petites majuscules très espacées — signature éditoriale du site */
+/*
+ * Sur-titre en majuscules. Graisse normale : en 600 il concurrençait le titre
+ * qu'il annonce. Aucune des trois références (shapes.co, cultureamp.com,
+ * confirm.com) ne met son sur-titre en gras ni ne le souligne d'un filet.
+ */
 .eyebrow {
   display: block;
   font-family: var(--font-body);
   font-size: var(--size-eyebrow);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-regular);
   text-transform: uppercase;
   letter-spacing: var(--tracking-eyebrow);
   color: var(--text-muted);
 }
 
+/*
+ * `.eyebrow--rule` est conservé comme sélecteur (il est posé sur une trentaine
+ * de pages) mais ne dessine plus de filet : le trait fin qui traversait la
+ * colonne était le reliquat de la direction « éditorial imprimé ».
+ */
 .eyebrow--rule {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-}
-
-.eyebrow--rule::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--rule);
+  display: block;
 }
 
 .lead {
@@ -244,10 +246,6 @@ a {
   color: var(--on-ink-muted);
 }
 
-.section--ink .eyebrow--rule::after {
-  background: var(--on-ink-rule);
-}
-
 .section--ink .numeral {
   color: var(--on-ink-rule-strong);
 }
@@ -326,14 +324,35 @@ a {
   letter-spacing: 0.01em;
   line-height: 1;
   padding: 17px 28px;
-  border-radius: var(--radius);
+  /* Seul rayon non nul du système — voir --radius-pill dans tokens.css. */
+  border-radius: var(--radius-pill);
   border: var(--border-hairline) solid transparent;
   text-decoration: none;
   cursor: pointer;
   transition:
     background-color var(--duration) var(--ease),
     border-color var(--duration) var(--ease),
-    color var(--duration) var(--ease);
+    color var(--duration) var(--ease),
+    transform var(--duration) var(--ease);
+}
+
+/*
+ * Micro-interaction franche : le bouton se soulève de 2px, puis retombe à plat
+ * au clic. Pas de `scale` élastique — un aplat net ne rebondit pas.
+ */
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover,
+  .btn:active {
+    transform: none;
+  }
 }
 
 /*
@@ -369,6 +388,114 @@ a {
 .section--ink .btn--secondary:hover {
   background: rgba(244, 237, 226, 0.08);
   border-color: var(--on-ink);
+}
+
+/*
+ * Bouton posé sur un aplat de couleur saturée (la bande CTA finale). Le blanc
+ * plein est le seul traitement qui reste lisible sur du rouge sans dépendre
+ * d'une bordure.
+ */
+.btn--invert {
+  background: var(--paper-white);
+  color: var(--ink);
+}
+
+.btn--invert:hover {
+  background: var(--paper);
+}
+
+/*
+ * Numérotation de rang. Sert à scander une liste courte (trois freins, trois
+ * réponses) et à faire correspondre visuellement deux colonnes en vis-à-vis.
+ */
+/*
+ * La couleur est --text-muted et non --accent : à 13px, #EE4036 plafonne à
+ * 3.54:1 sur papier, sous le seuil AA du texte de taille normale. Un numéro
+ * de rang est du texte, pas un ornement. --text-muted tient 5.10:1, et une
+ * numérotation qui scande discrètement vaut mieux qu'une qui crie.
+ */
+/*
+ * Sur-titre en pilule teintée. C'est le motif commun à Lattice (« RESOURCES »
+ * en pilule verte) et Leapsome : il remplace le sur-titre en petites capitales
+ * grises, qui est le marqueur le plus reconnaissable d'une page de gabarit.
+ */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: var(--tint-teal);
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+}
+
+.pill--blue {
+  background: var(--tint-blue);
+}
+.pill--red {
+  background: var(--tint-red);
+}
+.pill--yellow {
+  background: var(--tint-yellow);
+}
+
+/*
+ * Surligneur — bande de couleur légèrement débordante derrière un groupe de
+ * mots, motif relevé sur la référence Spara (« hybrid AI & human sales
+ * motions » sur fond ocre). Le mot souligné reste lisible : c'est un aplat
+ * clair derrière du texte foncé, jamais l'inverse.
+ */
+.highlight {
+  display: inline;
+  background: var(--tint-yellow);
+  padding: 0.05em 0.3em;
+  border-radius: var(--radius);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.rank {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--size-rank);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   EN-TÊTE AU DÉFILEMENT
+   ------------------------------------------------------------
+   En haut de page l'en-tête se fond dans le fond crème, sans filet. Dès qu'on
+   défile, il prend un fond opaque et son filet bas : c'est un changement
+   d'état, pas une décoration. L'information vient d'une sentinelle observée
+   par IntersectionObserver, jamais d'un écouteur sur l'événement scroll.
+   ============================================================ */
+
+#scroll-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 1px;
+  pointer-events: none;
+}
+
+.site-header {
+  border-bottom-color: transparent;
+  transition:
+    background-color var(--duration-slow) var(--ease),
+    border-color var(--duration-slow) var(--ease);
+}
+
+.site-header.is-stuck {
+  background: var(--paper-light);
+  border-bottom-color: var(--rule);
 }
 
 /* ============================================================
@@ -598,7 +725,7 @@ a.gnb-card:hover {
   font-weight: var(--weight-semibold);
   line-height: 1;
   padding: 17px 28px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
   border: var(--border-hairline) solid transparent;
   text-decoration: none;
   cursor: pointer;
@@ -636,7 +763,7 @@ a.gnb-card:hover {
   letter-spacing: 0.04em;
   color: var(--accent-deep);
   background: var(--accent-wash);
-  border-radius: 3px;
+  border-radius: var(--radius);
   padding: 1px 6px;
 }
 
