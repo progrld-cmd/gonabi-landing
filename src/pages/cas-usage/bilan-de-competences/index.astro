@@ -9,7 +9,7 @@ const phases = [
     nom: 'Phase préliminaire',
     role: 'Analyser la demande, vérifier l’engagement du bénéficiaire, définir le format.',
     outil:
-      'Formulaire d’analyse du besoin co-signé, convention générée avec la durée, le coût et le planning.',
+      'Formulaire d’analyse du besoin co-signé lors de l’entretien préalable, puis devis personnalisé pour la commande EDOF (CPF) ou convention tripartite (financement employeur), avec la durée, le coût et le planning.',
   },
   {
     nom: 'Phase d’investigation',
@@ -28,9 +28,9 @@ const phases = [
 <PageLayout
   title="Gonabi pour le bilan de compétences"
   description="Les trois phases réglementaires du bilan de compétences, le document de synthèse et le suivi à six mois, dans un outil qui produit au passage vos preuves d'audit."
-  heading="Le bilan de compétences, de la convention au suivi à six mois"
+  heading="Le bilan de compétences, de l'entretien préalable au suivi à six mois"
   eyebrow="Cas d'usage"
-  lead="C'est la prestation la plus encadrée du secteur : trois phases imposées, un document de synthèse qui appartient au bénéficiaire, une confidentialité protégée par la loi et un suivi obligatoire six mois après. Gonabi suit ce cadre plutôt que de vous demander de l'adapter."
+  lead="C'est la prestation la plus encadrée du secteur : trois phases imposées, 24 heures au maximum, un document de synthèse qui appartient au bénéficiaire, une confidentialité protégée par la loi et un entretien de suivi à proposer. Gonabi suit ce cadre plutôt que de vous demander de l'adapter."
   breadcrumbs={[{ label: "Cas d'usage", href: '/cas-usage' }, { label: 'Bilan de compétences' }]}
 >
   <section class="gnb-section gnb-section--cream-light">
@@ -52,7 +52,9 @@ const phases = [
       </div>
       <p class="bilan-note">
         La trame de bilan fournie par défaut est découpée en 12 séances. Elle s'ajuste
-        bénéficiaire par bénéficiaire.
+        bénéficiaire par bénéficiaire, dans la limite légale de 24 heures par bilan
+        (article L6313-4 du Code du travail).
+        <span class="gnb-todo">[À FOURNIR] Volume horaire total de la trame par défaut.</span>
         <a href="/produit/parcours-personnalises">Voir les parcours</a>
       </p>
     </div>
@@ -89,11 +91,17 @@ const phases = [
 
   <section class="gnb-section gnb-section--blue">
     <div class="gnb-container">
-      <h2>Le suivi à six mois n'est pas optionnel</h2>
+      <h2>Le suivi à six mois, proposé et tracé</h2>
       <p class="gnb-lead">
-        Le référentiel qualité attend un entretien de suivi six mois après la fin du bilan. C'est
-        aussi le moment où il est le plus facile de l'oublier : le dossier est clos, le bénéficiaire
-        est parti.
+        Le document de synthèse doit mentionner la possibilité d'un entretien de suivi
+        (article R6313-4 du Code du travail). Le bénéficiaire est libre de l'accepter. C'est aussi
+        le moment où il est le plus facile de l'oublier : le dossier est clos, le bénéficiaire est
+        parti.
+      </p>
+      <p class="gnb-lead">
+        Pour assurer ce suivi, les documents du bilan ne peuvent être conservés qu'avec l'accord
+        écrit du bénéficiaire, et pendant un an au plus (article R6313-7).
+        <span class="gnb-todo">[À CONFIRMER] Recueil de cet accord écrit dans Gonabi.</span>
       </p>
       <p class="gnb-lead">
         Gonabi déclenche l'enquête à froid automatiquement, avec ses relances, et rattache la
@@ -111,6 +119,9 @@ const phases = [
         Le plafond de prise en charge par le compte personnel de formation est fixé à
         <strong>1 600 €</strong> depuis le 26 février 2026. Au-delà, le reste à charge doit
         apparaître clairement sur votre offre — c'est un point que les contrôles regardent.
+      </p>
+      <p class="gnb-lead">
+        <span class="gnb-todo">[À FOURNIR] Source officielle du plafond de 1 600 € (texte et date de publication).</span>
       </p>
     </div>
   </section>
