@@ -1,0 +1,162 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+/**
+ * Page stratégique : la friction de switching est l'objection n°1 terrain,
+ * avant le prix et avant la qualité.
+ *
+ * ⚠️ Ne jamais écrire ici un engagement que Gonabi ne tient pas aujourd'hui
+ * (import automatique depuis un concurrent, migration clé en main, garantie de
+ * remboursement, délai contractuel). Ces engagements doivent être validés
+ * explicitement avant d'apparaître sur cette page.
+ */
+const peurs = [
+  {
+    titre: 'Je vais perdre mes données et mon historique',
+    reformulation:
+      'Des années de dossiers, de comptes rendus et de synthèses vivent dans votre outil actuel. En partir donne l’impression de les abandonner.',
+  },
+  {
+    titre: 'Mes consultants vont devoir tout réapprendre',
+    reformulation:
+      'Une équipe qui a ses habitudes ne change pas d’outil gratuitement. Le coût réel d’une migration est un coût de formation et d’adhésion.',
+  },
+  {
+    titre: 'On va perdre des semaines pendant la bascule',
+    reformulation:
+      'Les accompagnements en cours ne s’arrêtent pas pour vous laisser changer de logiciel. La question n’est pas « quand », c’est « comment sans interrompre ».',
+  },
+  {
+    titre: 'Et si ça ne marche pas, je fais quoi ?',
+    reformulation:
+      'Se tromper d’outil coûte deux fois : la migration aller, et la migration retour. C’est ce risque-là qui fait renoncer, pas le prix.',
+  },
+];
+---
+
+<PageLayout
+  title="Migrer vers Gonabi"
+  description="Changer d'outil d'accompagnement sans perdre son historique ni interrompre les parcours en cours : les quatre craintes que nous entendons, traitées une par une."
+  heading="Changer d'outil est la vraie objection. Parlons-en."
+  eyebrow="Migration"
+  lead="Dans nos échanges avec les cabinets et les organismes de formation, la friction du changement passe avant le prix et avant la qualité de l'outil. Autant y consacrer une page plutôt qu'une phrase rassurante en bas d'un argumentaire."
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Les quatre craintes que nous entendons</h2>
+      <div class="migration-list">
+        {
+          peurs.map((peur, index) => (
+            <article class="migration-item">
+              <p class="migration-item__num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
+              <div>
+                <h3>« {peur.titre} »</h3>
+                <p class="migration-item__reformulation">{peur.reformulation}</p>
+                <p class="migration-item__answer">
+                  <span class="gnb-todo">[À FOURNIR]</span> Réponse opérationnelle : ce que nous
+                  faisons concrètement, qui fait quoi, dans quel délai. Cette réponse n'est pas
+                  rédigée tant que l'engagement correspondant n'a pas été validé — une promesse de
+                  migration non tenue coûte plus cher que l'objection qu'elle prétend lever.
+                </p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Ce que nous pouvons dire aujourd'hui</h2>
+      <p class="gnb-lead">
+        Si vous arrivez avec un historique d'accompagnements, les éléments repris dans Gonabi sont
+        marqués comme <strong>traces reconstituées</strong>. Ils portent la date de leur reprise,
+        pas une date antidatée. C'est moins flatteur, mais un dossier antidaté est une
+        non-conformité en audit.
+      </p>
+      <p class="migration-more">
+        <a href="/produit/conformite-qualiopi">Voir comment les preuves sont tracées</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Questions fréquentes sur la migration</h2>
+      <p class="gnb-lead">
+        <span class="gnb-todo">[À FOURNIR]</span> Formats de données repris, durée de reprise,
+        coût éventuel, réversibilité en cas de départ. Chaque réponse suppose un engagement à
+        valider avant publication.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Parlons de votre situation avant de parler d'outil"
+    text="Un échange de cadrage permet d'évaluer ce qu'il y a réellement à reprendre et à quel rythme, sans engagement."
+  />
+</PageLayout>
+
+<style>
+  .migration-list {
+    display: grid;
+    gap: var(--gnb-space-6);
+    margin-top: var(--gnb-space-8);
+  }
+
+  .migration-item {
+    display: flex;
+    gap: var(--gnb-space-6);
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-md);
+    padding: var(--gnb-space-6);
+  }
+
+  .migration-item__num {
+    font-family: var(--gnb-font-heading);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--gnb-red);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .migration-item h3 {
+    font-family: var(--gnb-font-heading);
+    font-size: var(--gnb-text-lg);
+    margin-bottom: var(--gnb-space-3);
+  }
+
+  .migration-item__reformulation {
+    color: var(--gnb-text-muted);
+    line-height: var(--gnb-leading-relaxed);
+    margin-bottom: var(--gnb-space-4);
+  }
+
+  .migration-item__answer {
+    color: var(--gnb-text-muted);
+    line-height: var(--gnb-leading-relaxed);
+    padding-top: var(--gnb-space-4);
+    border-top: 1px dashed var(--gnb-border);
+  }
+
+  .migration-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .migration-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .migration-item {
+      flex-direction: column;
+      gap: var(--gnb-space-3);
+    }
+  }
+</style>

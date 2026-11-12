@@ -1,0 +1,78 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Gonabi pour les organismes de formation"
+  description="Accompagner et rester auditable dans le même outil : chaque séance menée dans Gonabi produit ses preuves Qualiopi, sans saisie administrative supplémentaire."
+  heading="Accompagner et rester auditable, sans double saisie"
+  eyebrow="Pour qui"
+  lead="Vous avez déjà un outil pour la gestion administrative et la facturation. Ce qui manque, c'est l'endroit où se passe réellement l'accompagnement — et qui produise au passage les preuves que votre certificateur demandera."
+  breadcrumbs={[
+    { label: 'Pour qui', href: '/solutions' },
+    { label: 'Organismes de formation' },
+  ]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Le problème n'est pas la conformité, c'est le moment où on la produit</h2>
+      <p class="gnb-lead">
+        La plupart des structures accompagnent correctement, puis reconstituent le dossier de
+        preuves à l'approche de l'audit — à partir de tableurs, de mails et de dossiers éparpillés.
+        Nos bêta-testeurs estimaient y passer 2 à 4 heures par audit, et ce travail est refait à
+        chaque cycle.
+      </p>
+      <p class="gnb-lead">
+        Dans Gonabi, l'émargement, les comptes rendus, les logs de connexion des séances à distance
+        et les enquêtes de satisfaction sont produits par l'accompagnement lui-même.
+      </p>
+      <p class="solution-more">
+        <a href="/produit/conformite-qualiopi">Voir le détail de la conformité Qualiopi</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Un cadre réglementaire qui s'est resserré</h2>
+      <p class="gnb-lead">
+        Le référentiel national qualité applicable est la version V9, issue de l'arrêté du
+        31 décembre 2023, avec des exigences renforcées sur les modalités à distance. Les preuves
+        d'un dossier financé peuvent être demandées pendant 5 ans.
+      </p>
+      <p class="gnb-lead">
+        Pour le bilan de compétences, le plafond de prise en charge par le compte personnel de
+        formation est fixé à 1 600 € depuis le 26 février 2026 : le reste à charge éventuel doit
+        apparaître sur votre offre.
+      </p>
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Ce que Gonabi ne remplace pas"
+    brief="Positionner honnêtement vis-à-vis des outils de gestion d'OF (facturation, BPF, catalogue, émargement de sessions collectives). Gonabi couvre l'accompagnement individuel, pas la gestion administrative complète d'un organisme."
+    tone="white"
+  />
+
+  <PlaceholderSection
+    title="Mise en route"
+    brief="Décrire le déploiement type pour un organisme : paramétrage, reprise de l'existant, formation des consultants. Aucun délai annoncé sans validation."
+    tone="cream"
+  />
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .solution-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .solution-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+</style>

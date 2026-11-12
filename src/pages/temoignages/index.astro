@@ -1,0 +1,83 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Témoignages"
+  description="[À FOURNIR] Meta description — retours des structures utilisatrices de Gonabi, 150 à 160 caractères."
+  heading="Ils utilisent Gonabi"
+  eyebrow="Témoignages"
+  lead="[À FOURNIR] Chapô : ce que cette page apporte au visiteur."
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Retours clients</h2>
+      <p class="gnb-lead testimonials-note">
+        <span class="gnb-todo">[À FOURNIR]</span> Aucun témoignage n'est affiché tant que les
+        verbatims, noms et structures n'ont pas été recueillis et autorisés par écrit.
+      </p>
+
+      <div class="gnb-grid gnb-grid--3 testimonials-grid">
+        <blockquote class="gnb-card testimonial">
+          <p><span class="gnb-todo">[À FOURNIR]</span> Verbatim client.</p>
+          <footer>
+            <cite>Prénom Nom</cite> — <span>Structure</span>
+          </footer>
+        </blockquote>
+        <blockquote class="gnb-card testimonial">
+          <p><span class="gnb-todo">[À FOURNIR]</span> Verbatim client.</p>
+          <footer>
+            <cite>Prénom Nom</cite> — <span>Structure</span>
+          </footer>
+        </blockquote>
+        <blockquote class="gnb-card testimonial">
+          <p><span class="gnb-todo">[À FOURNIR]</span> Verbatim client.</p>
+          <footer>
+            <cite>Prénom Nom</cite> — <span>Structure</span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Études de cas</h2>
+      <p class="gnb-lead">
+        <span class="gnb-todo">[À FOURNIR]</span> Cas détaillés : contexte, mise en place, résultats
+        mesurés. Aucun chiffre ne doit figurer sans validation du client concerné.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .testimonials-note {
+    margin-bottom: var(--gnb-space-8);
+  }
+
+  .testimonials-grid {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .testimonial p {
+    color: var(--gnb-text);
+    font-size: var(--gnb-text-lg);
+    line-height: var(--gnb-leading-relaxed);
+    margin-bottom: var(--gnb-space-4);
+  }
+
+  .testimonial footer {
+    font-size: var(--gnb-text-sm);
+    color: var(--gnb-text-muted);
+  }
+
+  .testimonial cite {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--gnb-text);
+  }
+</style>

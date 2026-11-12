@@ -1,0 +1,179 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { legalNav } from '../../../data/navigation';
+
+/**
+ * ⚠️ Page à risque juridique. Ne rédiger ici que ce qui est effectivement en
+ * place et vérifiable. Tout point non confirmé reste marqué [À CONFIRMER]
+ * plutôt qu'affirmé : une page de réassurance inexacte est un risque, pas un
+ * actif commercial. Toute affirmation doit rester cohérente avec les 4 pages
+ * légales déjà en ligne.
+ */
+---
+
+<PageLayout
+  title="Sécurité & RGPD"
+  description="Où vivent les données de vos bénéficiaires, qui peut y accéder, combien de temps elles sont conservées, et ce que Gonabi s'interdit de faire."
+  heading="Ce que deviennent les données de vos bénéficiaires"
+  eyebrow="À propos"
+  lead="Un bilan de compétences produit des informations intimes. Cette page dit ce que nous en faisons, et surtout ce que nous ne faisons pas. Elle est écrite pour un directeur de cabinet, pas pour un juriste."
+  breadcrumbs={[{ label: 'À propos', href: '/a-propos' }, { label: 'Sécurité & RGPD' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Ce que nous ne faisons pas</h2>
+      <p class="gnb-lead">
+        C'est souvent plus parlant que la liste de ce que nous faisons.
+      </p>
+      <ul class="rgpd-nots">
+        <li>
+          <strong>Nous n'enregistrons pas vos séances.</strong> Ni l'audio, ni la vidéo. Pour les
+          séances à distance, seule la connexion à la plateforme est journalisée — heure de début,
+          heure de fin, durée. C'est ce qui est attendu comme preuve de réalisation, et
+          l'enregistrement est de toute façon contre-indiqué en bilan de compétences.
+        </li>
+        <li>
+          <strong>Nous n'ouvrons pas les dossiers des bénéficiaires d'un consultant à toute la
+          structure.</strong> L'accès est cloisonné par organisation, et limité au parcours suivi.
+        </li>
+        <li>
+          <strong>Nous ne revendons aucune donnée</strong> et n'utilisons pas les contenus de vos
+          accompagnements à des fins commerciales.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Où sont les données</h2>
+      <p class="gnb-lead">
+        <span class="gnb-todo">[À CONFIRMER]</span> Hébergeur, région d'hébergement et liste des
+        sous-traitants — dont le fournisseur du modèle d'IA utilisé pour les synthèses. Ces
+        éléments ne sont pas publiés tant que le plan RGPD n'est pas finalisé et que les accords de
+        sous-traitance ne sont pas signés. Ils doivent aussi correspondre exactement à ce
+        qu'indique la
+        <a href="/politique-confidentialite.html">politique de confidentialité</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Combien de temps</h2>
+      <p class="gnb-lead">
+        Les preuves de réalisation — traces de parcours, feuilles d'émargement, logs de connexion —
+        sont conservées <strong>5 ans</strong>. Ce n'est pas un choix de notre part : c'est la
+        durée pendant laquelle la Caisse des Dépôts peut demander les pièces d'un dossier financé.
+      </p>
+      <p class="gnb-lead">
+        Conséquence importante et rarement dite : si un bénéficiaire demande la suppression de son
+        compte, les preuves de réalisation sont <strong>anonymisées</strong>, pas détruites. Le
+        dossier reste auditable, la personne n'y est plus identifiable.
+      </p>
+      <p class="gnb-lead">
+        Le contenu d'un bilan de compétences suit une règle plus stricte. Les documents élaborés
+        pendant le bilan (résultats de tests, notes, document de synthèse) doivent être détruits
+        dès la fin de la prestation (article R6313-7 du Code du travail). Seule exception : trois
+        ans au plus, pour la synthèse transmise avec l'accord du bénéficiaire, ou pour les documents
+        qu'il accepte par écrit de faire conserver en vue de son suivi.
+        <span class="gnb-todo">[À CONFIRMER] Mécanisme de purge en fin de bilan dans Gonabi.</span>
+      </p>
+      <p class="gnb-lead">
+        <span class="gnb-todo">[À CONFIRMER]</span> Durées de conservation des autres catégories de
+        données (compte, contenus de parcours, résultats de tests) — à aligner avec la politique de
+        confidentialité avant publication.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--blue">
+    <div class="gnb-container">
+      <h2>Confidentialité du bilan de compétences</h2>
+      <p class="gnb-lead">
+        L'article L6313-4 du Code du travail protège les résultats d'un bilan de compétences : ils
+        appartiennent au bénéficiaire et ne peuvent être communiqués à un tiers, y compris à
+        l'employeur, sans son accord.
+      </p>
+      <p class="gnb-lead">
+        Cela se traduit dans le produit : l'export d'un dossier d'audit propose une option
+        d'anonymisation, et le bénéficiaire ne voit ses résultats que lorsque le consultant les lui
+        restitue.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Droits des personnes</h2>
+      <p class="gnb-lead">
+        <span class="gnb-todo">[À CONFIRMER]</span> Modalités d'exercice des droits d'accès, de
+        rectification, d'effacement et de portabilité, délais de réponse et point de contact. Le
+        contact indiqué ici doit être strictement identique à celui de la politique de
+        confidentialité.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Certifications</h2>
+      <p class="gnb-lead">
+        Gonabi ne revendique aujourd'hui aucune certification de sécurité. Nous préférons le dire
+        plutôt que d'afficher des logos qui n'engagent personne. Cette section sera mise à jour
+        lorsqu'une certification sera effectivement obtenue.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Documents de référence</h2>
+      <ul class="rgpd-links">
+        {legalNav.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Une question de conformité avant de vous engager ?"
+    text="Nous répondons par écrit aux questionnaires de sécurité et aux demandes de vos services juridiques."
+  />
+</PageLayout>
+
+<style>
+  .rgpd-nots {
+    margin-top: var(--gnb-space-8);
+    display: grid;
+    gap: var(--gnb-space-4);
+    padding-left: 1.25rem;
+    max-width: 75ch;
+  }
+
+  .rgpd-nots li {
+    color: var(--gnb-text-muted);
+    line-height: var(--gnb-leading-relaxed);
+  }
+
+  .rgpd-nots strong {
+    color: var(--gnb-text);
+  }
+
+  .rgpd-links {
+    list-style: none;
+    display: grid;
+    gap: var(--gnb-space-3);
+    margin-top: var(--gnb-space-6);
+  }
+
+  .rgpd-links a {
+    color: var(--gnb-red);
+    font-weight: 600;
+  }
+
+  .gnb-lead a {
+    color: var(--gnb-red);
+    font-weight: 600;
+  }
+</style>

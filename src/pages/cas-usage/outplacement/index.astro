@@ -1,0 +1,83 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Gonabi pour l'outplacement"
+  description="Accompagner un salarié en transition tout en rendant compte à l'employeur qui finance, sans mélanger ce qui relève de l'un et de l'autre."
+  heading="Rendre compte à l'employeur sans trahir le bénéficiaire"
+  eyebrow="Cas d'usage"
+  lead="L'outplacement a une particularité que les autres prestations n'ont pas : celui qui paie n'est pas celui qu'on accompagne. Tout l'enjeu est de tenir les deux — un reporting crédible pour l'entreprise, une confidentialité réelle pour la personne."
+  breadcrumbs={[{ label: "Cas d'usage", href: '/cas-usage' }, { label: 'Outplacement' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Deux interlocuteurs, deux niveaux d'information</h2>
+      <div class="gnb-grid gnb-grid--2">
+        <article class="gnb-card">
+          <h3>Ce que l'employeur a besoin de savoir</h3>
+          <p>
+            Que l'accompagnement a lieu, qu'il avance, qu'il est conforme à ce qui a été
+            contractualisé. Les traces d'assiduité — séances tenues, émargements signés — le
+            documentent sans révéler le contenu des échanges.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Ce qui reste entre vous et la personne</h3>
+          <p>
+            Les résultats des tests, les hésitations, les pistes écartées, le contenu des séances.
+            Gonabi n'enregistre pas vos entretiens, et l'export de dossier propose une
+            anonymisation.
+          </p>
+        </article>
+      </div>
+      <p class="cas-more"><a href="/a-propos/securite-rgpd">Voir la politique de confidentialité technique</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Un parcours plus court, plus tendu</h2>
+      <p class="gnb-lead">
+        La trame d'outplacement fournie par défaut est découpée en 10 séances. La personne
+        accompagnée est souvent sous pression de temps : le parcours visible depuis son espace lui
+        montre où elle en est sans qu'elle ait à vous écrire pour le demander.
+      </p>
+      <p class="cas-more"><a href="/produit/parcours-personnalises">Voir les parcours</a></p>
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Le cadre contractuel"
+    brief="Préciser ce que Gonabi permet côté convention tripartite employeur / prestataire / bénéficiaire, et ce qu'il ne couvre pas. Ne rien affirmer sans vérifier ce qui est réellement paramétrable aujourd'hui."
+    tone="white"
+  />
+
+  <PlaceholderSection
+    title="Reporting employeur"
+    brief="Décrire les exports réellement disponibles pour rendre compte à un financeur entreprise, et leur niveau de détail. Aucun format promis sans qu'il existe."
+    tone="cream"
+  />
+
+  <PlaceholderSection
+    title="Mesure du retour à l'emploi"
+    brief="Point sensible : c'est l'indicateur sur lequel l'outplacement se vend. Ne publier aucun taux, aucune moyenne, aucune durée sans donnée mesurée et sourcée."
+    tone="cream-light"
+  />
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .cas-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .cas-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+</style>

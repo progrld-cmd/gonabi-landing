@@ -1,0 +1,66 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../../components/PlaceholderSection.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Portefeuille de compétences"
+  description="Les compétences du bénéficiaire, identifiées au fil du parcours et rattachées au référentiel ROME, pour être réutilisables après l'accompagnement."
+  heading="Des compétences nommées avec les mots du marché"
+  eyebrow="Produit"
+  lead="Un bénéficiaire sait rarement nommer ce qu'il sait faire. Le portefeuille rassemble ce qui ressort du parcours et le rattache au référentiel public des compétences, pour qu'il reste utilisable une fois l'accompagnement terminé."
+  breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Portefeuille de compétences' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Un référentiel commun</h2>
+      <p class="gnb-lead">
+        Les compétences sont rattachées au <strong>référentiel ROME de France Travail</strong>, le
+        même que celui des fiches métiers. Conséquence pratique : ce que le bénéficiaire identifie
+        pendant le bilan est directement comparable aux compétences attendues par les métiers qu'il
+        explore.
+      </p>
+      <p class="portefeuille-more">
+        <a href="/produit/explorateur-metiers">Voir l'explorateur de métiers</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>De l'écart au plan d'action</h2>
+      <p class="gnb-lead">
+        Quand un projet est retenu, la confrontation est mécanique : voici ce que le métier
+        demande, voici ce que la personne a déjà. L'écart constitue le plan de développement, et il
+        se justifie devant un financeur.
+      </p>
+    </div>
+  </section>
+
+  <PlaceholderSection
+    title="Ce que le bénéficiaire en fait après"
+    brief="Décrire les usages en sortie d'accompagnement (CV, entretien, VAE, mobilité) et le format d'export réellement disponible aujourd'hui. Ne rien promettre qui ne soit livré."
+    tone="white"
+  />
+
+  <PlaceholderSection
+    title="Comment les compétences sont identifiées"
+    brief="Détailler les sources de collecte réellement implémentées : expériences saisies, résultats de tests, auto-évaluation guidée. Les documents internes ne tranchent pas ce point."
+    tone="cream"
+  />
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .portefeuille-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .portefeuille-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { legalNav } from '../data/navigation';
+import '../styles/legal.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  /** URL canonique — obligatoire ici : ces URLs en `.html` sont déjà indexées. */
+  canonical: string;
+  /** Libellé de la page dans le fil d'Ariane. */
+  crumb: string;
+  /** Fragment HTML repris tel quel de l'ancien site. */
+  html: string;
+}
+
+const { title, description, canonical, crumb, html } = Astro.props;
+const autres = legalNav.filter((link) => link.href !== canonical);
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <section class="legal-page">
+    <div class="legal-page__inner">
+      <Breadcrumbs items={[{ label: crumb }]} />
+
+      <!-- Contenu repris à l'identique de l'ancien site : ne pas retoucher ici,
+           éditer le fragment correspondant dans src/legal/. -->
+      <div class="legal-body" set:html={html} />
+
+      <nav class="legal-other" aria-label="Autres documents légaux">
+        <h2>Autres documents</h2>
+        <ul>
+          {
+            autres.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-page :global(.breadcrumbs) {
+    margin-bottom: var(--gnb-space-8);
+  }
+
+  .legal-other {
+    margin-top: var(--gnb-space-12);
+    padding-top: var(--gnb-space-8);
+    border-top: 1px solid var(--gnb-border-soft);
+  }
+
+  .legal-other h2 {
+    font-family: var(--gnb-font-body);
+    font-size: var(--gnb-text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gnb-text-muted);
+    margin-bottom: var(--gnb-space-4);
+  }
+
+  .legal-other ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gnb-space-6);
+  }
+
+  .legal-other a {
+    font-size: var(--gnb-text-sm);
+    color: var(--gnb-blue);
+    text-decoration: none;
+  }
+
+  .legal-other a:hover {
+    text-decoration: underline;
+  }
+</style>

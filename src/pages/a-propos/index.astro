@@ -1,0 +1,60 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PlaceholderSection from '../../components/PlaceholderSection.astro';
+import CtaBand from '../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="À propos"
+  description="[À FOURNIR] Meta description — qui est Gonabi, 150 à 160 caractères."
+  heading="À propos de Gonabi"
+  eyebrow="À propos"
+  lead="[À FOURNIR] Chapô : pourquoi Gonabi existe, en deux phrases."
+>
+  <PlaceholderSection
+    title="Notre raison d'être"
+    brief="Origine du projet et problème observé sur le terrain. Pas de storytelling inventé."
+    tone="cream-light"
+  />
+
+  <PlaceholderSection
+    title="Ce en quoi nous croyons"
+    brief="Trois convictions structurantes, cohérentes avec le positionnement validé."
+    items={['Conviction 1', 'Conviction 2', 'Conviction 3']}
+    tone="cream"
+  />
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>En savoir plus</h2>
+      <div class="gnb-grid gnb-grid--2 about-grid">
+        <a href="/a-propos/equipe" class="gnb-card about-card">
+          <h3>L'équipe</h3>
+          <p>Les personnes derrière la plateforme.</p>
+        </a>
+        <a href="/a-propos/securite-rgpd" class="gnb-card about-card">
+          <h3>Sécurité &amp; RGPD</h3>
+          <p>Hébergement, traitement des données et engagements de conformité.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .about-grid {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .about-card {
+    text-decoration: none;
+    transition: var(--gnb-transition);
+  }
+
+  .about-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+</style>

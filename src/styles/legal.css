@@ -1,0 +1,281 @@
+/**
+ * Styles des pages légales.
+ * Reprise des règles de l'ancien site (mentions légales, CGU/CGV, confidentialité,
+ * cookies), réécrites sur les tokens Gonabi. Les noms de classes sont conservés :
+ * les fragments HTML sont repris tels quels et ne doivent pas être retouchés.
+ */
+
+.legal-page {
+  padding: var(--gnb-space-12) 5% var(--gnb-space-20);
+  background: var(--gnb-cream-light);
+}
+
+.legal-page__inner {
+  max-width: 860px;
+  margin-inline: auto;
+}
+
+/* ---------- En-tête ---------- */
+
+.legal-header {
+  margin-bottom: var(--gnb-space-12);
+  padding-bottom: var(--gnb-space-8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.legal-header h1 {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 500;
+  color: var(--gnb-text);
+  margin-bottom: var(--gnb-space-2);
+}
+
+.legal-date {
+  font-size: 0.9rem;
+  color: var(--gnb-text-muted);
+  font-style: italic;
+}
+
+.legal-intro {
+  font-size: 0.95rem;
+  color: var(--gnb-text-muted);
+  margin-top: var(--gnb-space-4);
+}
+
+.legal-intro ul {
+  margin-top: var(--gnb-space-2);
+  padding-left: 1.5rem;
+}
+
+.legal-intro li {
+  margin-bottom: var(--gnb-space-1);
+}
+
+/* ---------- Typographie du corps ---------- */
+
+.legal-content h2 {
+  font-family: var(--gnb-font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gnb-text);
+  margin-top: 2.5rem;
+  margin-bottom: var(--gnb-space-4);
+  padding-bottom: var(--gnb-space-2);
+  border-bottom: 2px solid var(--gnb-red);
+  display: inline-block;
+}
+
+.legal-content h2:first-child {
+  margin-top: 0;
+}
+
+.legal-content h3 {
+  font-family: var(--gnb-font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gnb-text);
+  margin-top: var(--gnb-space-6);
+  margin-bottom: var(--gnb-space-3);
+}
+
+.legal-content p {
+  font-size: 0.95rem;
+  color: var(--gnb-text-muted);
+  margin-bottom: var(--gnb-space-4);
+}
+
+.legal-content ul,
+.legal-content ol {
+  padding-left: 1.5rem;
+  margin-bottom: var(--gnb-space-4);
+}
+
+.legal-content li {
+  font-size: 0.95rem;
+  color: var(--gnb-text-muted);
+  margin-bottom: var(--gnb-space-2);
+}
+
+.legal-content strong {
+  color: var(--gnb-text);
+}
+
+.legal-content a {
+  color: var(--gnb-blue);
+  text-decoration: none;
+}
+
+.legal-content a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Séparateur de partie (CGU / CGV) ---------- */
+
+.part-divider {
+  margin: 3.5rem 0 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: var(--gnb-space-4);
+}
+
+.part-divider::before,
+.part-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.part-label {
+  font-family: var(--gnb-font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 0.35rem 1.25rem;
+  background: var(--gnb-teal);
+  color: var(--gnb-white);
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Encadrés ---------- */
+
+.info-box,
+.contact-box {
+  background: var(--gnb-white);
+  border-radius: 12px;
+  padding: var(--gnb-space-6);
+  margin-top: var(--gnb-space-4);
+  border-left: 4px solid var(--gnb-red);
+}
+
+.info-box p,
+.contact-box p {
+  margin-bottom: var(--gnb-space-2);
+}
+
+.info-box p:last-child,
+.contact-box p:last-child {
+  margin-bottom: 0;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0.5rem 1rem;
+  font-size: 0.95rem;
+}
+
+.info-grid dt {
+  color: var(--gnb-text-muted);
+}
+
+.info-grid dd {
+  color: var(--gnb-text);
+  font-weight: 500;
+}
+
+.notice-box {
+  background: var(--gnb-white);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: var(--gnb-space-4) 0;
+  border-left: 4px solid var(--gnb-blue);
+  font-size: 0.9rem;
+  color: var(--gnb-text-muted);
+}
+
+.notice-box p {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+.notice-box.success {
+  border-left-color: var(--gnb-green);
+}
+
+.notice-box.warning {
+  border-left-color: #f59e0b;
+}
+
+.highlight-box {
+  background: var(--gnb-white);
+  border-radius: 12px;
+  padding: var(--gnb-space-6);
+  margin: var(--gnb-space-4) 0;
+  border-left: 4px solid var(--gnb-green);
+}
+
+.highlight-box p {
+  margin-bottom: 0;
+  color: var(--gnb-text);
+}
+
+.highlight-box strong {
+  color: var(--gnb-green);
+}
+
+/* ---------- Tableaux ---------- */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--gnb-space-4) 0 var(--gnb-space-6);
+  font-size: 0.88rem;
+}
+
+.data-table th {
+  background: var(--gnb-teal);
+  color: var(--gnb-white);
+  font-family: var(--gnb-font-body);
+  font-weight: 600;
+  padding: 0.65rem 0.9rem;
+  text-align: left;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.data-table td {
+  padding: 0.65rem 0.9rem;
+  color: var(--gnb-text-muted);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  vertical-align: top;
+}
+
+.data-table tr:nth-child(even) td {
+  background: rgba(249, 244, 236, 0.6);
+}
+
+.data-table strong {
+  color: var(--gnb-text);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-grid dt {
+    margin-top: var(--gnb-space-2);
+  }
+
+  .part-label {
+    font-size: 1.2rem;
+  }
+
+  /* Les tableaux longs défilent horizontalement plutôt que de casser la page */
+  .legal-content .data-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 0.8rem;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.5rem 0.6rem;
+  }
+}

@@ -1,0 +1,96 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { DEMO_HREF } from '../../data/navigation';
+---
+
+<PageLayout
+  title="Réserver une démo"
+  description="[À FOURNIR] Meta description — réserver une démonstration de Gonabi, 150 à 160 caractères."
+  heading="Réserver une démo"
+  eyebrow="Démo"
+  lead="[À FOURNIR] Chapô : ce qui se passe pendant la démo, sa durée, à qui elle s'adresse."
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container demo-grid">
+      <div>
+        <h2>Comment ça se passe</h2>
+        <ol class="demo-steps">
+          <li><span class="gnb-todo">[À FOURNIR]</span> Étape 1.</li>
+          <li><span class="gnb-todo">[À FOURNIR]</span> Étape 2.</li>
+          <li><span class="gnb-todo">[À FOURNIR]</span> Étape 3.</li>
+        </ol>
+
+        <h3>Ce que la démo n'est pas</h3>
+        <p class="demo-text">
+          <span class="gnb-todo">[À FOURNIR]</span> Poser le cadre honnêtement pour éviter les
+          rendez-vous non qualifiés.
+        </p>
+      </div>
+
+      <div class="demo-embed">
+        <h2>Choisir un créneau</h2>
+        <div class="demo-embed__slot">
+          <p>
+            <span class="gnb-todo">[À FOURNIR]</span> Emplacement réservé à l'outil de prise de
+            rendez-vous. La destination n'est pas encore arbitrée : le bouton
+            « Réserver une démo » du site pointe pour l'instant sur
+            <code>{DEMO_HREF}</code>, à remplacer dans <code>src/data/navigation.ts</code>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Vous préférez écrire ?</h2>
+      <p class="gnb-lead">
+        La page <a href="/contact">contact</a> permet de nous joindre sans passer par un créneau.
+      </p>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .demo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gnb-space-12);
+    align-items: start;
+  }
+
+  .demo-steps {
+    margin: var(--gnb-space-6) 0 var(--gnb-space-8);
+    padding-left: 1.25rem;
+    display: grid;
+    gap: var(--gnb-space-3);
+    color: var(--gnb-text-muted);
+  }
+
+  .demo-text {
+    color: var(--gnb-text-muted);
+    margin-top: var(--gnb-space-3);
+  }
+
+  .demo-embed__slot {
+    margin-top: var(--gnb-space-6);
+    padding: var(--gnb-space-8);
+    background: var(--gnb-white);
+    border: 1px dashed var(--gnb-border);
+    border-radius: var(--gnb-radius-md);
+    color: var(--gnb-text-muted);
+  }
+
+  .demo-embed__slot code {
+    font-size: 0.85em;
+    background: var(--gnb-cream);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 900px) {
+    .demo-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

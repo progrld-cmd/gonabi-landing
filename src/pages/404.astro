@@ -1,0 +1,44 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { mainNav } from '../data/navigation';
+---
+
+<PageLayout
+  title="Page introuvable"
+  description="La page demandée n'existe pas ou a été déplacée."
+  heading="Cette page n'existe pas"
+  eyebrow="Erreur 404"
+  lead="Le lien est peut-être obsolète, ou l'adresse comporte une faute de frappe."
+  noindex
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Où aller maintenant</h2>
+      <ul class="notfound-links">
+        <li><a href="/">Accueil</a></li>
+        {
+          mainNav.map((group) => (
+            <li>
+              <a href={group.href}>{group.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .notfound-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gnb-space-6);
+    margin-top: var(--gnb-space-6);
+  }
+
+  .notfound-links a {
+    color: var(--gnb-red);
+    font-weight: 600;
+  }
+</style>

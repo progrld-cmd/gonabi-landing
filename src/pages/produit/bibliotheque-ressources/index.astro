@@ -1,0 +1,88 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<PageLayout
+  title="Bibliothèque de ressources"
+  description="Vos supports et ceux fournis par Gonabi, organisés et assignés au bon moment du parcours — avec la traçabilité de ce que le bénéficiaire a consulté."
+  heading="Le bon support, au bon moment du parcours"
+  eyebrow="Produit"
+  lead="Un document envoyé par mail est un document perdu. Dans Gonabi, une ressource est rattachée à une étape : le bénéficiaire la trouve quand il en a besoin, et vous savez s'il l'a ouverte."
+  breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Bibliothèque de ressources' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Deux fonds, une seule bibliothèque</h2>
+      <div class="gnb-grid gnb-grid--2">
+        <article class="gnb-card">
+          <h3>Vos supports</h3>
+          <p>
+            Les documents que vous avez construits au fil des années : guides maison, trames
+            d'exercices, fiches que vous avez rédigées. Vous les importez, vous les organisez par
+            dossiers et par mots-clés.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Les ressources Gonabi</h3>
+          <p>
+            Un fonds commun fourni avec la plateforme, adossé notamment aux fiches métiers du
+            référentiel ROME. Il complète le vôtre, il ne le remplace pas.
+          </p>
+        </article>
+      </div>
+      <p class="biblio-note">
+        <span class="gnb-todo">[À FOURNIR]</span> Le détail du fonds commun — types de supports et
+        volumétrie — reste à préciser. Aucun nombre n'est affiché tant qu'il n'est pas vérifié.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Assigner plutôt qu'envoyer</h2>
+      <p class="gnb-lead">
+        Une ressource se rattache à une étape du parcours d'un bénéficiaire. Elle apparaît dans son
+        espace au moment où cette étape s'ouvre, avec le contexte qui va avec — pas trois semaines
+        trop tôt, en pièce jointe d'un mail qu'il ne retrouvera pas.
+      </p>
+      <p class="biblio-more">
+        <a href="/produit/parcours-personnalises">Voir comment se construit un parcours</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Savoir ce qui a été consulté</h2>
+      <p class="gnb-lead">
+        Chaque accès à une ressource est journalisé par bénéficiaire. Cela sert deux choses :
+        ajuster l'accompagnement quand vous constatez qu'un support n'est jamais ouvert, et
+        documenter la mise à disposition de moyens pédagogiques attendue par le référentiel qualité.
+      </p>
+      <p class="biblio-more">
+        <a href="/produit/conformite-qualiopi">Voir la conformité Qualiopi</a>
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .biblio-note {
+    margin-top: var(--gnb-space-6);
+    color: var(--gnb-text-muted);
+    max-width: 70ch;
+  }
+
+  .biblio-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .biblio-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+</style>

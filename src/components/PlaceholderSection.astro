@@ -1,0 +1,61 @@
+---
+/**
+ * Bloc de contenu structuré, volontairement vide de rédactionnel.
+ * Il matérialise la hiérarchie Hn et l'emplacement des contenus à écrire
+ * lors de la passe suivante. Aucun chiffre ni promesse n'y est inventé.
+ */
+export interface Props {
+  /** Titre de section (H2). */
+  title: string;
+  /** Intention éditoriale du bloc — sert de brief au rédacteur. */
+  brief?: string;
+  /** Sous-blocs (H3) à remplir. */
+  items?: string[];
+  /** Fond de la section. */
+  tone?: 'cream' | 'cream-light' | 'white' | 'blue';
+  /** Disposition des sous-blocs. */
+  columns?: 2 | 3 | 4;
+}
+
+const { title, brief, items = [], tone = 'cream', columns = 3 } = Astro.props;
+---
+
+<section class:list={['gnb-section', `gnb-section--${tone}`]}>
+  <div class="gnb-container">
+    <h2>{title}</h2>
+    {
+      brief && (
+        <p class="gnb-lead placeholder-brief">
+          <span class="gnb-todo">[À FOURNIR]</span> {brief}
+        </p>
+      )
+    }
+
+    {
+      items.length > 0 && (
+        <div class:list={['gnb-grid', `gnb-grid--${columns}`, 'placeholder-grid']}>
+          {items.map((item) => (
+            <article class="gnb-card">
+              <h3>{item}</h3>
+              <p>
+                <span class="gnb-todo">[À FOURNIR]</span> Description à rédiger.
+              </p>
+            </article>
+          ))}
+        </div>
+      )
+    }
+
+    <slot />
+  </div>
+</section>
+
+<style>
+  .placeholder-brief {
+    margin-bottom: var(--gnb-space-8);
+  }
+
+  .placeholder-grid {
+    margin-top: var(--gnb-space-8);
+  }
+</style>

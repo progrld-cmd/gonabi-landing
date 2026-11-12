@@ -1,0 +1,94 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { mainNav } from '../../data/navigation';
+
+const solutions = mainNav.find((group) => group.label === 'Solutions');
+---
+
+<PageLayout
+  title="Solutions"
+  description="[À FOURNIR] Meta description — Gonabi selon votre type de structure, 150 à 160 caractères."
+  heading="Gonabi selon votre structure"
+  eyebrow="Pour qui"
+  lead="Un consultant seul cherche à gagner du temps. Un cabinet cherche un cadre commun. Un organisme de formation cherche à rester auditable. Une mission locale cherche à rendre compte. Le produit est le même, les enjeux ne le sont pas."
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Choisissez votre situation</h2>
+      <div class="gnb-grid gnb-grid--2 hub-grid">
+        {
+          solutions?.children?.map((page) => (
+            <a href={page.href} class="gnb-card hub-card">
+              <h3>{page.label}</h3>
+              <p>{page.description}</p>
+              <span class="hub-card__more" aria-hidden="true">En savoir plus →</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Ou raisonnez par prestation</h2>
+      <p class="gnb-lead">
+        Ces pages découpent par type de structure. Si votre question porte plutôt sur la
+        prestation que vous vendez — bilan de compétences, outplacement, coaching, orientation des
+        jeunes — la rubrique cas d'usage lui répond directement.
+      </p>
+      <p class="hub-more"><a href="/cas-usage">Voir par prestation</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Vous venez d'un autre outil ?</h2>
+      <p class="gnb-lead">
+        La crainte de perdre son historique et de faire réapprendre son équipe passe avant le prix
+        dans les échanges que nous avons. C'est l'objection la plus fréquente, et elle a sa propre
+        page.
+      </p>
+      <p class="hub-more"><a href="/migrer-vers-gonabi">Migrer vers Gonabi</a></p>
+    </div>
+  </section>
+
+  <CtaBand />
+</PageLayout>
+
+<style>
+  .hub-grid {
+    margin-top: var(--gnb-space-8);
+  }
+
+  .hub-card {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gnb-space-2);
+    transition: var(--gnb-transition);
+  }
+
+  .hub-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+
+  .hub-card__more {
+    margin-top: auto;
+    padding-top: var(--gnb-space-4);
+    font-size: var(--gnb-text-sm);
+    font-weight: 600;
+    color: var(--gnb-red);
+  }
+
+  .hub-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .hub-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+  }
+</style>

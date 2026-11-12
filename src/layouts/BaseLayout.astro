@@ -1,0 +1,163 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+export interface Props {
+  /** Titre de la page, sans le suffixe « | Gonabi ». */
+  title: string;
+  /** Meta description. Placeholder tant que la passe rédactionnelle n'est pas faite. */
+  description: string;
+  /** Chemin canonique explicite — sinon déduit de l'URL courante. */
+  canonical?: string;
+  /** Image Open Graph, relative à la racine du site. */
+  ogImage?: string;
+  /** Empêche l'indexation (pages techniques, brouillons). */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = '/assets/logos/Gonabi_Symbole.png',
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(canonical ?? Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+const fullTitle = title === 'Gonabi' ? title : `${title} | Gonabi`;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#EE4036" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Gonabi" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/logos/Gonabi_Symbole.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/logos/Gonabi_Symbole.png" />
+
+    <!-- Polices de la charte : Lora (titres) + Inter (corps).
+         Graisses limitées à celles réellement utilisées par le système. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Posé avant le premier rendu : conditionne le masquage des blocs à
+         révéler, pour qu'ils n'apparaissent pas puis ne disparaissent pas. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+
+    <slot name="head" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu principal</a>
+    {/*
+      Sentinelle de défilement. Elle sert à savoir si la page est en haut sans
+      écouter l'événement `scroll` : un IntersectionObserver suffit, et il ne
+      s'exécute pas à chaque image. Tant qu'elle est visible, l'en-tête n'a ni
+      fond ni filet ; dès qu'elle sort du champ, il prend les deux.
+    */}
+    <div id="scroll-sentinel" aria-hidden="true"></div>
+    <Header />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Photo absente : on retire l'image plutôt que d'afficher l'icône de
+      // fichier cassé du navigateur. Le cadre est teinté en CSS, il reste donc
+      // un aplat propre à la place. Une photo qui manque ne doit jamais donner
+      // l'impression que la page est en panne.
+      document.querySelectorAll('img.photo').forEach((image) => {
+        image.addEventListener('error', () => image.remove(), { once: true });
+      });
+    </script>
+
+    <script>
+      // En-tête transparent en haut de page, plein dès qu'on défile.
+      // Motivation : sur un hero pleine page en photo, un bandeau opaque
+      // coupe l'image ; une fois le hero passé, la nav a besoin d'un fond
+      // pour rester lisible. C'est un changement d'état, pas une décoration.
+      const sentinelle = document.querySelector('#scroll-sentinel');
+      const entete = document.querySelector('.site-header');
+
+      if (sentinelle && entete && 'IntersectionObserver' in window) {
+        new IntersectionObserver(
+          ([entree]) => entete.classList.toggle('is-stuck', !entree.isIntersecting),
+          { threshold: 0 }
+        ).observe(sentinelle);
+      } else {
+        // Sans observateur, on garde l'en-tête plein : lisible en toutes circonstances.
+        entete?.classList.add('is-stuck');
+      }
+    </script>
+
+    <script>
+      // Révélation au scroll, volontairement discrète. Le masquage vient du CSS
+      // (`.js [data-reveal]`) ; ici on ne fait que le lever, soit au scroll, soit
+      // immédiatement si l'animation n'a pas lieu d'être.
+      const cibles = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const reveler = (cible: Element) => cible.classList.add('is-visible');
+
+      if (!cibles.length || !('IntersectionObserver' in window) || reduit) {
+        // Rien à animer : on lève le masquage plutôt que de laisser la page vide.
+        cibles.forEach(reveler);
+      } else {
+        const observateur = new IntersectionObserver(
+          (entrees) => {
+            entrees.forEach((entree) => {
+              if (!entree.isIntersecting) return;
+              reveler(entree.target);
+              observateur.unobserve(entree.target);
+            });
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.05 }
+        );
+
+        cibles.forEach((cible) => observateur.observe(cible));
+
+        /*
+         * Filet de sécurité. L'observateur ne se déclenche pas tant que le
+         * document n'est pas composité (onglet en arrière-plan, navigateur
+         * headless, moteur exotique) : sans ce garde-fou, toute la page
+         * resterait invisible. Un effet de révélation ne doit jamais pouvoir
+         * faire disparaître du contenu.
+         */
+        window.setTimeout(() => cibles.forEach(reveler), 1600);
+      }
+    </script>
+  </body>
+</html>

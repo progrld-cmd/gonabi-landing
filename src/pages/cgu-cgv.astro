@@ -1,0 +1,15 @@
+---
+// Avec `build.format: 'preserve'`, ce fichier produit /cgu-cgv.html.
+// URL déjà indexée : ne pas renommer ce fichier et ne pas le déplacer dans un
+// sous-dossier — cela produirait /cgu-cgv/index.html.
+import LegalLayout from '../layouts/LegalLayout.astro';
+import html from '../legal/cgu-cgv.html?raw';
+---
+
+<LegalLayout
+  title="CGU / CGV"
+  description="Conditions Générales d'Utilisation et de Vente de Gonabi"
+  canonical="/cgu-cgv.html"
+  crumb="CGU / CGV"
+  html={html}
+/>

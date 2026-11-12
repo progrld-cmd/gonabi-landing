@@ -1,0 +1,1424 @@
+---
+/**
+ * Home Gonabi.
+ *
+ * Troisième passe. Les visuels produit sont maintenant de vraies captures
+ * (déposées par Gérald dans public/assets/photos/), plus des illustrations.
+ * Chaque section a été reprise sur une référence précise fournie par Gérald :
+ *
+ *   §1 Hero      — grande capture réelle, sans cadre coloré (Setpoint/Alan)
+ *   §2 Partenaires — marquee grands logos, sans étiquette (gonabi.fr actuel)
+ *   §3 Produit    — onglets sobres à soulignement + badge icône (Culture Amp,
+ *                   Leapsome « Docs & eSign »)
+ *   §4 Différence — rangée d'icônes (Zendesk « Avantages »)
+ *   §5 Pour qui   — onglets qui tournent seuls, texte + photo (Alan)
+ *   §6 Témoignage — carrousel sombre, guillemets = formes du logo (référence
+ *                   « Dash0 »)
+ *   §7 Confiance  — cartes claires + surligneur (Spara)
+ *   §8 Formulaire — reproduction exacte du formulaire de gonabi.fr actuel
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import ShapeMask from '../components/ShapeMask.astro';
+import type { ShapeVariant } from '../components/ShapeMask.astro';
+import { DEMO_HREF } from '../data/navigation';
+
+const partenaires = [
+  { src: '/assets/partners/missions_locales_grayscale.png', alt: 'Missions Locales' },
+  { src: '/assets/partners/aura_grayscale.png', alt: 'Région Auvergne-Rhône-Alpes' },
+  { src: '/assets/partners/cma_grayscale.png', alt: 'Chambre de Métiers et de l’Artisanat' },
+  { src: '/assets/partners/edlv_grayscale.png', alt: 'EDLV' },
+  { src: '/assets/partners/french_tech_grayscale.png', alt: 'French Tech' },
+];
+
+const specialites = [
+  { texte: 'Bilan de compétences', fond: 'var(--tint-blue)', encre: 'var(--blue-deep)' },
+  { texte: 'Orientation', fond: 'var(--tint-red)', encre: 'var(--accent-deep)' },
+  { texte: 'Évolution professionnelle', fond: 'var(--tint-yellow)', encre: 'var(--ochre)' },
+];
+
+/** Onglets produit — quatre captures réelles de l'application. */
+const fonctionnalites: {
+  badge: string;
+  icon: 'layers' | 'compass' | 'shield-check' | 'users';
+  titre: string;
+  texte: string;
+  href: string;
+  src: string;
+  alt: string;
+}[] = [
+  {
+    badge: 'Tests et compétences',
+    icon: 'layers',
+    titre: 'Le profil se construit pendant les séances',
+    texte:
+      'Tests psychométriques passés en autonomie, compétences identifiées et structurées, métiers explorés. Tout reste exploitable en rendez-vous.',
+    href: '/produit/tests-psychometriques',
+    src: '/assets/photos/riasec-profil.png',
+    alt: 'Écran Gonabi : profil RIASEC détaillé par dimension',
+  },
+  {
+    badge: 'Parcours',
+    icon: 'compass',
+    titre: 'Vos trames, réutilisées d’un dossier à l’autre',
+    texte:
+      'Vous montez le parcours une fois, avec vos modules et vos ressources. Il ressert ensuite sans être remonté.',
+    href: '/produit/parcours-personnalises',
+    src: '/assets/photos/parcours-liste.png',
+    alt: 'Écran Gonabi : liste des parcours, bilan de compétences, orientation lycéen, reconversion',
+  },
+  {
+    badge: 'Conformité Qualiopi',
+    icon: 'shield-check',
+    titre: 'Chaque séance dépose sa preuve au bon endroit',
+    texte:
+      'Le jour de l’audit, le dossier est déjà constitué : checklist par critère, export en un clic.',
+    href: '/produit/conformite-qualiopi',
+    src: '/assets/photos/qualiopi-audit.png',
+    alt: 'Écran Gonabi : préparation de l’audit Qualiopi, checklist pré-audit et export du dossier',
+  },
+  {
+    badge: 'Vue d’ensemble',
+    icon: 'users',
+    titre: 'Tous vos dossiers au même endroit',
+    texte:
+      'Où en est chaque bénéficiaire, qui le suit, ce qu’il reste à faire. Sans ouvrir quatre outils pour le savoir.',
+    href: '/produit',
+    src: '/assets/photos/suivi-beneficiaires.png',
+    alt: 'Écran Gonabi : suivi des bénéficiaires avec statut, consultant, parcours et progression',
+  },
+];
+
+/** Différenciateurs — arguments fournis par Gérald. */
+const differences: { icon: 'compass' | 'layers' | 'zap' | 'users'; titre: string; texte: string }[] =
+  [
+    {
+      icon: 'compass',
+      titre: 'Pensé pour l’accompagnement',
+      texte: 'Pas un outil générique détourné de son usage.',
+    },
+    {
+      icon: 'layers',
+      titre: 'Tout dans un même espace',
+      texte: 'Tests, compétences, parcours et synthèses réunis.',
+    },
+    {
+      icon: 'zap',
+      titre: 'Automatisation native',
+      texte: 'Relances, rapports et synthèses générés sans y penser.',
+    },
+    {
+      icon: 'users',
+      titre: 'Expérience fluide',
+      texte: 'Pour le professionnel comme pour le bénéficiaire.',
+    },
+  ];
+
+/**
+ * Pour qui — onglets qui tournent automatiquement. Chaque persona a sa photo
+ * et sa teinte de fond, tirées des couleurs de marque en rotation.
+ */
+const cibles: {
+  titre: string;
+  texte: string;
+  href: string;
+  src: string;
+  alt: string;
+  fond: string;
+}[] = [
+  {
+    titre: 'Centres de bilan et cabinets RH',
+    texte: 'Optimisez vos accompagnements et gagnez en performance.',
+    href: '/solutions/cabinets-rh',
+    src: '/assets/photos/handshake-cabinet-rh.webp',
+    alt: 'Consultante RH accueillant un candidat, poignée de main',
+    fond: 'var(--tint-blue)',
+  },
+  {
+    titre: 'Coachs et consultants indépendants',
+    texte: 'Gagnez du temps sur la gestion, concentrez-vous sur l’accompagnement.',
+    href: '/solutions/coachs-independants',
+    src: '/assets/photos/bureau-domicile-coach.webp',
+    alt: 'Coach indépendant travaillant depuis son bureau à domicile',
+    fond: 'var(--tint-red)',
+  },
+  {
+    titre: 'Organismes publics et parapublics',
+    texte: 'Proposez des parcours individualisés à grande échelle.',
+    href: '/solutions/insertion-professionnelle',
+    src: '/assets/photos/visio-groupe-collectif.webp',
+    alt: 'Conseillère en visioconférence de groupe avec plusieurs bénéficiaires',
+    fond: 'var(--tint-yellow)',
+  },
+  {
+    titre: 'Organismes de formation',
+    texte: 'Ce que votre logiciel de gestion ne couvre pas.',
+    href: '/solutions/organismes-de-formation',
+    src: '/assets/photos/bureau-lumineux-formatrice.webp',
+    alt: 'Formatrice au bureau, poste de travail lumineux',
+    fond: 'var(--tint-teal)',
+  },
+];
+
+/** Témoignages — textes repris tels quels de l'ancienne landing. */
+const temoignages: { citation: string; nom: string; role: string }[] = [
+  {
+    citation:
+      'Utile pour nous, praticiens ; et pour les bénéficiaires, une vraie plus-value : parcours plus lisible, expérience plus fluide et compétences à s’orienter qui se développent séance après séance.',
+    nom: 'Hélène B.',
+    role: 'DRH',
+  },
+  {
+    citation:
+      'Les tests que j’utilisais dataient des années 90 alors que mes clients me parlaient de soft skills et de télétravail. Gonabi évalue enfin les compétences d’aujourd’hui. Mes bilans sont devenus percutants et mon taux de recommandation a explosé.',
+    nom: 'Marc D.',
+    role: 'Psychologue du travail',
+  },
+  {
+    citation:
+      'Avant, on courait après des mails, des docs et des liens de visio. Avec Gonabi, tout est dans un seul espace : parcours, contenus, tests, échanges. On lance un accompagnement sans bricoler et tout le monde sait quoi faire. Je respire enfin.',
+    nom: 'Stéphanie F.',
+    role: 'Consultante en cabinet RH',
+  },
+  {
+    citation:
+      'Je voulais arrêter de « faire l’administratif le soir ». Les relances intelligentes et les documents pré-remplis de Gonabi m’ont rendu mes soirées. Je me sens à nouveau coach, pas secrétaire.',
+    nom: 'Claire V.',
+    role: 'Coach indépendante',
+  },
+  {
+    citation:
+      'Gérer des cohortes d’étudiants par tableurs et emails, c’était la pagaille. Avec Gonabi, on a des parcours clairs, des ressources au bon endroit et des rappels automatiques. Les étudiants avancent sans se perdre, l’équipe aussi.',
+    nom: 'Samir K.',
+    role: 'Responsable orientation universitaire',
+  },
+  {
+    citation:
+      'Nos publics sont très variés et on passe notre temps à recoller les morceaux entre outils. Avec Gonabi, on peut partager une feuille de route unique et tous avoir le même niveau d’infos. Moins d’énergie sur l’organisation, plus sur l’accompagnement humain.',
+    nom: 'Amina B.',
+    role: 'Conseillère mission locale',
+  },
+];
+
+const formesTemoignage: ShapeVariant[] = ['half-disc', 'arc-concave', 'block-round'];
+const couleursTemoignage = ['var(--blue)', 'var(--accent)', 'var(--yellow)'];
+
+const confiance = [
+  {
+    shape: 'block-round' as ShapeVariant,
+    color: 'var(--blue)',
+    titre: 'Séances non enregistrées',
+    texte: 'Ni audio, ni vidéo. Seule la connexion à la plateforme est journalisée.',
+  },
+  {
+    shape: 'arc-concave' as ShapeVariant,
+    color: 'var(--accent)',
+    titre: 'Dossiers cloisonnés',
+    texte: 'L’accès est limité à l’organisation et au parcours suivi.',
+  },
+  {
+    shape: 'half-disc' as ShapeVariant,
+    color: 'var(--yellow)',
+    titre: 'Preuves de réalisation conservées 5 ans',
+    texte: 'Émargements et connexions, pendant la durée où un dossier financé peut être contrôlé. Pas le contenu des bilans.',
+  },
+];
+---
+
+<BaseLayout
+  title="Gonabi"
+  description="Gonabi réunit tests psychométriques, parcours, exploration métiers, synthèses et preuves Qualiopi dans un seul outil, pour les professionnels de l’accompagnement."
+  canonical="/"
+>
+  {/* ═════════ 1 — HERO ═════════ */}
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__content">
+        <span class="switcher">
+          {
+            specialites.map((s, i) => (
+              <span
+                class="switcher__item"
+                style={`--step: ${i}; --fond: ${s.fond}; --encre: ${s.encre}`}
+              >
+                {s.texte}
+              </span>
+            ))
+          }
+        </span>
+
+        <h1 class="hero__title">Un seul outil, du premier rendez-vous à la synthèse.</h1>
+
+        <p class="hero__lead">
+          Créez des parcours sur mesure, automatisez les tâches répétitives et gérez vos suivis en
+          temps réel, au même endroit.
+        </p>
+
+        <a href={DEMO_HREF} class="btn btn--primary hero__cta">Réserver une démo</a>
+      </div>
+
+      {/* Capture réelle, sans cadre coloré : l'image porte le hero seule. */}
+      <div class="hero__visual">
+        <img
+          class="photo"
+          src="/assets/photos/mon-equipe-dashboard.png"
+          alt="Tableau de bord Gonabi : bénéficiaires, consultants, activité et répartition des dispositifs"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/*
+    ═════════ 2 — PARTENAIRES ═════════
+    Reproduction du bandeau de gonabi.fr : grands logos (64px), espacement
+    large, aucune étiquette au-dessus. `mix-blend-mode: multiply` efface le
+    fond blanc opaque des fichiers, `grayscale` + opacité fait le reste.
+  */}
+  <section class="partners">
+    <div class="marquee">
+      <ul class="marquee__track">
+        {
+          [0, 1, 2].map((copie) =>
+            partenaires.map((p) => (
+              <li aria-hidden={copie > 0 ? 'true' : undefined}>
+                <img src={p.src} alt={copie === 0 ? p.alt : ''} loading="lazy" />
+              </li>
+            ))
+          )
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/*
+    ═════════ 3 — PRODUIT ═════════
+    Titre sur une ligne, sans-serif puis serif. Onglets sobres à soulignement
+    (pas de pilules), badge icône + petit intitulé au-dessus de chaque titre
+    de panneau — motif « Docs & eSign ». Rotation automatique par défaut.
+  */}
+  <section class="features">
+    <div class="container">
+      <h2 class="features__title">
+        <span class="mixed-sans">Une seule plateforme,</span>
+        <span class="mixed-serif">du test à la preuve</span>
+      </h2>
+
+      <div class="features__nav" data-autotabs>
+        <button type="button" class="carousel-arrow" data-tab-prev aria-label="Fonctionnalité précédente">
+          <Icon name="arrow-left" size={18} />
+        </button>
+
+        <div class="features__tabs" role="tablist" aria-label="Fonctionnalités de Gonabi">
+          {
+            fonctionnalites.map((f, i) => (
+              <button
+                type="button"
+                role="tab"
+                id={`tab-${i}`}
+                aria-controls={`panel-${i}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                tabindex={i === 0 ? 0 : -1}
+                class="sober-tab"
+              >
+                {f.badge}
+              </button>
+            ))
+          }
+        </div>
+
+        <button type="button" class="carousel-arrow" data-tab-next aria-label="Fonctionnalité suivante">
+          <Icon name="arrow-right" size={18} />
+        </button>
+      </div>
+
+      {
+        fonctionnalites.map((f, i) => (
+          <div
+            role="tabpanel"
+            id={`panel-${i}`}
+            aria-labelledby={`tab-${i}`}
+            class="features__panel"
+            hidden={i !== 0}
+          >
+            <div class="features__text">
+              <span class="mini-badge">
+                <Icon name={f.icon} size={14} />
+                {f.badge}
+              </span>
+              <h3 class="features__panel-title">{f.titre}</h3>
+              <p class="features__panel-text">{f.texte}</p>
+              <a href={f.href} class="btn btn--secondary">
+                En savoir plus
+              </a>
+            </div>
+            <div class="features__media">
+              <img class="photo" src={f.src} alt={f.alt} loading="lazy" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* ═════════ 4 — POURQUOI GONABI EST DIFFÉRENT ═════════ */}
+  <section class="diff">
+    <div class="container">
+      <h2 class="diff__title">Pourquoi Gonabi est <em>différent</em></h2>
+
+      <div class="diff__row">
+        {
+          differences.map((d) => (
+            <div class="diff__item" data-reveal>
+              <span class="diff__icon">
+                <Icon name={d.icon} size={20} />
+              </span>
+              <h3 class="diff__item-title">{d.titre}</h3>
+              <p class="diff__item-text">{d.texte}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/*
+    ═════════ 5 — POUR QUI ═════════
+    Onglets qui tournent tout seuls, texte + photo en vis-à-vis — structure
+    reprise de la référence Alan (Leaders / Managers / Employees / HR teams).
+  */}
+  <section class="audience" id="pour-qui">
+    <div class="container">
+      <h2 class="audience__title">
+        Conçu pour tous les professionnels de <em>l’accompagnement</em>
+      </h2>
+
+      <div class="audience__nav" data-autotabs>
+        {
+          cibles.map((c, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`aud-tab-${i}`}
+              aria-controls={`aud-panel-${i}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              class="sober-tab"
+            >
+              {c.titre}
+            </button>
+          ))
+        }
+      </div>
+
+      {
+        cibles.map((c, i) => (
+          <div
+            role="tabpanel"
+            id={`aud-panel-${i}`}
+            aria-labelledby={`aud-tab-${i}`}
+            class="audience__panel"
+            hidden={i !== 0}
+          >
+            <div class="audience__text">
+              <p class="audience__lead">{c.texte}</p>
+              <a href={c.href} class="link-arrow">
+                En savoir plus
+                <Icon name="arrow-right" size={16} />
+              </a>
+            </div>
+            <div class="audience__media" style={`--fond: ${c.fond}`}>
+              <img class="photo" src={c.src} alt={c.alt} loading="lazy" />
+            </div>
+          </div>
+        ))
+      }
+
+      <div class="audience__arrows">
+        <button type="button" class="carousel-arrow" data-tab-prev aria-label="Cible précédente">
+          <Icon name="arrow-left" size={18} />
+        </button>
+        <button type="button" class="carousel-arrow" data-tab-next aria-label="Cible suivante">
+          <Icon name="arrow-right" size={18} />
+        </button>
+      </div>
+    </div>
+  </section>
+
+  {/*
+    ═════════ 6 — TÉMOIGNAGES ═════════
+    Carrousel sombre, un témoignage à la fois. Les guillemets sont les trois
+    formes géométriques du logo, pas des caractères typographiques.
+  */}
+  <section class="voices">
+    <div class="container voices__inner">
+      <button type="button" class="carousel-arrow carousel-arrow--voices" data-voice-prev aria-label="Témoignage précédent">
+        <Icon name="arrow-left" size={20} />
+      </button>
+
+      <div class="voices__stage">
+        {
+          temoignages.map((t, i) => (
+            <figure class="voice" hidden={i !== 0} data-voice-slide>
+              <ShapeMask
+                variant={formesTemoignage[i % 3]}
+                color={couleursTemoignage[i % 3]}
+                size={30}
+                class="voice__mark"
+              />
+              <blockquote class="voice__quote">{t.citation}</blockquote>
+              <figcaption class="voice__author">
+                {t.nom}
+                <span class="voice__role">{t.role}</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+
+      <button type="button" class="carousel-arrow carousel-arrow--voices" data-voice-next aria-label="Témoignage suivant">
+        <Icon name="arrow-right" size={20} />
+      </button>
+    </div>
+
+    <div class="voices__dots" role="tablist" aria-label="Aller à un témoignage">
+      {
+        temoignages.map((_, i) => (
+          <button
+            type="button"
+            class="voice-dot"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-label={`Témoignage ${i + 1}`}
+            data-voice-dot={i}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  {/*
+    ═════════ 7 — CONFIANCE ═════════
+    Titre surligné + rangée de cartes claires — référence Spara.
+  */}
+  <section class="trust">
+    <div class="container">
+      <header class="trust__head">
+        <h2 class="trust__title">
+          Des données sensibles, <span class="highlight">traitées comme telles</span>
+        </h2>
+        <p class="trust__lead">
+          Un bilan de compétences produit des informations intimes, protégées par la loi. Nous
+          documentons publiquement ce que nous en faisons, et ce que nous nous interdisons.
+        </p>
+      </header>
+
+      <div class="trust__grid">
+        {
+          confiance.map((item) => (
+            <div class="trust__card" data-reveal>
+              <span class="trust__card-mark">
+                <ShapeMask variant={item.shape} color={item.color} size={18} />
+              </span>
+              <h3 class="trust__card-title">{item.titre}</h3>
+              <p class="trust__card-text">{item.texte}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <a href="/a-propos/securite-rgpd" class="link-arrow trust__cta">
+        Sécurité et RGPD
+        <Icon name="arrow-right" size={16} />
+      </a>
+    </div>
+  </section>
+
+  {/*
+    ═════════ 8 — FORMULAIRE ═════════
+    Reproduction exacte du formulaire actuellement en ligne sur gonabi.fr :
+    fond encre, carte vitrée (fond blanc à 10 %), champs translucides.
+    Même endpoint Formspree que l'original.
+  */}
+  <section class="signup" id="beta">
+    <div class="container signup__container">
+      <h2 class="signup__title">Voyez comment Gonabi peut améliorer vos accompagnements.</h2>
+
+      <form
+        class="signup__form"
+        action="https://formspree.io/f/mzdbzqwy"
+        method="POST"
+        aria-label="Formulaire de réservation de démo"
+      >
+        <div class="signup__row">
+          <div class="field">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required autocomplete="given-name" />
+          </div>
+          <div class="field">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" placeholder="Votre nom" required autocomplete="family-name" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Adresse email</label>
+          <input type="email" id="email" name="email" placeholder="votre@email.com" required autocomplete="email" />
+        </div>
+
+        <button type="submit" class="btn btn--primary signup__submit">Réserver une démo</button>
+
+        <ul class="signup__reassure">
+          <li><Icon name="check" size={14} /> Sans engagement</li>
+          <li><Icon name="check" size={14} /> Données sécurisées</li>
+          <li><Icon name="check" size={14} /> Accès en 24 h</li>
+        </ul>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ============================================================
+     1 — HERO
+     ============================================================ */
+
+  .hero {
+    background: var(--paper-light);
+    padding-block: clamp(40px, 5vw, 72px) clamp(56px, 7vw, 96px);
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(40px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .switcher {
+    display: inline-grid;
+    justify-items: start;
+    margin-bottom: var(--space-4);
+  }
+
+  .switcher__item {
+    grid-area: 1 / 1;
+    white-space: nowrap;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: var(--weight-semibold);
+    letter-spacing: 0.02em;
+    color: var(--encre);
+    background: var(--fond);
+    border-radius: var(--radius-pill);
+    padding: 8px 16px;
+    opacity: 0;
+    animation: switcher 9s var(--ease) infinite;
+    animation-delay: calc(var(--step) * 3s);
+  }
+
+  @keyframes switcher {
+    0%,
+    2% {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    7%,
+    30% {
+      opacity: 1;
+      transform: none;
+    }
+    36%,
+    100% {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  .hero__title {
+    font-size: var(--size-h1);
+    max-width: 15ch;
+  }
+
+  .hero__lead {
+    font-size: var(--size-lead);
+    line-height: var(--leading-lead);
+    color: var(--text-muted);
+    max-width: 42ch;
+    margin-top: var(--space-8);
+  }
+
+  .hero__cta {
+    margin-top: var(--space-8);
+  }
+
+  /* Pas de cadre coloré : l'image est la seule matière visuelle du bloc. */
+  .hero__visual img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: var(--border-hairline) solid var(--rule);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .switcher,
+    .hero__title,
+    .hero__lead,
+    .hero__cta,
+    .hero__visual {
+      animation: hero-enter 780ms var(--ease) backwards;
+    }
+
+    .hero__title {
+      animation-delay: 70ms;
+    }
+    .hero__lead {
+      animation-delay: 150ms;
+    }
+    .hero__cta {
+      animation-delay: 230ms;
+    }
+    .hero__visual {
+      animation-delay: 120ms;
+    }
+
+    @keyframes hero-enter {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+    }
+  }
+
+  /* ============================================================
+     BANDEAU DÉFILANT — partenaires
+     ============================================================ */
+
+  .partners {
+    background: var(--paper-light);
+    padding-block: clamp(32px, 5vw, 56px);
+    border-top: var(--border-hairline) solid var(--rule);
+    border-bottom: var(--border-hairline) solid var(--rule);
+  }
+
+  .marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .marquee__track {
+    display: flex;
+    align-items: center;
+    gap: clamp(64px, 9vw, 128px);
+    list-style: none;
+    width: max-content;
+    /* Trois copies : à -33,33% la boucle est invisible. */
+    animation: marquee 42s linear infinite;
+  }
+
+  .marquee:hover .marquee__track,
+  .marquee:focus-within .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-33.3333%);
+    }
+  }
+
+  .partners .marquee__track img {
+    height: 64px;
+    width: auto;
+    /* Fond blanc opaque des fichiers, effacé sur le crème par le blend mode. */
+    mix-blend-mode: multiply;
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition: opacity var(--duration) var(--ease);
+  }
+
+  .partners .marquee__track img:hover {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+      width: auto;
+      overflow-x: auto;
+    }
+    .marquee {
+      mask-image: none;
+    }
+  }
+
+  /* ============================================================
+     ONGLETS SOBRES — partagés par §3 et §5
+     ============================================================ */
+
+  .sober-tab {
+    font-family: var(--font-body);
+    font-size: var(--size-small);
+    font-weight: var(--weight-medium);
+    color: var(--text-muted);
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    padding: var(--space-2) 0;
+    cursor: pointer;
+    text-align: left;
+    transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+  }
+
+  .sober-tab:hover {
+    color: var(--text);
+  }
+
+  .sober-tab[aria-selected='true'] {
+    color: var(--text);
+    font-weight: var(--weight-semibold);
+    border-bottom-color: var(--accent);
+  }
+
+  .carousel-arrow {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: var(--radius-pill);
+    border: var(--border-hairline) solid var(--rule-strong);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: background-color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+  }
+
+  .carousel-arrow:hover {
+    background: var(--ink-08);
+    border-color: var(--ink);
+  }
+
+  /* ============================================================
+     3 — PRODUIT
+     ============================================================ */
+
+  .features {
+    background: var(--paper);
+    padding-block: clamp(72px, 10vw, 144px);
+  }
+
+  /* Titre mixte : premier segment en sans-serif, second en serif italique. */
+  .features__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4ch;
+    max-width: 52ch;
+    margin-bottom: var(--space-16);
+  }
+
+  .mixed-sans {
+    font-family: var(--font-body);
+    font-weight: var(--weight-medium);
+    font-size: 0.62em;
+    color: var(--text-muted);
+  }
+
+  .mixed-serif {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.1;
+    padding-bottom: 0.06em;
+  }
+
+  .diff__title em {
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.1;
+    padding-bottom: 0.06em;
+  }
+
+  .features__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding-bottom: var(--space-8);
+    border-bottom: var(--border-hairline) solid var(--rule);
+    margin-bottom: var(--space-16);
+  }
+
+  .features__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(20px, 3vw, 40px);
+    flex: 1;
+  }
+
+  .features__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+  }
+
+  .features__panel[hidden] {
+    display: none;
+  }
+
+  /* Badge icône + intitulé — motif « Docs & eSign ». */
+  .mini-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-body);
+    font-size: var(--size-small);
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+    margin-bottom: var(--space-4);
+  }
+
+  .mini-badge :global(svg) {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 6px;
+    box-sizing: border-box;
+    border-radius: var(--radius);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+
+  .features__panel-title {
+    font-size: var(--size-h3);
+    max-width: 18ch;
+  }
+
+  .features__panel-text {
+    color: var(--text-muted);
+    max-width: 46ch;
+    margin-block: var(--space-4) var(--space-8);
+  }
+
+  .features__media img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: var(--border-hairline) solid var(--rule);
+  }
+
+  /* ============================================================
+     4 — POURQUOI GONABI EST DIFFÉRENT
+     ============================================================ */
+
+  .diff {
+    background: var(--paper-light);
+    padding-block: clamp(72px, 10vw, 128px);
+    border-top: var(--border-hairline) solid var(--rule);
+  }
+
+  .diff__title {
+    font-size: var(--size-h2);
+    text-align: center;
+    margin-bottom: var(--space-16);
+  }
+
+  .diff__row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-8);
+  }
+
+  .diff__item {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .diff__icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
+    background: var(--tint-blue);
+    color: var(--blue-deep);
+    margin-bottom: var(--space-2);
+  }
+
+  .diff__item-title {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .diff__item-text {
+    font-size: var(--size-small);
+    color: var(--text-muted);
+  }
+
+  /* ============================================================
+     5 — POUR QUI
+     ============================================================ */
+
+  .audience {
+    background: var(--paper);
+    padding-block: clamp(72px, 10vw, 144px);
+  }
+
+  .audience__title {
+    font-size: var(--size-h2);
+    max-width: 26ch;
+    margin-bottom: var(--space-16);
+  }
+
+  .audience__title em {
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.1;
+    padding-bottom: 0.06em;
+  }
+
+  .audience__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(20px, 3vw, 40px);
+    padding-bottom: var(--space-8);
+    border-bottom: var(--border-hairline) solid var(--rule);
+    margin-bottom: var(--space-16);
+  }
+
+  .audience__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+  }
+
+  .audience__panel[hidden] {
+    display: none;
+  }
+
+  .audience__lead {
+    font-size: var(--size-lead);
+    line-height: var(--leading-lead);
+    max-width: 30ch;
+    margin-bottom: var(--space-4);
+  }
+
+  .audience__media {
+    background: var(--fond);
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .audience__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .audience__arrows {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-16);
+  }
+
+  /* ============================================================
+     6 — TÉMOIGNAGES
+     ============================================================ */
+
+  .voices {
+    background: var(--ink);
+    padding-block: clamp(80px, 11vw, 152px);
+  }
+
+  .voices__inner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(16px, 3vw, 40px);
+  }
+
+  .carousel-arrow--voices {
+    border-color: var(--on-ink-rule-strong);
+    color: var(--on-ink);
+  }
+
+  .carousel-arrow--voices:hover {
+    background: rgba(244, 237, 226, 0.08);
+    border-color: var(--on-ink);
+  }
+
+  .voices__stage {
+    max-width: 46rem;
+    margin-inline: auto;
+    text-align: center;
+    min-height: 14rem;
+    display: grid;
+    align-content: center;
+  }
+
+  .voice {
+    display: grid;
+    justify-items: center;
+    grid-area: 1 / 1;
+  }
+
+  .voice__mark {
+    margin-bottom: var(--space-8);
+  }
+
+  .voice__quote {
+    font-family: var(--font-display);
+    font-size: var(--size-h3);
+    line-height: var(--leading-title);
+    color: var(--on-ink);
+  }
+
+  .voice__author {
+    margin-top: var(--space-8);
+    font-size: var(--size-small);
+    font-weight: var(--weight-semibold);
+    color: var(--on-ink);
+  }
+
+  .voice__role {
+    display: block;
+    font-weight: var(--weight-regular);
+    color: var(--on-ink-muted);
+  }
+
+  .voices__dots {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-16);
+  }
+
+  .voice-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    border: 0;
+    background: var(--on-ink-rule-strong);
+    cursor: pointer;
+    padding: 0;
+    transition: background-color var(--duration) var(--ease);
+  }
+
+  .voice-dot[aria-selected='true'] {
+    background: var(--accent);
+  }
+
+  /* ============================================================
+     7 — CONFIANCE
+     ============================================================ */
+
+  .trust {
+    background: var(--tint-teal);
+    padding-block: clamp(72px, 10vw, 144px);
+  }
+
+  .trust__head {
+    text-align: center;
+    max-width: 46rem;
+    margin-inline: auto;
+    margin-bottom: var(--space-16);
+  }
+
+  .trust__title {
+    font-size: var(--size-h2);
+  }
+
+  .trust__lead {
+    color: var(--text-muted);
+    margin-top: var(--space-4);
+  }
+
+  .trust__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .trust__card {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-8);
+    background: var(--paper-white);
+    border-radius: var(--radius-lg);
+  }
+
+  .trust__card-mark {
+    margin-bottom: var(--space-2);
+  }
+
+  .trust__card-title {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: var(--weight-semibold);
+  }
+
+  .trust__card-text {
+    font-size: var(--size-small);
+    color: var(--text-muted);
+  }
+
+  .trust__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-16);
+  }
+
+  /* ============================================================
+     8 — FORMULAIRE
+     ============================================================ */
+
+  .signup {
+    background: var(--ink);
+    padding-block: clamp(72px, 10vw, 128px);
+  }
+
+  .signup__container {
+    max-width: 640px;
+    text-align: center;
+  }
+
+  .signup__title {
+    font-size: var(--size-h2);
+    color: var(--on-ink);
+  }
+
+  .signup__form {
+    margin-top: var(--space-16);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: clamp(24px, 4vw, 40px);
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .signup__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .field {
+    display: grid;
+    gap: var(--space-2);
+    text-align: left;
+  }
+
+  .field label {
+    font-size: var(--size-small);
+    color: var(--on-ink-muted);
+  }
+
+  .field input {
+    width: 100%;
+    padding: 13px 16px;
+    font-size: var(--size-small);
+    color: var(--on-ink);
+    background: rgba(255, 255, 255, 0.05);
+    border: var(--border-hairline) solid var(--on-ink-rule-strong);
+    border-radius: var(--radius);
+  }
+
+  .field input::placeholder {
+    color: var(--on-ink-muted);
+  }
+
+  .field input:focus-visible {
+    outline: none;
+    border-color: var(--on-ink);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .signup__submit {
+    width: 100%;
+    margin-top: var(--space-2);
+  }
+
+  .signup__reassure {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4) var(--space-8);
+    margin-top: var(--space-2);
+  }
+
+  .signup__reassure li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.8125rem;
+    color: var(--on-ink-muted);
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+
+  @media (max-width: 1024px) {
+    .diff__row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .trust__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero__grid,
+    .features__panel,
+    .audience__panel {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero__title {
+      max-width: none;
+    }
+
+    .audience__lead {
+      max-width: none;
+    }
+
+    .voices__inner {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .carousel-arrow--voices {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .diff__row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .signup__row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .partners .marquee__track img {
+      height: 44px;
+    }
+  }
+</style>
+
+<script>
+  /*
+   * Onglets rotatifs — partagés par les sections « Produit » et « Pour qui ».
+   * Chaque conteneur `[data-autotabs]` pointe vers un groupe de boutons
+   * `role=tab` et de panneaux `role=tabpanel` qui le suivent dans le DOM
+   * (jusqu'au prochain `[data-autotabs]` ou la fin de la section).
+   * Rotation automatique par défaut, arrêtée dès qu'on interagit : reprendre
+   * la main sur un carrousel ne doit jamais être annulé par la rotation.
+   */
+  const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-autotabs]').forEach((nav) => {
+    const section = nav.closest('section');
+    if (!section) return;
+
+    const onglets = Array.from(nav.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panneaux = onglets.map((o) =>
+      section.querySelector<HTMLElement>(`#${o.getAttribute('aria-controls')}`)
+    );
+    if (!onglets.length) return;
+
+    let actif = 0;
+    let minuteur: number | undefined;
+
+    const afficher = (index: number) => {
+      actif = index;
+      onglets.forEach((onglet, i) => {
+        const choisi = i === index;
+        onglet.setAttribute('aria-selected', String(choisi));
+        onglet.tabIndex = choisi ? 0 : -1;
+        if (panneaux[i]) panneaux[i]!.hidden = !choisi;
+      });
+    };
+
+    const arreter = () => {
+      if (minuteur !== undefined) window.clearInterval(minuteur);
+      minuteur = undefined;
+    };
+
+    const suivant = (pas: number) => {
+      arreter();
+      afficher((actif + pas + onglets.length) % onglets.length);
+    };
+
+    onglets.forEach((onglet, i) => {
+      onglet.addEventListener('click', () => suivant(i - actif));
+      onglet.addEventListener('keydown', (evenement) => {
+        if (evenement.key !== 'ArrowRight' && evenement.key !== 'ArrowLeft') return;
+        evenement.preventDefault();
+        suivant(evenement.key === 'ArrowRight' ? 1 : -1);
+        onglets[actif].focus();
+      });
+    });
+
+    section.querySelectorAll<HTMLButtonElement>('[data-tab-prev]').forEach((b) =>
+      b.addEventListener('click', () => suivant(-1))
+    );
+    section.querySelectorAll<HTMLButtonElement>('[data-tab-next]').forEach((b) =>
+      b.addEventListener('click', () => suivant(1))
+    );
+
+    if (!reduit) {
+      minuteur = window.setInterval(() => afficher((actif + 1) % onglets.length), 6000);
+    }
+  });
+
+  /*
+   * Carrousel de témoignages. Structure distincte des onglets : une seule
+   * diapositive visible, navigation par flèches + puces, rotation automatique
+   * par défaut.
+   */
+  const scene = document.querySelector<HTMLElement>('.voices');
+  if (scene) {
+    const slides = Array.from(scene.querySelectorAll<HTMLElement>('[data-voice-slide]'));
+    const dots = Array.from(scene.querySelectorAll<HTMLButtonElement>('[data-voice-dot]'));
+    let actif = 0;
+    let minuteur: number | undefined;
+
+    const afficher = (index: number) => {
+      actif = (index + slides.length) % slides.length;
+      slides.forEach((s, i) => (s.hidden = i !== actif));
+      dots.forEach((d, i) => d.setAttribute('aria-selected', String(i === actif)));
+    };
+
+    const arreter = () => {
+      if (minuteur !== undefined) window.clearInterval(minuteur);
+      minuteur = undefined;
+    };
+
+    scene.querySelector('[data-voice-prev]')?.addEventListener('click', () => {
+      arreter();
+      afficher(actif - 1);
+    });
+    scene.querySelector('[data-voice-next]')?.addEventListener('click', () => {
+      arreter();
+      afficher(actif + 1);
+    });
+    dots.forEach((dot, i) =>
+      dot.addEventListener('click', () => {
+        arreter();
+        afficher(i);
+      })
+    );
+
+    if (!reduit) {
+      minuteur = window.setInterval(() => afficher(actif + 1), 7000);
+    }
+  }
+</script>

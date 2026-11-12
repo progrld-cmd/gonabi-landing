@@ -1,0 +1,219 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+
+/**
+ * ⚠️ Ne jamais écrire ici que l'IA est « illimitée », « sans compteur » ou
+ * « sans crédit ». Aucune limite d'usage n'est contractualisée dans les CGV :
+ * promettre l'illimité expose l'éditeur en cas d'usage massif. L'argument de
+ * cette page est le temps gagné, pas le modèle tarifaire.
+ */
+const sections = [
+  'Contexte et situation',
+  'Déroulement de l’accompagnement',
+  'Profil et ressources',
+  'Projets explorés',
+  'Projet retenu et plan d’action',
+  'Bilan et perspectives',
+];
+---
+
+<PageLayout
+  title="Synthèses IA"
+  description="Gonabi pré-rédige la synthèse de fin d'accompagnement à partir du parcours réel du bénéficiaire. Vous relisez, vous ajustez, vous signez."
+  heading="La synthèse est pré-rédigée. Vous gardez la plume."
+  eyebrow="Produit"
+  lead="Gonabi rassemble ce qui s'est passé pendant l'accompagnement — tests, séances, métiers explorés, plan d'action — et en produit une première version structurée. Vous relisez, vous corrigez, vous signez."
+  breadcrumbs={[{ label: 'Produit', href: '/produit' }, { label: 'Synthèses IA' }]}
+>
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>Ce que l'IA exploite</h2>
+      <p class="gnb-lead">
+        Elle ne part pas d'une page blanche, et elle ne vous demande pas de remplir un
+        questionnaire de plus. Elle lit ce que le parcours a déjà produit : les résultats des tests
+        psychométriques, les étapes franchies, les métiers explorés et écartés, les ressources
+        consultées, le projet retenu.
+      </p>
+      <p class="gnb-lead">
+        C'est la différence entre un générateur de texte et une synthèse d'accompagnement : le
+        contenu vient de votre travail, pas d'un modèle générique.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Une synthèse en six sections</h2>
+      <p class="gnb-lead">
+        La trame suit le déroulé attendu d'une synthèse de bilan de compétences. Chaque section est
+        générée séparément : vous pouvez en reprendre une sans toucher aux autres.
+      </p>
+      <ol class="synthese-sections">
+        {sections.map((section) => <li>{section}</li>)}
+      </ol>
+      <p class="gnb-lead">
+        Pour un bilan de compétences, la synthèse doit contenir quatre éléments (article R6313-4
+        du Code du travail) : l'analyse des compétences professionnelles et personnelles, le projet
+        professionnel et les propositions concrètes d'évolution, les conditions et moyens qui
+        favorisent sa réalisation, et les étapes de mise en œuvre, dont la possibilité d'un
+        entretien de suivi.
+      </p>
+      <p class="gnb-lead">
+        <span class="gnb-todo">[À CONFIRMER] Section de la trame qui couvre « les conditions et moyens favorisant la réalisation du projet ». À ajouter ou à renommer côté produit si aucune ne la couvre.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--white">
+    <div class="gnb-container">
+      <h2>Le consultant garde la main</h2>
+      <div class="gnb-grid gnb-grid--3">
+        <article class="gnb-card">
+          <h3>Rien n'est publié sans vous</h3>
+          <p>
+            La synthèse générée est un brouillon. Elle n'est visible du bénéficiaire que lorsque
+            vous la publiez.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Tout est modifiable</h3>
+          <p>
+            Le texte s'édite section par section. Vous réécrivez ce qui ne vous convient pas, vous
+            gardez ce qui tient.
+          </p>
+        </article>
+        <article class="gnb-card">
+          <h3>Vous restez l'auteur</h3>
+          <p>
+            La synthèse engage votre nom et votre expertise. L'outil fait gagner du temps de
+            rédaction, il ne remplace pas votre analyse.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--blue">
+    <div class="gnb-container">
+      <h2>Ce que ça change sur une semaine</h2>
+      <blockquote class="synthese-quote">
+        Avant, je passais mes jeudis soirs à rédiger mes synthèses. Maintenant, je génère un
+        rapport complet en trois clics pendant la séance. Mes jeudis soirs m'appartiennent à
+        nouveau.
+      </blockquote>
+      <p class="synthese-source">
+        Coach en reconversion, bêta-testeuse, six accompagnements en parallèle.
+      </p>
+      <p class="gnb-lead">
+        La rédaction d'une synthèse demandait une heure et demie à deux heures. Elle prend
+        désormais une vingtaine de minutes de relecture et d'ajustement.
+      </p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream">
+    <div class="gnb-container">
+      <h2>Et les données du bénéficiaire ?</h2>
+      <p class="gnb-lead">
+        Une synthèse de bilan de compétences contient des informations sensibles, couvertes par la
+        confidentialité prévue à l'article L6313-4 du Code du travail. Le détail du traitement —
+        sous-traitants, localisation des données, durées de conservation — est décrit sur la page
+        dédiée.
+      </p>
+      <p class="synthese-more"><a href="/a-propos/securite-rgpd">Sécurité &amp; RGPD</a></p>
+    </div>
+  </section>
+
+  <section class="gnb-section gnb-section--cream-light">
+    <div class="gnb-container">
+      <h2>À lire ensuite</h2>
+      <div class="gnb-grid gnb-grid--2">
+        <a href="/produit/tests-psychometriques" class="gnb-card synthese-link">
+          <h3>Tests psychométriques</h3>
+          <p>La matière première de la section « Profil et ressources ».</p>
+        </a>
+        <a href="/produit/explorateur-metiers" class="gnb-card synthese-link">
+          <h3>Explorateur de métiers</h3>
+          <p>Ce qui alimente « Projets explorés » et « Projet retenu ».</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Voir une synthèse générée sur un cas réel"
+    text="En démonstration, nous générons une synthèse à partir d'un parcours complet pour que vous jugiez sur pièce."
+  />
+</PageLayout>
+
+<style>
+  .synthese-sections {
+    counter-reset: section;
+    list-style: none;
+    display: grid;
+    gap: var(--gnb-space-3);
+    margin-top: var(--gnb-space-8);
+    max-width: 640px;
+  }
+
+  .synthese-sections li {
+    counter-increment: section;
+    display: flex;
+    align-items: center;
+    gap: var(--gnb-space-4);
+    background: var(--gnb-white);
+    border: 1px solid var(--gnb-border-soft);
+    border-radius: var(--gnb-radius-sm);
+    padding: var(--gnb-space-4) var(--gnb-space-6);
+    font-weight: 500;
+  }
+
+  .synthese-sections li::before {
+    content: counter(section);
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--gnb-red-light);
+    color: var(--gnb-red);
+    font-size: var(--gnb-text-sm);
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .synthese-quote {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 40ch;
+    margin-bottom: var(--space-4);
+  }
+
+  .synthese-source {
+    font-size: var(--size-small);
+    margin-bottom: var(--space-8);
+  }
+
+  .synthese-more {
+    margin-top: var(--gnb-space-6);
+  }
+
+  .synthese-more a {
+    color: var(--gnb-red);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  .synthese-link {
+    text-decoration: none;
+    transition: var(--gnb-transition);
+  }
+
+  .synthese-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gnb-shadow-md);
+  }
+</style>
